@@ -22,23 +22,23 @@ import cakeImgSmall from '@/assets/cake.jpg';
 import coupleImgSmall from '@/assets/couple-lavender.jpg';
 
 const giftTiers = [
-  { amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
-  { amount: 100, emoji: '🥂', labelKey: 'registry.tier.toast' },
-  { amount: 200, emoji: '✨', labelKey: 'registry.tier.sparkle' },
-  { amount: 500, emoji: '💎', labelKey: 'registry.tier.diamond' },
-];
+{ amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
+{ amount: 100, emoji: '🥂', labelKey: 'registry.tier.toast' },
+{ amount: 200, emoji: '✨', labelKey: 'registry.tier.sparkle' },
+{ amount: 500, emoji: '💎', labelKey: 'registry.tier.diamond' }];
+
 
 /* Decorative aurora orb — pure CSS, no framer-motion animation */
-const AuroraOrb = forwardRef<HTMLDivElement, { position?: 'left' | 'right' | 'center'; color?: string; size?: number; delay?: number }>(({ 
-  position = 'left', 
-  color = 'rgba(201,169,182,0.3)', 
-  size = 400, 
+const AuroraOrb = forwardRef<HTMLDivElement, {position?: 'left' | 'right' | 'center';color?: string;size?: number;delay?: number;}>(({
+  position = 'left',
+  color = 'rgba(201,169,182,0.3)',
+  size = 400
 }, ref) => {
-  const posStyle = position === 'left' 
-    ? { left: '-12%', top: '20%' } 
-    : position === 'right' 
-    ? { right: '-12%', top: '30%' } 
-    : { left: '30%', top: '10%' };
+  const posStyle = position === 'left' ?
+  { left: '-12%', top: '20%' } :
+  position === 'right' ?
+  { right: '-12%', top: '30%' } :
+  { left: '30%', top: '10%' };
 
   return (
     <div
@@ -49,40 +49,40 @@ const AuroraOrb = forwardRef<HTMLDivElement, { position?: 'left' | 'right' | 'ce
         background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
         filter: 'blur(80px)',
         animation: `aurora-css-1 20s ease-in-out infinite`,
-        ...posStyle,
-      }}
-    />
-  );
+        ...posStyle
+      }} />);
+
+
 });
 AuroraOrb.displayName = 'AuroraOrb';
 
 /* FloatingHearts removed — using global one from App.tsx */
 
 /* Falling petals component — hidden on mobile for performance */
-const FallingPetals = ({ isMobile = false }: { isMobile?: boolean }) => {
+const FallingPetals = ({ isMobile = false }: {isMobile?: boolean;}) => {
   if (isMobile) return null;
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
       {Array.from({ length: 8 }).map((_, i) =>
-        <div
-          key={i}
-          className="absolute animate-petal-fall"
-          style={{
-            left: `${10 + i * 12 % 80}%`,
-            top: '-30px',
-            '--duration': `${14 + i * 2.5}s`,
-            '--delay': `${i * 2}s`
-          } as React.CSSProperties}>
+      <div
+        key={i}
+        className="absolute animate-petal-fall"
+        style={{
+          left: `${10 + i * 12 % 80}%`,
+          top: '-30px',
+          '--duration': `${14 + i * 2.5}s`,
+          '--delay': `${i * 2}s`
+        } as React.CSSProperties}>
           <span className="text-primary/15 text-lg">🌸</span>
         </div>
       )}
-    </div>
-  );
+    </div>);
+
 };
 
 /* Section divider with golden decorative line */
-const SectionDivider = forwardRef<HTMLDivElement, { variant?: 'heart' | 'sparkle' | 'line' }>(({ variant = 'heart' }, ref) => (
-  <div ref={ref} className="relative py-4 flex items-center justify-center overflow-hidden">
+const SectionDivider = forwardRef<HTMLDivElement, {variant?: 'heart' | 'sparkle' | 'line';}>(({ variant = 'heart' }, ref) =>
+<div ref={ref} className="relative py-4 flex items-center justify-center overflow-hidden">
     <div className="absolute inset-0 flex items-center">
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
     </div>
@@ -90,22 +90,22 @@ const SectionDivider = forwardRef<HTMLDivElement, { variant?: 'heart' | 'sparkle
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gold-light/15 to-transparent" />
     </div>
     <motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      className="relative z-10 bg-background/60 backdrop-blur-sm px-4 rounded-full"
-    >
+    initial={{ opacity: 0, scale: 0.5 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+    className="relative z-10 bg-background/60 backdrop-blur-sm px-4 rounded-full">
+    
       {variant === 'heart' && <Heart className="w-5 h-5 text-gold/50 fill-gold/30" />}
       {variant === 'sparkle' && <Sparkles className="w-5 h-5 text-gold/60" />}
       {variant === 'line' && <span className="text-gold/40 text-xs">✦ ✦ ✦</span>}
     </motion.div>
   </div>
-));
+);
 SectionDivider.displayName = 'SectionDivider';
 
 /* Golden corner frame decoration for sections */
-const GoldenCorners = forwardRef<HTMLDivElement, { className?: string }>(({ className = '' }, ref) => (
-  <div ref={ref} className={`absolute inset-0 pointer-events-none z-[1] ${className}`}>
+const GoldenCorners = forwardRef<HTMLDivElement, {className?: string;}>(({ className = '' }, ref) =>
+<div ref={ref} className={`absolute inset-0 pointer-events-none z-[1] ${className}`}>
     {/* Top-left */}
     <div className="absolute top-0 left-0 w-12 h-12">
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-gold/40 to-transparent" />
@@ -127,12 +127,12 @@ const GoldenCorners = forwardRef<HTMLDivElement, { className?: string }>(({ clas
       <div className="absolute bottom-0 right-0 h-full w-[1px] bg-gradient-to-t from-gold/40 to-transparent" />
     </div>
   </div>
-));
+);
 GoldenCorners.displayName = 'GoldenCorners';
 
 /* ===== Personal Court — Promise + Dynamic quotes from DB ===== */
-const PersonalCourtSection = forwardRef<HTMLElement, { t: (key: string) => string; coupleNames: string }>(({ t, coupleNames }, ref) => {
-  const [quotes, setQuotes] = useState<{ id: string; content: string }[]>([]);
+const PersonalCourtSection = forwardRef<HTMLElement, {t: (key: string) => string;coupleNames: string;}>(({ t, coupleNames }, ref) => {
+  const [quotes, setQuotes] = useState<{id: string;content: string;}[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -164,8 +164,8 @@ const PersonalCourtSection = forwardRef<HTMLElement, { t: (key: string) => strin
         </motion.div>
 
         {/* Quotes carousel */}
-        {quotes.length > 0 && (
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        {quotes.length > 0 &&
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <div className="glass-card-strong rounded-3xl p-8 md:p-12 relative overflow-hidden">
               <GoldenCorners />
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/8 to-violet-400/8 blur-2xl pointer-events-none" />
@@ -178,13 +178,13 @@ const PersonalCourtSection = forwardRef<HTMLElement, { t: (key: string) => strin
               <div className="min-h-[80px] flex items-center justify-center relative">
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={currentIndex}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center absolute inset-x-0 px-4"
-                  >
+                  key={currentIndex}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="text-center absolute inset-x-0 px-4">
+                  
                     <p className="font-serif-display text-lg md:text-xl text-foreground italic leading-relaxed">
                       "{quotes[currentIndex].content}"
                     </p>
@@ -199,30 +199,30 @@ const PersonalCourtSection = forwardRef<HTMLElement, { t: (key: string) => strin
                 </div>
               </div>
 
-              {quotes.length > 1 && (
-                <div className="flex items-center justify-center gap-1.5 mt-6">
-                  {quotes.map((_, i) => (
-                    <button key={i} onClick={() => setCurrentIndex(i)}
-                      aria-label={`Go to quote ${i + 1}`}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary w-6' : 'bg-muted-foreground/20 w-1.5'}`} />
-                  ))}
-                </div>
+              {quotes.length > 1 &&
+            <div className="flex items-center justify-center gap-1.5 mt-6">
+                  {quotes.map((_, i) =>
+              <button key={i} onClick={() => setCurrentIndex(i)}
+              aria-label={`Go to quote ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary w-6' : 'bg-muted-foreground/20 w-1.5'}`} />
               )}
+                </div>
+            }
             </div>
           </motion.div>
-        )}
+        }
 
         {/* Values row */}
         <div className="flex justify-center gap-4 mt-6">
           {[
-            { emoji: '💕', label: 'Love' },
-            { emoji: '🌹', label: 'Beauty' },
-            { emoji: '💒', label: 'Union' },
-            { emoji: '🕊️', label: 'Peace' },
-            { emoji: '✨', label: 'Grace' },
-          ].map((item, i) =>
-            <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-              className="flex flex-col items-center gap-1.5">
+          { emoji: '💕', label: 'Love' },
+          { emoji: '🌹', label: 'Beauty' },
+          { emoji: '💒', label: 'Union' },
+          { emoji: '🕊️', label: 'Peace' },
+          { emoji: '✨', label: 'Grace' }].
+          map((item, i) =>
+          <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
+          className="flex flex-col items-center gap-1.5">
               <div className="w-11 h-11 rounded-2xl glass-card-strong flex items-center justify-center">
                 <span className="text-lg">{item.emoji}</span>
               </div>
@@ -231,15 +231,15 @@ const PersonalCourtSection = forwardRef<HTMLElement, { t: (key: string) => strin
           )}
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 });
 PersonalCourtSection.displayName = 'PersonalCourtSection';
 
 
-const AnnouncementsSection = forwardRef<HTMLElement, { t: (key: string) => string }>(({ t }, ref) => {
+const AnnouncementsSection = forwardRef<HTMLElement, {t: (key: string) => string;}>(({ t }, ref) => {
   const { language } = useLanguage();
-  const [announcements, setAnnouncements] = useState<{ id: string; title: string; content: string; created_at: string; title_fr?: string | null; title_es?: string | null; content_fr?: string | null; content_es?: string | null }[]>([]);
+  const [announcements, setAnnouncements] = useState<{id: string;title: string;content: string;created_at: string;title_fr?: string | null;title_es?: string | null;content_fr?: string | null;content_es?: string | null;}[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const getTitle = (ann: typeof announcements[number]) => {
@@ -301,8 +301,8 @@ const AnnouncementsSection = forwardRef<HTMLElement, { t: (key: string) => strin
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.6 }}
-                  className="text-center"
-                >
+                  className="text-center">
+                  
                   <p className="font-sans-elegant text-sm font-bold text-primary mb-2">{getTitle(announcements[currentIndex])}</p>
                   <p className="font-serif-display text-base md:text-lg text-foreground italic leading-relaxed">
                     {getContent(announcements[currentIndex])}
@@ -311,14 +311,14 @@ const AnnouncementsSection = forwardRef<HTMLElement, { t: (key: string) => strin
               </AnimatePresence>
             </div>
 
-            {announcements.length > 1 && (
-              <div className="flex items-center justify-center gap-2 mt-6">
-                {announcements.map((_, i) => (
-                  <button key={i} onClick={() => setCurrentIndex(i)} type="button" aria-label={`Go to announcement ${i + 1}`}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary w-6' : 'bg-muted-foreground/25'}`} />
-                ))}
+            {announcements.length > 1 &&
+            <div className="flex items-center justify-center gap-2 mt-6">
+                {announcements.map((_, i) =>
+              <button key={i} onClick={() => setCurrentIndex(i)} type="button" aria-label={`Go to announcement ${i + 1}`}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary w-6' : 'bg-muted-foreground/25'}`} />
+              )}
               </div>
-            )}
+            }
 
             <div className="love-divider mt-6">
               <Heart className="w-4 h-4 text-primary/40 fill-primary/40" />
@@ -326,18 +326,18 @@ const AnnouncementsSection = forwardRef<HTMLElement, { t: (key: string) => strin
           </div>
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 });
 AnnouncementsSection.displayName = 'AnnouncementsSection';
 
 /* ===== Transitioning Scripture (Genesis 2:24 + Jeremiah 31:3) ===== */
 const FEATURED_VERSES = [
-  { key: 'verse.genesis', ref: 'Genesis 2:24' },
-  { key: 'love.quote1.text', ref: 'Jeremiah 31:3' },
-];
+{ key: 'verse.genesis', ref: 'Genesis 2:24' },
+{ key: 'love.quote1.text', ref: 'Jeremiah 31:3' }];
 
-const TransitioningScripture = ({ t }: { t: (key: string) => string }) => {
+
+const TransitioningScripture = ({ t }: {t: (key: string) => string;}) => {
   const [currentVerse, setCurrentVerse] = useState(0);
 
   useEffect(() => {
@@ -362,8 +362,8 @@ const TransitioningScripture = ({ t }: { t: (key: string) => string }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.7 }}
-              className="text-center absolute inset-x-0 px-6"
-            >
+              className="text-center absolute inset-x-0 px-6">
+              
               <p className="font-serif-display text-xl md:text-2xl text-foreground italic leading-relaxed mb-4">
                 "{t(FEATURED_VERSES[currentVerse].key)}"
               </p>
@@ -374,23 +374,23 @@ const TransitioningScripture = ({ t }: { t: (key: string) => string }) => {
           </AnimatePresence>
         </div>
       </div>
-    </motion.div>
-  );
+    </motion.div>);
+
 };
 
 /* Auto-transitioning scripture component — no cards, floating text */
 const VERSES = [
-  { key: 'verse.1cor13.full', ref: '1 Corinthians 13:4-7' },
-  { key: 'verse.ecclesiastes', ref: 'Ecclesiastes 4:9-12' },
-  { key: 'verse.colossians', ref: 'Colossians 3:14' },
-  { key: 'verse.genesis', ref: 'Genesis 2:24' },
-  { key: 'verse.romans12', ref: 'Romans 12:10' },
-  { key: 'verse.galatians', ref: 'Galatians 5:22-23' },
-  { key: 'verse.proverbs', ref: 'Proverbs 3:5-6' },
-  { key: 'verse.psalm37', ref: 'Psalm 37:4' },
-];
+{ key: 'verse.1cor13.full', ref: '1 Corinthians 13:4-7' },
+{ key: 'verse.ecclesiastes', ref: 'Ecclesiastes 4:9-12' },
+{ key: 'verse.colossians', ref: 'Colossians 3:14' },
+{ key: 'verse.genesis', ref: 'Genesis 2:24' },
+{ key: 'verse.romans12', ref: 'Romans 12:10' },
+{ key: 'verse.galatians', ref: 'Galatians 5:22-23' },
+{ key: 'verse.proverbs', ref: 'Proverbs 3:5-6' },
+{ key: 'verse.psalm37', ref: 'Psalm 37:4' }];
 
-const ScriptureTransition = ({ t }: { t: (key: string) => string }) => {
+
+const ScriptureTransition = ({ t }: {t: (key: string) => string;}) => {
   const [currentVerse, setCurrentVerse] = useState(0);
 
   useEffect(() => {
@@ -420,8 +420,8 @@ const ScriptureTransition = ({ t }: { t: (key: string) => string }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.8, ease: 'easeInOut' }}
-              className="text-center px-4 absolute inset-x-0"
-            >
+              className="text-center px-4 absolute inset-x-0">
+              
               <BookOpen className="w-6 h-6 text-primary/40 mx-auto mb-5" />
               <p className="font-serif-display text-xl md:text-2xl lg:text-3xl text-foreground italic leading-relaxed mb-5">
                 "{t(VERSES[currentVerse].key)}"
@@ -434,20 +434,20 @@ const ScriptureTransition = ({ t }: { t: (key: string) => string }) => {
         </div>
 
         <div className="flex items-center justify-center gap-2 mt-6">
-          {VERSES.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentVerse(i)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                i === currentVerse ? 'bg-primary w-6' : 'bg-muted-foreground/25 hover:bg-muted-foreground/40'
-              }`}
-              aria-label={`Verse ${i + 1}`}
-            />
-          ))}
+          {VERSES.map((_, i) =>
+          <button
+            key={i}
+            onClick={() => setCurrentVerse(i)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            i === currentVerse ? 'bg-primary w-6' : 'bg-muted-foreground/25 hover:bg-muted-foreground/40'}`
+            }
+            aria-label={`Verse ${i + 1}`} />
+
+          )}
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 
@@ -464,12 +464,12 @@ const Index = () => {
 
   const coupleName1 = settings.couple_name_1 || 'Corine';
   const coupleName2 = settings.couple_name_2 || 'Ruben';
-  
+
   // Event mode: court or church
   const isCourtMode = settings.active_event === 'court';
-  const weddingDateStr = isCourtMode 
-    ? (settings.court_wedding_date || '2026-03-16T14:00:00') 
-    : (settings.wedding_date || '2026-10-16T15:00:00');
+  const weddingDateStr = isCourtMode ?
+  settings.court_wedding_date || '2026-03-16T14:00:00' :
+  settings.wedding_date || '2026-10-16T15:00:00';
   const weddingDate = new Date(weddingDateStr);
   const courtVenue = settings.court_wedding_venue || '301 Sycamore St, Brookville — Mayor Letner';
   const courtAfterVenue = settings.court_wedding_after_venue || '10209 Gully Pass Dr, Dayton, OH 45458';
@@ -526,90 +526,90 @@ const Index = () => {
   };
 
   const features = [
-    { icon: Heart, label: t('nav.story'), desc: t('story.subtitle'), to: '/story', color: 'text-rose-400', bg: 'from-rose-500/20 to-pink-500/10' },
-    { icon: Clock, label: t('nav.rsvp'), desc: t('rsvp.subtitle'), to: '/rsvp', color: 'text-emerald-400', bg: 'from-emerald-500/20 to-teal-500/10' },
-  ];
+  { icon: Heart, label: t('nav.story'), desc: t('story.subtitle'), to: '/story', color: 'text-rose-400', bg: 'from-rose-500/20 to-pink-500/10' },
+  { icon: Clock, label: t('nav.rsvp'), desc: t('rsvp.subtitle'), to: '/rsvp', color: 'text-emerald-400', bg: 'from-emerald-500/20 to-teal-500/10' }];
+
 
   const courtDetailSections = [
-    {
-      id: 'court-ceremony',
-      icon: Calendar,
-      title: t('court.wedding.ceremony'),
-      color: 'from-rose-500/20 to-pink-500/10',
-      iconColor: 'text-rose-400',
-      dialogContent: [
-        { icon: Clock, label: t('court.wedding.time'), desc: t('court.wedding.officiant'), highlight: true },
-        { icon: MapPin, label: t('court.wedding.ceremony'), desc: courtVenue, highlight: true },
-      ]
-    },
-    {
-      id: 'court-after',
-      icon: Utensils,
-      title: t('court.wedding.after'),
-      color: 'from-amber-500/20 to-orange-500/10',
-      iconColor: 'text-amber-400',
-      dialogContent: [
-        { icon: MapPin, label: t('court.wedding.after'), desc: courtAfterVenue, highlight: true },
-        { icon: Utensils, label: t('court.wedding.after'), desc: t('court.wedding.after.desc') },
-      ]
-    },
-  ];
+  {
+    id: 'court-ceremony',
+    icon: Calendar,
+    title: t('court.wedding.ceremony'),
+    color: 'from-rose-500/20 to-pink-500/10',
+    iconColor: 'text-rose-400',
+    dialogContent: [
+    { icon: Clock, label: t('court.wedding.time'), desc: t('court.wedding.officiant'), highlight: true },
+    { icon: MapPin, label: t('court.wedding.ceremony'), desc: courtVenue, highlight: true }]
+
+  },
+  {
+    id: 'court-after',
+    icon: Utensils,
+    title: t('court.wedding.after'),
+    color: 'from-amber-500/20 to-orange-500/10',
+    iconColor: 'text-amber-400',
+    dialogContent: [
+    { icon: MapPin, label: t('court.wedding.after'), desc: courtAfterVenue, highlight: true },
+    { icon: Utensils, label: t('court.wedding.after'), desc: t('court.wedding.after.desc') }]
+
+  }];
+
 
   const churchDetailSections = [
-    {
-      id: 'ceremony',
-      icon: Church,
-      title: t('details.ceremony'),
-      color: 'from-rose-500/20 to-pink-500/10',
-      iconColor: 'text-rose-400',
-      dialogContent: [
-        { icon: Calendar, label: t('details.ceremony.time'), desc: t('details.ceremony.program.welcome'), highlight: true },
-        { icon: MapPin, label: t('details.ceremony.location'), desc: t('details.ceremony.address'), highlight: true },
-        { icon: BookOpen, label: t('details.ceremony.program.readings'), desc: t('details.ceremony.program.readings.desc') },
-        { icon: Gem, label: t('details.ceremony.program.vows'), desc: t('details.ceremony.program.vows.desc') },
-        { icon: Music, label: t('details.ceremony.program.hymns'), desc: t('details.ceremony.program.hymns.desc') },
-        { icon: Cross, label: t('details.ceremony.program.blessing'), desc: t('details.ceremony.program.blessing.desc') },
-      ]
-    },
-    {
-      id: 'reception',
-      icon: PartyPopper,
-      title: t('details.reception'),
-      color: 'from-amber-500/20 to-orange-500/10',
-      iconColor: 'text-amber-400',
-      dialogContent: [
-        { icon: Calendar, label: t('details.reception.time'), desc: t('details.reception.program.cocktail'), highlight: true },
-        { icon: MapPin, label: t('details.reception.location'), desc: t('details.reception.address'), highlight: true },
-        { icon: Utensils, label: t('details.reception.program.dinner'), desc: t('details.reception.program.dinner.desc') },
-        { icon: Music, label: t('details.reception.program.dance'), desc: t('details.reception.program.dance.desc') },
-        { icon: Heart, label: t('details.reception.program.cake'), desc: t('details.reception.program.cake.desc') },
-      ]
-    },
-    {
-      id: 'accommodation',
-      icon: Hotel,
-      title: t('details.accommodation'),
-      color: 'from-violet-500/20 to-purple-500/10',
-      iconColor: 'text-violet-400',
-      dialogContent: [
-        { icon: Hotel, label: t('details.accommodation.hotel'), desc: t('details.accommodation.hotel.desc'), highlight: true },
-        { icon: MapPin, label: t('details.accommodation.address'), desc: t('details.accommodation.address.desc') },
-        { icon: Sparkles, label: t('details.accommodation.rate'), desc: t('details.accommodation.rate.desc') },
-      ]
-    },
-    {
-      id: 'transport',
-      icon: Car,
-      title: t('details.transport'),
-      color: 'from-emerald-500/20 to-teal-500/10',
-      iconColor: 'text-emerald-400',
-      dialogContent: [
-        { icon: Car, label: t('details.transport.shuttle'), desc: t('details.transport.shuttle.desc'), highlight: true },
-        { icon: MapPin, label: t('details.transport.parking'), desc: t('details.transport.parking.desc') },
-        { icon: Clock, label: t('details.transport.schedule'), desc: t('details.transport.schedule.desc') },
-      ]
-    },
-  ];
+  {
+    id: 'ceremony',
+    icon: Church,
+    title: t('details.ceremony'),
+    color: 'from-rose-500/20 to-pink-500/10',
+    iconColor: 'text-rose-400',
+    dialogContent: [
+    { icon: Calendar, label: t('details.ceremony.time'), desc: t('details.ceremony.program.welcome'), highlight: true },
+    { icon: MapPin, label: t('details.ceremony.location'), desc: t('details.ceremony.address'), highlight: true },
+    { icon: BookOpen, label: t('details.ceremony.program.readings'), desc: t('details.ceremony.program.readings.desc') },
+    { icon: Gem, label: t('details.ceremony.program.vows'), desc: t('details.ceremony.program.vows.desc') },
+    { icon: Music, label: t('details.ceremony.program.hymns'), desc: t('details.ceremony.program.hymns.desc') },
+    { icon: Cross, label: t('details.ceremony.program.blessing'), desc: t('details.ceremony.program.blessing.desc') }]
+
+  },
+  {
+    id: 'reception',
+    icon: PartyPopper,
+    title: t('details.reception'),
+    color: 'from-amber-500/20 to-orange-500/10',
+    iconColor: 'text-amber-400',
+    dialogContent: [
+    { icon: Calendar, label: t('details.reception.time'), desc: t('details.reception.program.cocktail'), highlight: true },
+    { icon: MapPin, label: t('details.reception.location'), desc: t('details.reception.address'), highlight: true },
+    { icon: Utensils, label: t('details.reception.program.dinner'), desc: t('details.reception.program.dinner.desc') },
+    { icon: Music, label: t('details.reception.program.dance'), desc: t('details.reception.program.dance.desc') },
+    { icon: Heart, label: t('details.reception.program.cake'), desc: t('details.reception.program.cake.desc') }]
+
+  },
+  {
+    id: 'accommodation',
+    icon: Hotel,
+    title: t('details.accommodation'),
+    color: 'from-violet-500/20 to-purple-500/10',
+    iconColor: 'text-violet-400',
+    dialogContent: [
+    { icon: Hotel, label: t('details.accommodation.hotel'), desc: t('details.accommodation.hotel.desc'), highlight: true },
+    { icon: MapPin, label: t('details.accommodation.address'), desc: t('details.accommodation.address.desc') },
+    { icon: Sparkles, label: t('details.accommodation.rate'), desc: t('details.accommodation.rate.desc') }]
+
+  },
+  {
+    id: 'transport',
+    icon: Car,
+    title: t('details.transport'),
+    color: 'from-emerald-500/20 to-teal-500/10',
+    iconColor: 'text-emerald-400',
+    dialogContent: [
+    { icon: Car, label: t('details.transport.shuttle'), desc: t('details.transport.shuttle.desc'), highlight: true },
+    { icon: MapPin, label: t('details.transport.parking'), desc: t('details.transport.parking.desc') },
+    { icon: Clock, label: t('details.transport.schedule'), desc: t('details.transport.schedule.desc') }]
+
+  }];
+
 
   const detailSections = isCourtMode ? courtDetailSections : churchDetailSections;
 
@@ -630,7 +630,7 @@ const Index = () => {
   const handleShareStream = async () => {
     const shareUrl = window.location.origin;
     if (navigator.share) {
-      try { await navigator.share({ title: livestreamTitle || "Corine & Ruben's Wedding Live", url: shareUrl }); } catch {}
+      try {await navigator.share({ title: livestreamTitle || "Corine & Ruben's Wedding Live", url: shareUrl });} catch {}
     } else {
       navigator.clipboard.writeText(shareUrl);
       toast.success('Link copied!');
@@ -645,53 +645,53 @@ const Index = () => {
       {/* ===== FLOATING GIFT BUTTON ===== */}
       <motion.button
         initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ 
-          opacity: 1, 
+        animate={{
+          opacity: 1,
           scale: [1, 1.1, 1],
           boxShadow: [
-            '0 0 15px rgba(201,169,182,0.3)',
-            '0 0 30px rgba(201,169,182,0.6)',
-            '0 0 15px rgba(201,169,182,0.3)',
-          ],
+          '0 0 15px rgba(201,169,182,0.3)',
+          '0 0 30px rgba(201,169,182,0.6)',
+          '0 0 15px rgba(201,169,182,0.3)']
+
         }}
-        transition={{ 
-          delay: 2, 
+        transition={{
+          delay: 2,
           type: 'spring',
           scale: { repeat: Infinity, duration: 2, ease: 'easeInOut' },
-          boxShadow: { repeat: Infinity, duration: 2, ease: 'easeInOut' },
+          boxShadow: { repeat: Infinity, duration: 2, ease: 'easeInOut' }
         }}
         onClick={() => setGiftOpen(true)}
         className={`fixed z-40 rounded-full gradient-primary shadow-glow flex items-center justify-center hover:scale-110 transition-transform duration-300 group ${
-          isMobile ? 'bottom-20 right-4 w-12 h-12' : 'bottom-8 right-8 w-14 h-14'
-        }`}
-        aria-label="Gift"
-      >
+        isMobile ? 'bottom-20 right-4 w-12 h-12' : 'bottom-8 right-8 w-14 h-14'}`
+        }
+        aria-label="Gift">
+        
         <motion.div
           animate={{ rotate: [0, -15, 15, -10, 10, 0], y: [0, -3, 0] }}
-          transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut', repeatDelay: 1 }}
-        >
+          transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut', repeatDelay: 1 }}>
+          
           <Gift className="w-6 h-6 text-primary-foreground" />
         </motion.div>
         <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 animate-pulse" />
         {/* Sparkle particles */}
-        {[...Array(3)].map((_, i) => (
-          <motion.span
-            key={i}
-            className="absolute w-1.5 h-1.5 rounded-full bg-gold"
-            animate={{
-              opacity: [0, 1, 0],
-              scale: [0, 1.2, 0],
-              x: [0, (i - 1) * 20],
-              y: [0, -15 - i * 8],
-            }}
-            transition={{
-              repeat: Infinity,
-              duration: 1.8,
-              delay: i * 0.5,
-              ease: 'easeOut',
-            }}
-          />
-        ))}
+        {[...Array(3)].map((_, i) =>
+        <motion.span
+          key={i}
+          className="absolute w-1.5 h-1.5 rounded-full bg-gold"
+          animate={{
+            opacity: [0, 1, 0],
+            scale: [0, 1.2, 0],
+            x: [0, (i - 1) * 20],
+            y: [0, -15 - i * 8]
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 1.8,
+            delay: i * 0.5,
+            ease: 'easeOut'
+          }} />
+
+        )}
       </motion.button>
 
       {/* ===== HERO ===== */}
@@ -707,17 +707,17 @@ const Index = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: 'easeOut' }}
-          className="flex flex-col items-center text-center max-w-3xl mx-auto mt-20 md:mt-28 z-20 px-6"
-        >
+          className="flex flex-col items-center text-center max-w-3xl mx-auto mt-20 md:mt-28 z-20 px-6">
+          
           {/* Floating badge — Blessed Union */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.2 }}
-            className="absolute top-24 left-4 md:left-12 z-30 hidden md:block"
-          >
+            className="absolute top-24 left-4 md:left-12 z-30 hidden md:block">
+            
             <motion.div animate={{ y: [-4, 6, -4] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="glass-card-strong rounded-full px-4 py-2 flex items-center gap-2">
+            className="glass-card-strong rounded-full px-4 py-2 flex items-center gap-2">
               <Cross className="w-3.5 h-3.5 text-rose-400 icon-glow" />
               <span className="font-sans-elegant text-[11px] font-bold text-foreground drop-shadow-sm">{t('badge.blessed')}</span>
             </motion.div>
@@ -728,10 +728,10 @@ const Index = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.4 }}
-            className="absolute top-28 right-4 md:right-12 z-30 hidden md:block"
-          >
+            className="absolute top-28 right-4 md:right-12 z-30 hidden md:block">
+            
             <motion.div animate={{ y: [5, -5, 5] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="glass-card-strong rounded-2xl px-4 py-2.5 flex items-center gap-2">
+            className="glass-card-strong rounded-2xl px-4 py-2.5 flex items-center gap-2">
               <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400 icon-glow" />
               <span className="font-sans-elegant text-[11px] font-bold text-foreground drop-shadow-sm">{t('love.soulmates')}</span>
             </motion.div>
@@ -743,8 +743,8 @@ const Index = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
             className="inline-block px-6 py-2.5 rounded-full mb-6"
-            style={{ background: 'rgba(255,255,255,0.08)' }}
-          >
+            style={{ background: 'rgba(255,255,255,0.08)' }}>
+            
             <p className="font-sans-elegant text-xs tracking-[0.3em] uppercase text-foreground/80 dark:text-foreground/90 font-semibold">
               {t('love.tagline')}
             </p>
@@ -757,8 +757,8 @@ const Index = () => {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.5, type: "spring" }}
-            className="my-3 md:my-4"
-          >
+            className="my-3 md:my-4">
+            
             <span className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full gradient-primary shadow-glow animate-pulse-love" role="img" aria-label="Heart">
               <Heart className="w-5 h-5 md:w-7 md:h-7 text-primary-foreground fill-primary-foreground" />
             </span>
@@ -772,8 +772,8 @@ const Index = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
-            className="font-serif-display text-lg md:text-xl text-primary italic mb-2"
-          >
+            className="font-serif-display text-lg md:text-xl text-primary italic mb-2">
+            
             {t('love.together')}
           </motion.p>
 
@@ -785,8 +785,8 @@ const Index = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
-            className="flex flex-row gap-4 justify-center mb-8"
-          >
+            className="flex flex-row gap-4 justify-center mb-8">
+            
             <Link to="/rsvp" className="btn-primary">
               <Heart className="w-4 h-4 fill-current" />
               {t('hero.cta')}
@@ -802,8 +802,8 @@ const Index = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: 'easeOut' }}
-          className="w-full max-w-6xl mx-auto mt-6 md:mt-10 relative z-20 px-4"
-        >
+          className="w-full max-w-6xl mx-auto mt-6 md:mt-10 relative z-20 px-4">
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
 
             {/* LEFT */}
@@ -811,8 +811,8 @@ const Index = () => {
               <motion.div
                 animate={{ y: [-6, 8, -6] }}
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card-strong rounded-3xl p-4 md:p-5 w-44 md:w-52"
-              >
+                className="glass-card-strong rounded-3xl p-4 md:p-5 w-44 md:w-52">
+                
                 <div className="flex items-center gap-2 mb-3">
                   <Heart className="w-4 h-4 text-rose-400 fill-rose-400 icon-glow" />
                   <span className="font-sans-elegant text-[10px] font-bold text-foreground/70 tracking-wider uppercase">{t('love.loveStory')}</span>
@@ -827,8 +827,8 @@ const Index = () => {
                 animate={{ y: [-8, 10, -8] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 className="glass-card-strong rounded-3xl p-4 flex items-center gap-3 cursor-pointer"
-                onClick={() => toggleTrack('amazing-grace')}
-              >
+                onClick={() => toggleTrack('amazing-grace')}>
+                
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-rose-400/20">
                   <img src={flowersImgSmall} alt="Lavender flowers" className="w-full h-full object-cover" width={48} height={48} loading="eager" decoding="async" />
                 </div>
@@ -847,8 +847,8 @@ const Index = () => {
               <motion.div
                 animate={{ y: [-10, 10, -10] }}
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card-dark rounded-3xl p-6 w-full max-w-[260px] md:scale-105"
-              >
+                className="glass-card-dark rounded-3xl p-6 w-full max-w-[260px] md:scale-105">
+                
                 <div className="flex items-center gap-2 mb-2">
                   <Heart className="w-4 h-4 text-rose-300 fill-rose-300 animate-pulse-love" />
                   <p className="font-sans-elegant text-xs font-medium opacity-80 tracking-[0.1em] uppercase">{t('love.together')}</p>
@@ -860,12 +860,12 @@ const Index = () => {
 
                 <div className="grid grid-cols-4 gap-2 mb-5">
                   {[
-                    { value: countdown.days, label: t('countdown.days') },
-                    { value: countdown.hours, label: t('countdown.hours') },
-                    { value: countdown.minutes, label: t('countdown.minutes') },
-                    { value: countdown.seconds, label: t('countdown.seconds') },
-                  ].map((item) =>
-                    <div key={item.label} className="text-center rounded-2xl bg-white/10 backdrop-blur-sm border border-white/15 py-2 px-1">
+                  { value: countdown.days, label: t('countdown.days') },
+                  { value: countdown.hours, label: t('countdown.hours') },
+                  { value: countdown.minutes, label: t('countdown.minutes') },
+                  { value: countdown.seconds, label: t('countdown.seconds') }].
+                  map((item) =>
+                  <div key={item.label} className="text-center rounded-2xl bg-white/10 backdrop-blur-sm border border-white/15 py-2 px-1">
                       <span className="font-serif-display text-xl font-semibold block">
                         {String(item.value).padStart(2, '0')}
                       </span>
@@ -897,8 +897,8 @@ const Index = () => {
               <motion.div
                 animate={{ y: [6, -8, 6] }}
                 transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card-strong rounded-full px-5 py-3 flex items-center gap-2"
-              >
+                className="glass-card-strong rounded-full px-5 py-3 flex items-center gap-2">
+                
                 <Heart className="w-4 h-4 text-rose-400 fill-rose-400 icon-glow animate-pulse-love" />
                 <span className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('index.foreverAlways')}</span>
               </motion.div>
@@ -907,14 +907,14 @@ const Index = () => {
                 animate={{ y: [-6, 10, -6] }}
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
                 className="glass-card-strong rounded-3xl p-4 flex items-center gap-3 cursor-pointer"
-                onClick={() => toggleTrack('blessed-larson')}
-              >
+                onClick={() => toggleTrack('blessed-larson')}>
+                
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-violet-400/20">
                   <img src={ringsImgSmall} alt="Wedding rings" className="w-full h-full object-cover" width={48} height={48} loading="eager" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">I Have Been Blessed</p>
-                  <p className="font-sans-elegant text-xs text-foreground/60 font-medium">Joseph Larson</p>
+                  
                 </div>
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ml-1 transition-all duration-300 ${currentTrack === 'blessed-larson' && isPlaying ? 'gradient-primary shadow-glow' : 'bg-background/80 dark:bg-background/40'}`}>
                   {currentTrack === 'blessed-larson' && isPlaying ? <Pause className="w-3 h-3 text-primary-foreground fill-primary-foreground" /> : <Play className="w-3 h-3 text-foreground fill-foreground" />}
@@ -924,8 +924,8 @@ const Index = () => {
               <motion.div
                 animate={{ y: [-4, 8, -4] }}
                 transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card-strong rounded-3xl p-3 md:p-4 w-40 md:w-48"
-              >
+                className="glass-card-strong rounded-3xl p-3 md:p-4 w-40 md:w-48">
+                
                 <div className="flex items-center gap-1.5 mb-1.5">
                   <Sparkles className="w-3 h-3 text-amber-400 icon-glow" />
                   <p className="font-sans-elegant text-xs text-foreground/60 font-medium">{isCourtMode ? t('court.wedding.date') : t('hero.date')}</p>
@@ -940,8 +940,8 @@ const Index = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="mt-auto pt-6 flex flex-col items-center gap-2 z-10"
-        >
+          className="mt-auto pt-6 flex flex-col items-center gap-2 z-10">
+          
           <span className="font-sans-elegant text-xs tracking-wider text-muted-foreground">{t('hero.scroll')}</span>
           <ChevronDown className="w-4 h-4 text-muted-foreground animate-scroll-indicator" />
         </motion.div>
@@ -951,8 +951,8 @@ const Index = () => {
       <SectionDivider variant="heart" />
 
       {/* ===== LIVE STREAM ===== */}
-      {livestreamActive && livestreamUrl && (
-        <section className="py-8 md:py-12 relative overflow-hidden">
+      {livestreamActive && livestreamUrl &&
+      <section className="py-8 md:py-12 relative overflow-hidden">
           <div className="container mx-auto px-6 md:px-12 max-w-4xl relative z-10">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-6">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card-strong mb-5">
@@ -965,19 +965,19 @@ const Index = () => {
             </motion.div>
 
             <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-              className="glass-card-strong rounded-3xl overflow-hidden relative">
-              {embedUrl ? (
-                <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+          className="glass-card-strong rounded-3xl overflow-hidden relative">
+              {embedUrl ?
+            <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
                   <iframe
-                    src={embedUrl}
-                    className="absolute inset-0 w-full h-full rounded-3xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    title="Live Stream"
-                  />
-                </div>
-              ) : (
-                <div className="p-12 text-center">
+                src={embedUrl}
+                className="absolute inset-0 w-full h-full rounded-3xl"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                title="Live Stream" />
+              
+                </div> :
+
+            <div className="p-12 text-center">
                   <div className="w-20 h-20 rounded-full bg-red-500/15 flex items-center justify-center mx-auto mb-6">
                     <Video className="w-10 h-10 text-red-500" />
                   </div>
@@ -985,16 +985,16 @@ const Index = () => {
                     {livestreamTitle || 'Live Stream'}
                   </h3>
                   <a
-                    href={livestreamUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-primary inline-flex items-center gap-2 text-base"
-                  >
+                href={livestreamUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary inline-flex items-center gap-2 text-base">
+                
                     <ExternalLink className="w-5 h-5" />
                     Watch Live
                   </a>
                 </div>
-              )}
+            }
             </motion.div>
 
             <div className="flex justify-center mt-4">
@@ -1007,7 +1007,7 @@ const Index = () => {
 
           <SectionDivider variant="sparkle" />
         </section>
-      )}
+      }
 
       {/* ===== ANNOUNCEMENTS ===== */}
       <AnnouncementsSection t={t} />
@@ -1025,8 +1025,8 @@ const Index = () => {
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.4 }}
-            >
+              transition={{ duration: 0.4 }}>
+              
               <div className="relative">
                 <div className="glass-card-strong rounded-3xl p-2.5">
                   <img
@@ -1037,14 +1037,14 @@ const Index = () => {
                     width={474}
                     height={593}
                     loading="lazy"
-                    decoding="async"
-                  />
+                    decoding="async" />
+                  
                 </div>
                 <motion.div
                   animate={{ y: [-8, 8, -8] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -bottom-6 -right-6 glass-card-strong rounded-3xl p-4"
-                >
+                  className="absolute -bottom-6 -right-6 glass-card-strong rounded-3xl p-4">
+                  
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center shadow-soft animate-pulse-love">
                       <Heart className="w-5 h-5 text-primary-foreground fill-primary-foreground" />
@@ -1058,8 +1058,8 @@ const Index = () => {
                 <motion.div
                   animate={{ y: [6, -6, 6] }}
                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -top-4 -left-4 glass-card rounded-3xl px-4 py-2.5 hidden md:block"
-                >
+                  className="absolute -top-4 -left-4 glass-card rounded-3xl px-4 py-2.5 hidden md:block">
+                  
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-amber-400 icon-glow" />
                     <span className="font-sans-elegant text-xs font-semibold text-foreground">{t('love.loveStory')}</span>
@@ -1072,8 +1072,8 @@ const Index = () => {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.4 }}
-            >
+              transition={{ duration: 0.4 }}>
+              
               <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-6">
                 <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.story')}</p>
               </div>
@@ -1135,7 +1135,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Proverbs card with glassmorphism text overlay */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-              className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
+            className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
               <div className="relative h-full min-h-[300px]">
                 <img src={flowersImgSmall} alt="Wedding flowers arrangement" className="w-full h-full object-cover" width={297} height={428} loading="eager" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/10" />
@@ -1153,13 +1153,13 @@ const Index = () => {
 
             {/* Faith feature cards — redesigned */}
             {[
-              { icon: Church, title: t('index.ceremony'), desc: t('index.ceremony.desc'), color: 'from-rose-500/20 to-pink-500/10', iconColor: 'text-rose-400', accent: 'rose', emoji: '⛪' },
-              { icon: Cross, title: t('index.blessing'), desc: t('index.blessing.desc'), color: 'from-violet-500/20 to-purple-500/10', iconColor: 'text-violet-400', accent: 'violet', emoji: '✝️' },
-              { icon: Gem, title: t('index.vows'), desc: t('index.vows.desc'), color: 'from-amber-500/20 to-orange-500/10', iconColor: 'text-amber-400', accent: 'amber', emoji: '💎' },
-              { icon: Users, title: t('index.fellowship'), desc: t('index.fellowship.desc'), color: 'from-emerald-500/20 to-teal-500/10', iconColor: 'text-emerald-400', accent: 'emerald', emoji: '🤝' },
-            ].map((item, i) =>
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: i * 0.04, duration: 0.3 }}
-                className="group glass-card-strong rounded-3xl p-6 card-hover relative overflow-hidden border border-border/20">
+            { icon: Church, title: t('index.ceremony'), desc: t('index.ceremony.desc'), color: 'from-rose-500/20 to-pink-500/10', iconColor: 'text-rose-400', accent: 'rose', emoji: '⛪' },
+            { icon: Cross, title: t('index.blessing'), desc: t('index.blessing.desc'), color: 'from-violet-500/20 to-purple-500/10', iconColor: 'text-violet-400', accent: 'violet', emoji: '✝️' },
+            { icon: Gem, title: t('index.vows'), desc: t('index.vows.desc'), color: 'from-amber-500/20 to-orange-500/10', iconColor: 'text-amber-400', accent: 'amber', emoji: '💎' },
+            { icon: Users, title: t('index.fellowship'), desc: t('index.fellowship.desc'), color: 'from-emerald-500/20 to-teal-500/10', iconColor: 'text-emerald-400', accent: 'emerald', emoji: '🤝' }].
+            map((item, i) =>
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: i * 0.04, duration: 0.3 }}
+            className="group glass-card-strong rounded-3xl p-6 card-hover relative overflow-hidden border border-border/20">
                 {/* Background glow */}
                 <div className={`absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br ${item.color} blur-2xl pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity duration-500`} />
                 <div className={`absolute bottom-0 left-0 w-20 h-20 rounded-full bg-gradient-to-tr ${item.color} blur-2xl pointer-events-none opacity-30`} />
@@ -1197,23 +1197,23 @@ const Index = () => {
             <p className="font-serif-display text-lg text-primary italic">{t('index.capturedMoments')}</p>
           </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {(homepageGalleryImages.length > 0
-              ? homepageGalleryImages.map(img => ({ img: img.url, label: '♥' }))
-              : [
-                  { img: heroImg, label: '♥' },
-                  { img: cakeImgSmall, label: '🌸' },
-                  { img: ringsImgSmall, label: '💍' },
-                  { img: coupleImgSmall, label: '♥' },
-                ]
-            ).map((item, i) =>
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.04, duration: 0.3 }}
-                className="glass-card-strong rounded-3xl p-1.5 overflow-hidden card-hover"
-              >
+            {(homepageGalleryImages.length > 0 ?
+            homepageGalleryImages.map((img) => ({ img: img.url, label: '♥' })) :
+            [
+            { img: heroImg, label: '♥' },
+            { img: cakeImgSmall, label: '🌸' },
+            { img: ringsImgSmall, label: '💍' },
+            { img: coupleImgSmall, label: '♥' }]).
+
+            map((item, i) =>
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.04, duration: 0.3 }}
+              className="glass-card-strong rounded-3xl p-1.5 overflow-hidden card-hover">
+              
                 <div className="relative rounded-[20px] overflow-hidden aspect-square group">
                   <img src={item.img} alt="Wedding gallery photo" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" width={241} height={241} loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent flex items-end justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -1239,8 +1239,8 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.3 }}
-            className="text-center mb-12"
-          >
+            className="text-center mb-12">
+            
             <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.details')}</p>
             </div>
@@ -1256,7 +1256,7 @@ const Index = () => {
                 accommodation: 'details.accommodation.hotel',
                 transport: 'details.transport.shuttle',
                 'court-ceremony': 'court.wedding.time',
-                'court-after': 'court.wedding.after',
+                'court-after': 'court.wedding.after'
               };
               return (
                 <motion.button
@@ -1273,8 +1273,8 @@ const Index = () => {
                     border border-white/40 dark:border-white/10
                     shadow-[0_8px_32px_rgba(139,107,138,0.08),0_2px_8px_rgba(0,0,0,0.04)]
                     hover:shadow-[0_16px_48px_rgba(139,107,138,0.16),0_4px_16px_rgba(0,0,0,0.06)]
-                    transition-shadow duration-500"
-                >
+                    transition-shadow duration-500">
+                  
                   {/* Soft colored glow behind icon */}
                   <div className={`absolute top-4 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full bg-gradient-to-br ${section.color} blur-2xl pointer-events-none opacity-50 group-hover:opacity-80 transition-opacity duration-500`} />
 
@@ -1299,34 +1299,34 @@ const Index = () => {
                     <ChevronDown className="w-3 h-3 group-hover:translate-y-0.5 transition-transform duration-300" />
                   </div>
 
-                </motion.button>
-              );
+                </motion.button>);
+
             })}
           </div>
         </div>
       </section>
 
       {/* ===== COMING SOON BANNER (Court Mode Only) ===== */}
-      {isCourtMode && (
-        <>
+      {isCourtMode &&
+      <>
           <SectionDivider variant="sparkle" />
           <section className="py-8 md:py-12 relative overflow-hidden">
             <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="glass-card-strong rounded-3xl p-8 md:p-12 text-center relative overflow-hidden border border-primary/20"
-              >
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="glass-card-strong rounded-3xl p-8 md:p-12 text-center relative overflow-hidden border border-primary/20">
+              
                 <GoldenCorners />
                 <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-gradient-to-br from-amber-400/10 to-rose-400/10 blur-3xl pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-gradient-to-tr from-violet-400/10 to-primary/10 blur-3xl pointer-events-none" />
                 
                 <motion.div
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                  className="text-5xl mb-4"
-                >
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                className="text-5xl mb-4">
+                
                   ⛪
                 </motion.div>
                 
@@ -1346,7 +1346,7 @@ const Index = () => {
             </div>
           </section>
         </>
-      )}
+      }
 
       {/* ===== DIVIDER ===== */}
       <SectionDivider variant="heart" />
@@ -1381,11 +1381,11 @@ const Index = () => {
 
           <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
             {features.map((feat, i) =>
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: i * 0.04, duration: 0.3 }}>
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: i * 0.04, duration: 0.3 }}>
                 <Link
-                  to={feat.to}
-                  className="glass-card-strong rounded-3xl p-7 flex flex-col items-center text-center card-hover group block h-full relative overflow-hidden"
-                >
+                to={feat.to}
+                className="glass-card-strong rounded-3xl p-7 flex flex-col items-center text-center card-hover group block h-full relative overflow-hidden">
+                
                   <div className={`absolute top-0 right-0 w-20 h-20 rounded-full bg-gradient-to-br ${feat.bg} blur-xl pointer-events-none`} />
                   <div className={`w-14 h-14 rounded-3xl bg-gradient-to-br ${feat.bg} flex items-center justify-center mb-4 group-hover:shadow-glow group-hover:scale-110 transition-all duration-500`}>
                     <feat.icon className={`w-6 h-6 ${feat.color} icon-glow`} />
@@ -1434,7 +1434,7 @@ const Index = () => {
 
       {/* ===== DETAIL DIALOGS ===== */}
       {detailSections.map((section) =>
-        <Dialog key={section.id} open={activeDetail === section.id} onOpenChange={(open) => !open && setActiveDetail(null)}>
+      <Dialog key={section.id} open={activeDetail === section.id} onOpenChange={(open) => !open && setActiveDetail(null)}>
           <DialogContent className="max-w-lg">
             <DialogHeader>
               <div className="relative mx-auto mb-4">
@@ -1450,17 +1450,17 @@ const Index = () => {
             </DialogHeader>
             <div className="space-y-3 pt-2 max-h-[60vh] overflow-y-auto pr-1">
               {section.dialogContent.map((item, j) =>
-                <motion.div
-                  key={j}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: j * 0.06 }}
-                  className={`rounded-2xl p-4 flex items-start gap-3 ${
-                    (item as { highlight?: boolean }).highlight
-                      ? 'bg-primary/[0.06] dark:bg-primary/[0.08] border border-primary/15'
-                      : 'glass-card'
-                  }`}
-                >
+            <motion.div
+              key={j}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: j * 0.06 }}
+              className={`rounded-2xl p-4 flex items-start gap-3 ${
+              (item as {highlight?: boolean;}).highlight ?
+              'bg-primary/[0.06] dark:bg-primary/[0.08] border border-primary/15' :
+              'glass-card'}`
+              }>
+              
                   <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center flex-shrink-0 mt-0.5`}>
                     <item.icon className={`w-4 h-4 ${section.iconColor}`} />
                   </div>
@@ -1469,15 +1469,15 @@ const Index = () => {
                     <p className="font-sans-elegant text-xs text-muted-foreground mt-0.5" style={{ lineHeight: 1.6 }}>{item.desc}</p>
                   </div>
                 </motion.div>
-              )}
+            )}
             </div>
           </DialogContent>
         </Dialog>
       )}
 
       {/* ===== GIFT PICKER (DRAWER on mobile, DIALOG on desktop) ===== */}
-      {isMobile ? (
-        <Drawer open={giftOpen} onOpenChange={setGiftOpen}>
+      {isMobile ?
+      <Drawer open={giftOpen} onOpenChange={setGiftOpen}>
           <DrawerContent className="px-4 pb-8 max-h-[85vh]">
             <DrawerHeader className="text-center">
               <div className="w-14 h-14 rounded-full gradient-primary flex items-center justify-center mx-auto mb-2 shadow-glow">
@@ -1492,20 +1492,20 @@ const Index = () => {
             {/* Quick amounts — mobile optimized */}
             <div className="grid grid-cols-2 gap-3 pt-2 px-1">
               {giftTiers.map((tier, i) =>
-                <motion.button
-                  key={tier.amount}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => handleSelectTier(tier.amount)}
-                  className="glass-card rounded-2xl p-4 text-center active:bg-primary/10 transition-colors min-h-[88px] flex flex-col items-center justify-center"
-                >
+            <motion.button
+              key={tier.amount}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleSelectTier(tier.amount)}
+              className="glass-card rounded-2xl p-4 text-center active:bg-primary/10 transition-colors min-h-[88px] flex flex-col items-center justify-center">
+              
                   <div className="text-2xl mb-1.5">{tier.emoji}</div>
                   <div className="font-serif-display text-lg text-foreground font-bold">${tier.amount}</div>
                   <div className="font-sans-elegant text-[10px] text-muted-foreground font-medium mt-0.5">{t(tier.labelKey)}</div>
                 </motion.button>
-              )}
+            )}
             </div>
 
             {/* Custom amount — mobile optimized */}
@@ -1519,14 +1519,14 @@ const Index = () => {
                   <div className="relative flex-1">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground font-serif-display text-lg font-bold">$</span>
                     <Input
-                      type="number"
-                      min="1"
-                      inputMode="numeric"
-                      value={customAmount}
-                      onChange={(e) => setCustomAmount(e.target.value)}
-                      placeholder=""
-                      className="font-serif-display text-lg font-bold rounded-full h-14 pl-9 border-primary/30 bg-primary/5 focus:ring-primary/30"
-                    />
+                    type="number"
+                    min="1"
+                    inputMode="numeric"
+                    value={customAmount}
+                    onChange={(e) => setCustomAmount(e.target.value)}
+                    placeholder=""
+                    className="font-serif-display text-lg font-bold rounded-full h-14 pl-9 border-primary/30 bg-primary/5 focus:ring-primary/30" />
+                  
                   </div>
                   <button onClick={handleCustomGift} className="btn-primary px-5 rounded-full text-sm whitespace-nowrap h-14">
                     <Gift className="w-4 h-4" />
@@ -1536,9 +1536,9 @@ const Index = () => {
               </div>
             </div>
           </DrawerContent>
-        </Drawer>
-      ) : (
-        <Dialog open={giftOpen} onOpenChange={setGiftOpen}>
+        </Drawer> :
+
+      <Dialog open={giftOpen} onOpenChange={setGiftOpen}>
           <DialogContent className="max-w-md">
             <DialogHeader>
               <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center mx-auto mb-3 shadow-glow">
@@ -1553,21 +1553,21 @@ const Index = () => {
             {/* Quick amounts */}
             <div className="grid grid-cols-2 gap-3 pt-2">
               {giftTiers.map((tier, i) =>
-                <motion.button
-                  key={tier.amount}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.06 }}
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() => handleSelectTier(tier.amount)}
-                  className="glass-card rounded-2xl p-5 text-center card-hover group"
-                >
+            <motion.button
+              key={tier.amount}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.06 }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => handleSelectTier(tier.amount)}
+              className="glass-card rounded-2xl p-5 text-center card-hover group">
+              
                   <div className="text-2xl mb-2">{tier.emoji}</div>
                   <div className="font-serif-display text-xl text-foreground font-bold">${tier.amount}</div>
                   <div className="font-sans-elegant text-[10px] text-muted-foreground font-medium mt-1">{t(tier.labelKey)}</div>
                 </motion.button>
-              )}
+            )}
             </div>
 
             {/* Custom amount — prominent */}
@@ -1581,13 +1581,13 @@ const Index = () => {
                   <div className="relative flex-1">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-foreground font-serif-display text-lg font-bold">$</span>
                     <Input
-                      type="number"
-                      min="1"
-                      value={customAmount}
-                      onChange={(e) => setCustomAmount(e.target.value)}
-                      placeholder=""
-                      className="font-serif-display text-lg font-bold rounded-full h-12 pl-9 border-primary/30 bg-primary/5 focus:ring-primary/30"
-                    />
+                    type="number"
+                    min="1"
+                    value={customAmount}
+                    onChange={(e) => setCustomAmount(e.target.value)}
+                    placeholder=""
+                    className="font-serif-display text-lg font-bold rounded-full h-12 pl-9 border-primary/30 bg-primary/5 focus:ring-primary/30" />
+                  
                   </div>
                   <button onClick={handleCustomGift} className="btn-primary px-6 rounded-full text-sm whitespace-nowrap">
                     <Gift className="w-4 h-4" />
@@ -1598,16 +1598,16 @@ const Index = () => {
             </div>
           </DialogContent>
         </Dialog>
-      )}
+      }
 
       {/* ===== EMBEDDED PAYMENT FORM ===== */}
       <EmbeddedPaymentForm
         open={paymentFormOpen}
         onOpenChange={setPaymentFormOpen}
-        selectedAmount={selectedAmount}
-      />
-    </div>
-  );
+        selectedAmount={selectedAmount} />
+      
+    </div>);
+
 };
 
 export default Index;
