@@ -7,7 +7,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
 // Static pre-wedding photos shown by default
-import heroImg from '@/assets/hero-wedding.jpg';
 import flowersImg from '@/assets/flowers-lavender.jpg';
 import ringsImg from '@/assets/rings.jpg';
 import coupleImg from '@/assets/couple-lavender.jpg';
@@ -15,7 +14,6 @@ import cakeImg from '@/assets/cake.jpg';
 
 const STATIC_PHOTOS = [
   { id: 'static-1', url: coupleImg, alt: 'Corine & Ruben' },
-  { id: 'static-2', url: heroImg, alt: 'Wedding day' },
   { id: 'static-3', url: flowersImg, alt: 'Lavender flowers' },
   { id: 'static-4', url: ringsImg, alt: 'Wedding rings' },
   { id: 'static-5', url: cakeImg, alt: 'Wedding cake' },
