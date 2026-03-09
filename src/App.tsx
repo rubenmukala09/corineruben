@@ -1,4 +1,4 @@
-import { Component, type ErrorInfo, type ReactNode } from "react";
+import { Component, type ErrorInfo, type ReactNode, lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -38,18 +38,18 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 import AuroraBackground from "@/components/AuroraBackground";
 import Index from "./pages/Index";
-import Story from "./pages/Story";
-import RSVP from "./pages/RSVP";
-import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
+const Story = lazy(() => import("./pages/Story"));
+const RSVP = lazy(() => import("./pages/RSVP"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Login = lazy(() => import("./pages/Login"));
 import NotFound from "./pages/NotFound";
-import Staff from "./pages/Staff";
-import Enquiries from "./pages/Enquiries";
-import Registry from "./pages/Registry";
-import FAQ from "./pages/FAQ";
-import Guestbook from "./pages/Guestbook";
-import Gallery from "./pages/Gallery";
-import Venue from "./pages/Venue";
+const Staff = lazy(() => import("./pages/Staff"));
+const Enquiries = lazy(() => import("./pages/Enquiries"));
+const Registry = lazy(() => import("./pages/Registry"));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const Guestbook = lazy(() => import("./pages/Guestbook"));
+const Gallery = lazy(() => import("./pages/Gallery"));
+const Venue = lazy(() => import("./pages/Venue"));
 import FloatingHearts from "@/components/FloatingHearts";
 import MusicFloatingButton, { MusicProvider } from "@/components/MusicPlayer";
 import { Toaster } from "@/components/ui/toaster";
@@ -79,6 +79,7 @@ const App = () => (
                 <div className="relative z-10">
                   <ScrollToTop />
                   <Navigation />
+                  <Suspense fallback={null}>
                   <Routes>
                     <Route path="/" element={<Index />} />
                     <Route path="/story" element={<Story />} />
@@ -98,6 +99,7 @@ const App = () => (
                     <Route path="/venue" element={<Venue />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
+                  </Suspense>
                   <Footer />
                 </div>
 
