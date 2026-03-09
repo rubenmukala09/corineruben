@@ -43,7 +43,7 @@ import { EmbeddedPaymentModal } from "@/components/payment/EmbeddedPaymentModal"
 // ScrollReveal removed — instant rendering
 import { PROFESSIONAL_HERO_IMAGES } from "@/config/professionalHeroImages";
 import BookCoverModal from "@/components/resources/BookCoverModal";
-import { BOOK_CATALOG, type BookItem } from "@/config/bookCatalog";
+import { BOOK_CATALOG } from "@/config/bookCatalog";
 import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 import { RotatingHeadlines } from "@/components/shared/RotatingHeadlines";
