@@ -335,17 +335,17 @@ const EmbeddedPaymentForm = ({ open, onOpenChange, selectedAmount }: EmbeddedPay
   if (isMobile) {
     return (
       <Drawer open={open} onOpenChange={handleClose}>
-        <DrawerContent className="px-4 pb-8 max-h-[85dvh]">
-          <DrawerHeader className="text-center">
-            <div className="w-14 h-14 rounded-full gradient-primary flex items-center justify-center mx-auto mb-2 shadow-glow">
-              <Heart className="w-6 h-6 text-primary-foreground" />
+        <DrawerContent className="px-4 pb-6 max-h-[85dvh]">
+          <DrawerHeader className="text-center py-3">
+            <div className="w-10 h-10 rounded-full gradient-primary flex items-center justify-center mx-auto mb-1 shadow-glow">
+              <Heart className="w-4 h-4 text-primary-foreground" />
             </div>
-            <DrawerTitle className="font-serif-display text-xl">{t('registry.dialog.title')}</DrawerTitle>
-            <DrawerDescription className="font-sans-elegant text-muted-foreground text-sm">
+            <DrawerTitle className="font-serif-display text-lg">{t('registry.dialog.title')}</DrawerTitle>
+            <DrawerDescription className="font-sans-elegant text-muted-foreground text-xs">
               {t('registry.dialog.subtitle')}
             </DrawerDescription>
           </DrawerHeader>
-          <div className="overflow-y-auto flex-1 px-1 pb-2">
+          <div className="overflow-y-auto flex-1 px-1 pb-2 -mt-2">
             {content}
           </div>
         </DrawerContent>
