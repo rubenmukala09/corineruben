@@ -1,83 +1,55 @@
 
 
-# Website Audit Plan — InVision Network
+# Sync & Clean Up: Resources, Reader, and Payment Flow
 
 ## Issues Found
 
-### Critical Issues
+1. **Duplicate book catalog**: `Resources.tsx` has its own 300-line `staticBooks` array + 30 individual image imports + local `BookItem` type + local `BOOK_AUTHOR` constant — all duplicating `src/config/bookCatalog.ts` which already has the canonical `BOOK_CATALOG`.
 
-1. **Training page renders blank/invisible content**
-   - The `/training` page shows only the footer — the main content area appears entirely white/invisible. This is a major usability failure; users cannot see any training plans or pricing.
-   - Root cause likely: CSS color/background conflict where text is rendering in white on a white background, or the hero section and content sections have no visible background contrast.
-   - **Fix**: Audit the Training.tsx page structure and ensure all sections have proper background colors and text contrast. Check for any CSS classes like `text-white` applied without a dark background.
+2. **PaymentSuccess.tsx still says "Download ready"**: Lines 89-101 show a `Download` icon with "Download ready" and "Check your email for download links" — contradicts the read-online model. Also still uses `framer-motion`.
 
-2. **Massive `forwardRef` warning spam (6+ warnings on every page load)**
-   - Components affected: `UnifiedCheckoutDialog`, `DonationModal`, `SEO`, `Navigation` (memo), `PrefetchLink`, `ShoppingCart`, `DialogContent`/`DialogPortal`
-   - These are React warnings about function components being given refs without `React.forwardRef()`. While they don't crash the app, they indicate broken ref forwarding that can cause subtle interaction bugs (e.g., Dialog focus management, Sheet animations).
-   - **Fix**: Wrap affected components in `React.forwardRef()` or remove unnecessary ref passing.
+3. **Resources stats outdated**: Line 661 says `"15+ Security Products"` — there are no physical products anymore, this should say `"30+ Digital Guides"` or similar.
 
-### Performance Issues
+4. **Resources SEO description** (line 570) still says "physical security products."
 
-3. **Hero image too large (1.3MB)**
-   - `hero-corporate-protection.webp` is 1,319KB — this is the single largest resource and takes 913ms to load. Should be compressed to under 200KB or served at appropriate dimensions.
-   - **Fix**: Compress the hero image or use responsive `srcset` with smaller variants.
+5. **Resources hero text** (line 589) says "tools, and products" — should align with digital-only.
 
-4. **framer-motion loaded on initial page (93KB)**
-   - Per the project's own memory/architecture rules, framer-motion should be excluded from the root level and only lazy-loaded. Currently loaded as part of the initial bundle.
-   - **Fix**: Ensure framer-motion imports in Index.tsx are isolated to lazy-loaded sub-components.
+6. **RefundPolicy.tsx** (line 66) says "downloadable guides" — minor but should say "digital guides."
 
-5. **DOM Content Loaded: 3.4s, Full Page Load: 3.6s**
-   - Acceptable but could improve. The 76 script files loaded on dev is expected (Vite HMR), but production builds should be verified.
+7. **BookReader.tsx duplicates image imports**: 30 image imports that could use the `BOOK_CATALOG` images directly via lookup.
 
-### Form Validation & Data Flow
+## Plan
 
-6. **Contact form uses `useState` instead of `react-hook-form`**
-   - The Contact page imports `useForm` and `zodResolver` but the `handleSubmit` function uses raw `useState` with manual form data. The Zod schema is imported (`contactFormSchema`) but may not be wired up for field-level validation feedback.
-   - **Fix**: Wire up `react-hook-form` with `contactFormSchema` for proper field-level error display.
+### 1. Resources.tsx — Use centralized catalog, fix copy
+- **Delete** the 300-line `staticBooks` array, local `BookItem` type, local `BOOK_AUTHOR`, and all 30 image imports
+- **Import** `BOOK_CATALOG` and `BookItem` from `@/config/bookCatalog`
+- Replace all `staticBooks` references with `BOOK_CATALOG`
+- Fix stats: `"15+ Security Products"` → `"30+ Expert Guides"`
+- Fix SEO description: remove "physical security products"
+- Fix hero subtitle: "tools, and products" → "tools, and guides"
 
-7. **Newsletter form validation is working correctly**
-   - Uses Zod schema, proper error handling, loading states, and success feedback. No issues found.
+### 2. PaymentSuccess.tsx — Fix "Download ready" + remove framer-motion
+- Replace `Download` icon with `BookOpen`
+- Change "Download ready" → "Access ID sent"
+- Change "Check your email for download links" → "Check your email for your Access ID to start reading"
+- Change "Arriving in 2-5 minutes" → "Your Access ID will arrive in 2-5 minutes"
+- Remove "Shipping in 1-3 business days" (no physical products)
+- Replace all `motion.*` elements with plain HTML + CSS `animate-fade-in`/`animate-scale-in`
 
-### Navigation & Responsiveness
+### 3. BookReader.tsx — Use centralized catalog images
+- Remove all 30 individual image imports
+- Replace `bookImageMap` with a lookup from `BOOK_CATALOG` (which already has `.image` and `.name`)
+- Keep `BOOK_CONTENT` for the 3 books with hand-written chapters; derive generic chapters from catalog data for the rest
 
-8. **Mobile navigation missing hamburger menu button on small screens**
-   - On 375px width, the nav shows logo + cart + phone + Login but no hamburger icon to open the mobile menu with all nav links. Users on mobile cannot access AI & Business, Learn & Train, Resources, etc.
-   - **Fix**: Ensure the hamburger menu button is visible on mobile breakpoints.
+### 4. RefundPolicy.tsx — Minor copy fix
+- "downloadable guides" → "digital guides"
 
-9. **Navigation responsive layout looks functional on desktop** — all 7 nav links visible, cart, phone, donate, login all accessible.
+## Files to Modify
 
-### Minor Issues
-
-10. **`body.style.overflow` manipulation in Navigation**
-    - Direct DOM mutation for scroll locking — works but could cause issues with other overlay components competing for the same property.
-
-11. **Edge function CORS headers missing newer Supabase client headers**
-    - The `process-payment` edge function uses basic CORS headers. Should include the extended headers per project standards.
-
----
-
-## Implementation Plan
-
-### Task 1: Fix Training page visibility
-- Inspect `Training.tsx` full render output and all CSS classes
-- Ensure hero and content sections have proper background/text colors
-- Verify the page renders correctly on both desktop and mobile
-
-### Task 2: Fix forwardRef warnings
-- Add `React.forwardRef()` to: `DonationModal`, `PrefetchLink`, `ShoppingCart`, `SEO`
-- These are the custom components triggering warnings; Dialog/Sheet warnings come from Radix internals and are lower priority
-
-### Task 3: Fix mobile navigation hamburger visibility
-- Ensure the hamburger menu toggle button renders on screens below `lg` breakpoint
-- Verify all nav links are accessible in the mobile drawer
-
-### Task 4: Optimize hero image size
-- Compress `hero-corporate-protection.webp` to under 200KB
-- Add `width`/`height` attributes to prevent layout shift
-
-### Task 5: Wire up Contact form validation properly
-- Connect `react-hook-form` + `zodResolver` with `contactFormSchema` for proper field-level error messages
-
-### Task 6: Update edge function CORS headers
-- Update `process-payment` and any other edge functions to include the full set of required CORS headers per project standards
+| File | Change |
+|------|--------|
+| `src/pages/Resources.tsx` | Remove duplicate catalog, use `BOOK_CATALOG`, fix stats/SEO/hero copy |
+| `src/components/payment/PaymentSuccess.tsx` | Fix download references, remove framer-motion |
+| `src/pages/BookReader.tsx` | Remove 30 image imports, use `BOOK_CATALOG` for image lookup |
+| `src/pages/RefundPolicy.tsx` | "downloadable" → "digital" |
 
