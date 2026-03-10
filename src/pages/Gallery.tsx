@@ -6,17 +6,17 @@ import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
-// Static pre-wedding photos shown by default
-import flowersImg from '@/assets/flowers-lavender-small.webp';
-import ringsImg from '@/assets/rings-small.webp';
-import coupleImg from '@/assets/couple-lavender-small.webp';
-import cakeImg from '@/assets/cake-small.webp';
+// Personal couple photos
+import couple2 from '@/assets/couple-2.jpg';
+import couple4 from '@/assets/couple-4.jpg';
+import couple5 from '@/assets/couple-5.jpg';
+import couple6 from '@/assets/couple-6.jpg';
 
 const STATIC_PHOTOS = [
-  { id: 'static-1', url: coupleImg, alt: 'Corine & Ruben' },
-  { id: 'static-3', url: flowersImg, alt: 'Lavender flowers' },
-  { id: 'static-4', url: ringsImg, alt: 'Wedding rings' },
-  { id: 'static-5', url: cakeImg, alt: 'Wedding cake' },
+  { id: 'static-1', url: couple2, alt: 'Corine & Ruben' },
+  { id: 'static-3', url: couple4, alt: 'Corine & Ruben' },
+  { id: 'static-4', url: couple5, alt: 'Corine & Ruben' },
+  { id: 'static-5', url: couple6, alt: 'Corine & Ruben' },
 ];
 
 interface Photo {
@@ -268,6 +268,7 @@ const Gallery = () => {
                 <img
                   src={photo.url}
                   alt={photo.alt}
+                  style={{ objectPosition: 'top' }}
                   loading="lazy"
                   className="w-full object-cover"
                 />

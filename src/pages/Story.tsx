@@ -7,12 +7,12 @@ import { useSiteImages, useStoryEvents } from '@/hooks/useSiteContent';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
-// Static fallback images
-import flowersImg from '@/assets/flowers-lavender-small.webp';
-import ringsImg from '@/assets/rings-small.webp';
-import venueImg from '@/assets/venue.jpg';
-import coupleImg from '@/assets/couple-lavender-small.webp';
-import cakeImg from '@/assets/cake-small.webp';
+// Personal couple photos
+import couple1 from '@/assets/couple-1.jpg';
+import couple3 from '@/assets/couple-3.jpg';
+import couple5 from '@/assets/couple-5.jpg';
+import couple9 from '@/assets/couple-9.jpg';
+import couple10 from '@/assets/couple-10.jpg';
 
 const FALLBACK_EVENTS = [
   { titleKey: 'story.event1.title', descKey: 'story.event1.description', dateKey: 'story.event1.date', icon: '💫' },
@@ -24,7 +24,7 @@ const FALLBACK_EVENTS = [
 ];
 
 // Images paired with timeline events
-const EVENT_IMAGES = [coupleImg, flowersImg, ringsImg, cakeImg, venueImg];
+const EVENT_IMAGES = [couple1, couple3, couple5, couple9, couple10];
 
 interface Photo {
   id: string;
@@ -34,10 +34,10 @@ interface Photo {
 }
 
 const STATIC_PHOTOS = [
-  { id: 'static-1', url: coupleImg, alt: 'Corine & Ruben' },
-  { id: 'static-3', url: flowersImg, alt: 'Lavender flowers' },
-  { id: 'static-4', url: ringsImg, alt: 'Wedding rings' },
-  { id: 'static-5', url: cakeImg, alt: 'Wedding cake' },
+  { id: 'static-1', url: couple1, alt: 'Corine & Ruben' },
+  { id: 'static-3', url: couple3, alt: 'Corine & Ruben' },
+  { id: 'static-4', url: couple9, alt: 'Corine & Ruben' },
+  { id: 'static-5', url: couple10, alt: 'Corine & Ruben' },
 ];
 
 const Story = () => {
@@ -202,7 +202,7 @@ const Story = () => {
                 <img
                   src={image}
                   alt={content.title}
-                  className="w-full aspect-[4/3] object-cover rounded-[20px] group-hover:scale-105 transition-transform duration-700"
+                  className="w-full aspect-[4/3] object-cover object-top rounded-[20px] group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                   decoding="async"
                   width={600}
@@ -415,7 +415,7 @@ const Story = () => {
                   src={photo.url}
                   alt={photo.alt}
                   loading="lazy"
-                  className="w-full object-cover"
+                  className="w-full object-cover object-top"
                 />
                 {photo.uploader && (
                   <div className="glass-card px-3 py-1.5 text-center">
