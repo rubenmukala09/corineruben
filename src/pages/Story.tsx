@@ -202,7 +202,7 @@ const Story = () => {
                 <img
                   src={image}
                   alt={content.title}
-                  className="w-full aspect-[4/3] object-cover object-top rounded-[20px] group-hover:scale-105 transition-transform duration-700"
+                  className="w-full aspect-[4/3] object-cover object-[center_20%] rounded-[20px] group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                   decoding="async"
                   width={600}
@@ -415,7 +415,7 @@ const Story = () => {
                   src={photo.url}
                   alt={photo.alt}
                   loading="lazy"
-                  className="w-full object-cover object-top"
+                  className="w-full object-cover object-[center_20%]"
                 />
                 {photo.uploader && (
                   <div className="glass-card px-3 py-1.5 text-center">

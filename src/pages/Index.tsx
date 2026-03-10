@@ -31,6 +31,8 @@ import couple5 from '@/assets/couple-5.jpg';
 import couple6 from '@/assets/couple-6.jpg';
 import couple7 from '@/assets/couple-7.jpg';
 import couple8 from '@/assets/couple-8.jpg';
+import cakeImg from '@/assets/cake-small.webp';
+import ringsImg from '@/assets/rings-tiny.webp';
 
 const giftTiers = [
 { amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
@@ -855,7 +857,7 @@ const Index = () => {
                 onClick={() => toggleTrack('amazing-grace')}>
                 
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-rose-400/20">
-                  <img src={couple3} alt="Corine & Ruben" className="w-full h-full object-cover object-top" width={48} height={48} loading="lazy" decoding="async" />
+                  <img src={couple3} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('hymn.amazing')}</p>
@@ -935,7 +937,7 @@ const Index = () => {
                 onClick={() => toggleTrack('blessed-larson')}>
                 
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-violet-400/20">
-                  <img src={couple4} alt="Corine & Ruben" className="w-full h-full object-cover object-top" width={48} height={48} loading="lazy" decoding="async" />
+                  <img src={couple4} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">I Have Been Blessed</p>
@@ -1056,7 +1058,7 @@ const Index = () => {
                 <div className="glass-card-strong rounded-3xl p-2.5">
                   <img
                     alt={`${coupleName1} & ${coupleName2}`}
-                    className="w-full object-cover object-top aspect-[4/5] border-2 shadow-2xl rounded-2xl"
+                    className="w-full object-cover object-[center_20%] aspect-[4/5] border-2 shadow-2xl rounded-2xl"
                     style={{ boxShadow: '0 20px 40px rgba(107, 78, 113, 0.15)' }}
                     width={474}
                     height={593}
@@ -1161,7 +1163,7 @@ const Index = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
               <div className="relative h-full min-h-[300px]">
-                <img src={couple2} alt="Corine & Ruben" className="w-full h-full object-cover object-top" width={297} height={428} loading="lazy" decoding="async" />
+                <img src={couple2} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={297} height={428} loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/10" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <div className="rounded-2xl bg-background/20 backdrop-blur-xl border border-white/20 p-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
@@ -1225,8 +1227,8 @@ const Index = () => {
             homepageGalleryImages.map((img) => ({ img: img.url, label: '♥' })) :
             [
             { img: heroImg, label: '♥' },
-            { img: couple5, label: '🌸' },
-            { img: couple6, label: '💍' },
+            { img: cakeImg, label: '🌸' },
+            { img: ringsImg, label: '💍' },
             { img: couple7, label: '♥' }]).
 
             map((item, i) =>
@@ -1239,7 +1241,7 @@ const Index = () => {
               className="glass-card-strong rounded-3xl p-1.5 overflow-hidden card-hover">
               
                 <div className="relative rounded-[20px] overflow-hidden aspect-square group">
-                  <img src={item.img} alt="Wedding gallery photo" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" width={241} height={241} loading="lazy" decoding="async" />
+                  <img src={item.img} alt="Wedding gallery photo" className="w-full h-full object-cover object-[center_20%] group-hover:scale-105 transition-transform duration-700" width={241} height={241} loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent flex items-end justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <span className="text-2xl">{item.label}</span>
                   </div>
@@ -1433,7 +1435,7 @@ const Index = () => {
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }}>
             <div className="glass-card-strong rounded-full w-28 h-28 mx-auto mb-8 flex items-center justify-center overflow-hidden ring-4 ring-primary/15 relative">
-              <img src={couple8} alt="Corine & Ruben" className="w-full h-full object-cover object-top" width={112} height={112} loading="lazy" decoding="async" />
+              <img src={couple8} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={112} height={112} loading="lazy" decoding="async" />
               <div className="absolute inset-0 flex items-center justify-center bg-foreground/20" />
             </div>
 
