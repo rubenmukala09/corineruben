@@ -1055,14 +1055,13 @@ const Index = () => {
               <div className="relative">
                 <div className="glass-card-strong rounded-3xl p-2.5">
                   <img
-
                     alt={`${coupleName1} & ${coupleName2}`}
-                    className="w-full object-cover aspect-[4/5] border-2 shadow-2xl rounded-2xl"
+                    className="w-full object-cover object-top aspect-[4/5] border-2 shadow-2xl rounded-2xl"
                     style={{ boxShadow: '0 20px 40px rgba(107, 78, 113, 0.15)' }}
                     width={474}
                     height={593}
                     loading="lazy"
-                    decoding="async" src={coupleImgSmall} />
+                    decoding="async" src={couple1} />
                   
                 </div>
                 <motion.div
