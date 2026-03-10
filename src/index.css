@@ -24,7 +24,7 @@
     --secondary-foreground: 282 18% 20%;
 
     --muted: 290 6% 92%;
-    --muted-foreground: 282 12% 44%;  /* #7A6580 darker dusty purple — WCAG AA 4.5:1 */
+    --muted-foreground: 282 12% 40%;  /* #6F5B76 dusty purple — WCAG AA 4.5:1 with headroom */
 
     /* Soft Lavender accent — #D7C0E0 */
     --accent: 270 33% 82%;
