@@ -18,6 +18,9 @@ export function ReadBooksDialog({ open, onOpenChange }: ReadBooksDialogProps) {
   const [email, setEmail] = useState("");
   const [accessId, setAccessId] = useState("");
   const [loading, setLoading] = useState(false);
+  const [resetting, setResetting] = useState(false);
+  const [showReset, setShowReset] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
   const navigate = useNavigate();
 
   // Auto-fill from URL params for shareable links
