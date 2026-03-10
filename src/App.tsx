@@ -279,6 +279,7 @@ function PublicRoutes() {
           <Route path="support/tickets" element={<SupportTicketsAdmin />} />
           <Route path="content/knowledge-base" element={<KnowledgeBaseAdmin />} />
           <Route path="content/reviews" element={<ReviewsAdmin />} />
+          <Route path="ecommerce/book-access" element={<BookAccessAdmin />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
