@@ -22,10 +22,15 @@ import { useSiteImages, useSiteSettings } from '@/hooks/useSiteContent';
 
 
 import heroImg from '@/assets/hero-wedding-thumb.webp';
-import flowersImgSmall from '@/assets/flowers-lavender-tiny.webp';
-import ringsImgSmall from '@/assets/rings-tiny.webp';
-import cakeImgSmall from '@/assets/cake-small.webp';
 import coupleImgSmall from '@/assets/couple-lavender-micro.webp';
+import couple1 from '@/assets/couple-1.jpg';
+import couple2 from '@/assets/couple-2.jpg';
+import couple3 from '@/assets/couple-3.jpg';
+import couple4 from '@/assets/couple-4.jpg';
+import couple5 from '@/assets/couple-5.jpg';
+import couple6 from '@/assets/couple-6.jpg';
+import couple7 from '@/assets/couple-7.jpg';
+import couple8 from '@/assets/couple-8.jpg';
 
 const giftTiers = [
 { amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
