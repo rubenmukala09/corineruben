@@ -857,7 +857,7 @@ const Index = () => {
                 onClick={() => toggleTrack('amazing-grace')}>
                 
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-rose-400/20">
-                  <img src={couple3} alt="Corine & Ruben" className="w-full h-full object-cover object-top" width={48} height={48} loading="lazy" decoding="async" />
+                  <img src={couple3} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('hymn.amazing')}</p>
