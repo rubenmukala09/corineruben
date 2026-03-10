@@ -32,8 +32,8 @@ import couple5 from '@/assets/couple-5.jpg';
 import couple6 from '@/assets/couple-6.jpg';
 import couple7 from '@/assets/couple-7.jpg';
 import couple8 from '@/assets/couple-8.jpg';
-import cakeImg from '@/assets/cake-thumb.webp';
-import ringsImg from '@/assets/rings-thumb.webp';
+import cakeImg from '@/assets/cake-small.webp';
+import ringsImg from '@/assets/rings-small.webp';
 
 const giftTiers = [
 { amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
