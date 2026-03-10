@@ -1239,7 +1239,7 @@ const Index = () => {
               className="glass-card-strong rounded-3xl p-1.5 overflow-hidden card-hover">
               
                 <div className="relative rounded-[20px] overflow-hidden aspect-square group">
-                  <img src={item.img} alt="Wedding gallery photo" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" width={241} height={241} loading="lazy" decoding="async" />
+                  <img src={item.img} alt="Wedding gallery photo" className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" width={241} height={241} loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent flex items-end justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <span className="text-2xl">{item.label}</span>
                   </div>
