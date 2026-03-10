@@ -799,21 +799,21 @@ function Business() {
               <AnimatedSection key={group.key} animation="fade-up" delay={gi * 120}>
                   <div>
                     {/* Group header with gradient accent */}
-                    <div className="flex flex-wrap items-center gap-4 mb-8">
-                      <div className={`h-10 w-1.5 rounded-full bg-gradient-to-b ${group.gradient}`} />
-                      <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${group.gradient} flex items-center justify-center shadow-lg`}>
-                        <group.icon className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-black tracking-tight">{group.title}</h3>
-                        <div className="flex items-center gap-2 mt-0.5">
-                          <span className="text-xs text-muted-foreground">{group.subtitle}</span>
-                        </div>
-                      </div>
-                      <span className="ml-auto text-xs font-bold text-primary bg-primary/8 px-4 py-1.5 rounded-full border border-primary/15">
-                        {group.minPrice}
-                      </span>
-                    </div>
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  
 
                     <div
                     className={`grid grid-cols-1 sm:grid-cols-2 gap-5 ${
