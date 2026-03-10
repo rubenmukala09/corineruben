@@ -1435,7 +1435,7 @@ const Index = () => {
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }}>
             <div className="glass-card-strong rounded-full w-28 h-28 mx-auto mb-8 flex items-center justify-center overflow-hidden ring-4 ring-primary/15 relative">
-              <img src={couple8} alt="Corine & Ruben" className="w-full h-full object-cover object-top" width={112} height={112} loading="lazy" decoding="async" />
+              <img src={couple8} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={112} height={112} loading="lazy" decoding="async" />
               <div className="absolute inset-0 flex items-center justify-center bg-foreground/20" />
             </div>
 

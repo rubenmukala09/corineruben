@@ -415,7 +415,7 @@ const Story = () => {
                   src={photo.url}
                   alt={photo.alt}
                   loading="lazy"
-                  className="w-full object-cover object-top"
+                  className="w-full object-cover object-[center_20%]"
                 />
                 {photo.uploader && (
                   <div className="glass-card px-3 py-1.5 text-center">
