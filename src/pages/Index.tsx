@@ -289,6 +289,7 @@ const AnnouncementsSection = forwardRef<HTMLElement, {t: (key: string) => string
   }, [announcements.length]);
 
   if (loaded && announcements.length === 0) return null;
+  if (!loaded) return <section ref={ref} aria-hidden="true" />;
 
   return (
     <section ref={ref} className="py-8 md:py-12 relative overflow-hidden">
