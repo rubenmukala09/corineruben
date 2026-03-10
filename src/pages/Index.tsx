@@ -1063,7 +1063,7 @@ const Index = () => {
                     width={474}
                     height={593}
                     loading="lazy"
-                    decoding="async" src={couple1} />
+                    decoding="async" src={couple5} />
                   
                 </div>
                 <motion.div

@@ -24,7 +24,7 @@ const FALLBACK_EVENTS = [
 ];
 
 // Images paired with timeline events
-const EVENT_IMAGES = [couple1, couple3, couple5, couple9, couple10];
+const EVENT_IMAGES = [couple1, couple3, couple9, couple5, couple10];
 
 interface Photo {
   id: string;
