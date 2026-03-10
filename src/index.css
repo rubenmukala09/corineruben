@@ -170,7 +170,7 @@
 
   h2 {
     font-family: 'Playfair Display', serif;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.2;
     letter-spacing: -0.02em;
     color: hsl(var(--foreground));
