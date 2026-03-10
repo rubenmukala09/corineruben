@@ -1227,7 +1227,7 @@ const Index = () => {
             {(homepageGalleryImages.length > 0 ?
             homepageGalleryImages.map((img) => ({ img: img.url, label: '♥' })) :
             [
-            { img: heroImg, label: '♥' },
+            { img: couple11, label: '♥' },
             { img: cakeImg, label: '🌸' },
             { img: ringsImg, label: '💍' },
             { img: couple7, label: '♥' }]).
