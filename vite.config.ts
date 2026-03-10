@@ -1,7 +1,28 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+
+/**
+ * Converts Vite-injected CSS <link> tags to non-render-blocking async pattern.
+ * This allows the inline HTML skeleton to paint immediately (faster FCP).
+ * CSS loads asynchronously and applies once downloaded — no FOUC because
+ * the skeleton uses inline styles and React hydrates after CSS is ready.
+ */
+function asyncCssPlugin(): Plugin {
+  return {
+    name: 'async-css',
+    enforce: 'post',
+    transformIndexHtml(html) {
+      // Match Vite-injected stylesheet links (hashed asset CSS files only)
+      return html.replace(
+        /<link rel="stylesheet" crossorigin href="(\/assets\/[^"]+\.css)">/g,
+        `<link rel="stylesheet" href="$1" media="print" onload="this.media='all'" crossorigin>
+    <noscript><link rel="stylesheet" href="$1" crossorigin></noscript>`
+      );
+    },
+  };
+}
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -52,7 +73,7 @@ export default defineConfig(({ mode }) => ({
       },
     },
   },
-  plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+  plugins: [react(), asyncCssPlugin(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
