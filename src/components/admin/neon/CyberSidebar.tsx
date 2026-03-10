@@ -40,6 +40,7 @@ import {
   Star,
   Image,
   UserPlus,
+  KeyRound,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -96,6 +97,7 @@ const menuItems: MenuItem[] = [
       { title: "Orders", href: "/admin/ecommerce/orders", icon: ShoppingCart },
       { title: "Inventory", href: "/admin/ecommerce/inventory", icon: Package },
       { title: "Subscriptions", href: "/admin/subscriptions", icon: CreditCard },
+      { title: "Book Access", href: "/admin/ecommerce/book-access", icon: KeyRound },
       { title: "Donations", href: "/admin/donations", icon: Heart },
     ],
   },
