@@ -132,6 +132,67 @@ export function ReadBooksDialog({ open, onOpenChange }: ReadBooksDialogProps) {
               </>
             )}
           </Button>
+
+          <div className="text-center">
+            <button
+              type="button"
+              className="text-xs text-muted-foreground hover:text-primary underline"
+              onClick={() => setShowReset(!showReset)}
+            >
+              <RefreshCw className="h-3 w-3 inline mr-1" />
+              Forgot your Access ID?
+            </button>
+          </div>
+
+          {showReset && (
+            <div className="border rounded-lg p-3 space-y-2 bg-muted/30">
+              <p className="text-xs text-muted-foreground">
+                Enter your purchase email and we'll send you a new Access ID.
+              </p>
+              <Input
+                type="email"
+                placeholder="your@email.com"
+                value={resetEmail}
+                onChange={(e) => setResetEmail(e.target.value)}
+                autoComplete="email"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="w-full"
+                disabled={resetting}
+                onClick={async () => {
+                  if (!resetEmail.trim()) {
+                    toast.error("Please enter your email.");
+                    return;
+                  }
+                  setResetting(true);
+                  try {
+                    const { data, error } = await supabase.functions.invoke("reset-book-access", {
+                      body: { email: resetEmail.trim() },
+                    });
+                    if (error) throw new Error(error.message);
+                    if (data?.error) throw new Error(data.error);
+                    toast.success(data.message || "New Access ID sent to your email!");
+                    setResetEmail("");
+                    setShowReset(false);
+                  } catch (err: any) {
+                    toast.error(err.message || "Reset failed.");
+                  } finally {
+                    setResetting(false);
+                  }
+                }}
+              >
+                {resetting ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />
+                ) : (
+                  <Mail className="h-3.5 w-3.5 mr-1" />
+                )}
+                Send New Access ID
+              </Button>
+            </div>
+          )}
         </form>
       </DialogContent>
     </Dialog>
