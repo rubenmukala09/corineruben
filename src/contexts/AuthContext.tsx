@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import type { Session, User } from '@supabase/supabase-js';
+import type { Session, User, SupabaseClient } from '@supabase/supabase-js';
 
 interface AuthContextType {
   session: Session | null;
@@ -18,32 +17,45 @@ const AuthContext = createContext<AuthContextType>({
 
 export const useAuth = () => useContext(AuthContext);
 
+// Lazy-load the supabase client to keep it out of the critical JS bundle
+let _supabase: SupabaseClient | null = null;
+const getSupabase = async () => {
+  if (!_supabase) {
+    const { supabase } = await import('@/integrations/supabase/client');
+    _supabase = supabase;
+  }
+  return _supabase;
+};
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Restore session from storage first
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setIsReady(true);
+    let unsubscribe: (() => void) | undefined;
+
+    getSupabase().then((supabase) => {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session);
+        setIsReady(true);
+      });
+
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        (_event, session) => {
+          setSession(session);
+        }
+      );
+      unsubscribe = () => subscription.unsubscribe();
     });
 
-    // Handle subsequent auth changes (sign in/out)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setSession(session);
-      }
-    );
-
-    return () => subscription.unsubscribe();
+    return () => unsubscribe?.();
   }, []);
 
   const signOut = async () => {
+    const supabase = await getSupabase();
     await supabase.auth.signOut();
   };
 
-  // Don't render children until auth is ready to prevent blinking
   if (!isReady) {
     return null;
   }
