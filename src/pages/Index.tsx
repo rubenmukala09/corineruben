@@ -274,6 +274,7 @@ const AnnouncementsSection = forwardRef<HTMLElement, {t: (key: string) => string
         const { data } = await supabase.from('announcements').select('*').order('created_at', { ascending: false });
         if (data) setAnnouncements(data);
         setLoaded(true);
+      };
       fetchData();
     }, 1500);
     return () => clearTimeout(id);
@@ -287,7 +288,7 @@ const AnnouncementsSection = forwardRef<HTMLElement, {t: (key: string) => string
     return () => clearInterval(interval);
   }, [announcements.length]);
 
-  if (announcements.length === 0) return null;
+  if (loaded && announcements.length === 0) return null;
 
   return (
     <section ref={ref} className="py-8 md:py-12 relative overflow-hidden">
