@@ -479,7 +479,9 @@ const ScriptureTransition = ({ t }: {t: (key: string) => string;}) => {
 
 };
 
-
+  const features = [
+  { icon: Heart, label: t('nav.story'), desc: t('story.subtitle'), to: '/story', color: 'text-rose-400', bg: 'from-rose-500/20 to-pink-500/10' },
+  { icon: Clock, label: t('nav.rsvp'), desc: t('rsvp.subtitle'), to: '/rsvp', color: 'text-emerald-400', bg: 'from-emerald-500/20 to-teal-500/10' }];
 
 
 const Index = () => {
