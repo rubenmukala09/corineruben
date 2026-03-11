@@ -5,39 +5,15 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useMusic } from '@/components/MusicContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Hotel, Car, Check, X, Megaphone, Video, Share2, ExternalLink } from 'lucide-react';
-const EmbeddedPaymentForm = lazy(() => import('@/components/EmbeddedPaymentForm'));
 const LazyDialog = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.Dialog })));
 const LazyDialogContent = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogContent })));
 const LazyDialogHeader = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogHeader })));
 const LazyDialogTitle = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogTitle })));
 const LazyDialogDescription = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogDescription })));
-const LazyDrawer = lazy(() => import('@/components/ui/drawer').then(m => ({ default: m.Drawer })));
-const LazyDrawerContent = lazy(() => import('@/components/ui/drawer').then(m => ({ default: m.DrawerContent })));
-const LazyDrawerHeader = lazy(() => import('@/components/ui/drawer').then(m => ({ default: m.DrawerHeader })));
-const LazyDrawerTitle = lazy(() => import('@/components/ui/drawer').then(m => ({ default: m.DrawerTitle })));
-const LazyDrawerDescription = lazy(() => import('@/components/ui/drawer').then(m => ({ default: m.DrawerDescription })));
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { useSiteImages, useSiteSettings } from '@/hooks/useSiteContent';
 
-
-import heroImg from '@/assets/hero-wedding-thumb.webp';
-import couple11 from '@/assets/couple-11-small.webp';
-import coupleImgSmall from '@/assets/couple-lavender-micro.webp';
-import couple2 from '@/assets/couple-2-small.webp';
-import couple3 from '@/assets/couple-3-thumb.webp';
-import couple4 from '@/assets/couple-4-thumb.webp';
-import couple5 from '@/assets/couple-5-small.webp';
-import couple7 from '@/assets/couple-7-small.webp';
-import couple8 from '@/assets/couple-12.jpg';
-import cakeImg from '@/assets/cake-gallery.webp';
-import ringsImg from '@/assets/rings-gallery.webp';
-
-const giftTiers = [
-{ amount: 60, emoji: '💐', labelKey: 'registry.tier.bouquet' },
-{ amount: 100, emoji: '🥂', labelKey: 'registry.tier.toast' },
-{ amount: 200, emoji: '✨', labelKey: 'registry.tier.sparkle' },
-{ amount: 500, emoji: '💎', labelKey: 'registry.tier.diamond' }];
 
 
 /* Decorative aurora orb — pure CSS, no framer-motion animation */
