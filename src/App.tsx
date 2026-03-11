@@ -53,6 +53,7 @@ const Guestbook = lazy(() => import("./pages/Guestbook"));
 const Gallery = lazy(() => import("./pages/Gallery"));
 const Venue = lazy(() => import("./pages/Venue"));
 const FloatingHearts = lazy(() => import("@/components/FloatingHearts"));
+const GiftFAB = lazy(() => import("@/components/GiftFAB"));
 const Toaster = lazy(() => import("@/components/ui/toaster").then(m => ({ default: m.Toaster })));
 const Sonner = lazy(() => import("@/components/ui/sonner").then(m => ({ default: m.Toaster })));
 const TooltipProvider = lazy(() => import("@/components/ui/tooltip").then(m => ({ default: m.TooltipProvider })));
