@@ -503,60 +503,6 @@ const Index = () => {
   const courtVenue = settings.court_wedding_venue || '301 Sycamore St, Brookville — Mayor Letner';
   const courtAfterVenue = settings.court_wedding_after_venue || '10209 Gully Pass Dr, Dayton, OH 45458';
 
-  // Gift dialog state
-  const [giftOpen, setGiftOpen] = useState(false);
-  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
-  const [customAmount, setCustomAmount] = useState('');
-  const [paymentFormOpen, setPaymentFormOpen] = useState(false);
-
-  useEffect(() => {
-    const targetDate = new Date(weddingDateStr);
-    const update = () => {
-      const now = new Date();
-      const diff = targetDate.getTime() - now.getTime();
-      if (diff <= 0) return;
-      setCountdown({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor(diff / (1000 * 60 * 60) % 24),
-        minutes: Math.floor(diff / (1000 * 60) % 60),
-        seconds: Math.floor(diff / 1000 % 60)
-      });
-    };
-    update();
-    const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
-  }, [weddingDateStr]);
-
-  // Handle payment return from Stripe Checkout
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('gift') === 'success') {
-      const amount = params.get('amount');
-      toast.success(`Thank you for your generous gift${amount ? ` of $${amount}` : ''}! 💕`);
-      // Clean up URL
-      window.history.replaceState({}, '', window.location.pathname);
-    }
-  }, []);
-
-  const handleSelectTier = (amount: number) => {
-    setSelectedAmount(amount);
-    setCustomAmount('');
-    setGiftOpen(false);
-    setPaymentFormOpen(true);
-  };
-
-  const handleCustomGift = () => {
-    const val = parseInt(customAmount);
-    if (val && val > 0) {
-      setSelectedAmount(val);
-      setGiftOpen(false);
-      setPaymentFormOpen(true);
-    }
-  };
-
-  const features = [
-  { icon: Heart, label: t('nav.story'), desc: t('story.subtitle'), to: '/story', color: 'text-rose-400', bg: 'from-rose-500/20 to-pink-500/10' },
-  { icon: Clock, label: t('nav.rsvp'), desc: t('rsvp.subtitle'), to: '/rsvp', color: 'text-emerald-400', bg: 'from-emerald-500/20 to-teal-500/10' }];
 
 
   const courtDetailSections = [
