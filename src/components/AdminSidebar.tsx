@@ -99,6 +99,7 @@ const menuItems: MenuItem[] = [
       { title: "Products", href: "/admin/ecommerce/products" },
       { title: "Orders", href: "/admin/ecommerce/orders" },
       { title: "Inventory", href: "/admin/ecommerce/inventory" },
+      { title: "Book Access", href: "/admin/ecommerce/book-access" },
       { title: "Donations", href: "/admin/donations" },
     ],
   },
