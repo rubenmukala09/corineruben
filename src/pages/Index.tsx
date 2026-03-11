@@ -617,7 +617,9 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
 
-
+      {/* ===== HERO ===== */}
+      <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-8">
+        <FallingPetals isMobile={isMobile} />
 
         <div className="absolute inset-0 mix-blend-soft-light z-[1]">
           <img src={coupleImgSmall} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} fetchPriority="high" />
