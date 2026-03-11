@@ -658,17 +658,52 @@ const RSVP = () => {
             <div className="w-16 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
             <Gem className="w-4 h-4 text-primary/50" />
           </div>
-          <p className="font-sans-elegant text-base text-muted-foreground mb-4">{t('rsvp.subtitle')}</p>
+          <p className="font-sans-elegant text-base text-muted-foreground mb-6">{t('rsvp.subtitle')}</p>
 
-          {/* Edit RSVP link */}
-          <button
-            type="button"
-            onClick={() => setEditOpen(true)}
-            className="inline-flex items-center gap-1.5 font-sans-elegant text-xs text-muted-foreground hover:text-primary transition-colors"
-          >
-            <Pencil className="w-3.5 h-3.5" />
-            {t('rsvp.edit.label')} <span className="underline underline-offset-2">{t('rsvp.edit.link')}</span>
-          </button>
+          {/* Your Information Menu */}
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            {/* Edit RSVP */}
+            <button
+              type="button"
+              onClick={() => setEditOpen(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-card-strong text-sm font-sans-elegant font-medium text-foreground hover:border-primary/30 hover:shadow-glow transition-all duration-300"
+            >
+              <Pencil className="w-3.5 h-3.5 text-primary" />
+              {t('rsvp.edit.link')}
+            </button>
+
+            {/* Share RSVP Link */}
+            <button
+              type="button"
+              onClick={async () => {
+                const rsvpUrl = `${window.location.origin}/rsvp`;
+                if (navigator.share) {
+                  try { await navigator.share({ title: 'RSVP – Corine & Ruben Wedding', url: rsvpUrl }); } catch {}
+                } else {
+                  await navigator.clipboard.writeText(rsvpUrl);
+                  toast.success('RSVP link copied! 💕');
+                }
+              }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-card-strong text-sm font-sans-elegant font-medium text-foreground hover:border-primary/30 hover:shadow-glow transition-all duration-300"
+            >
+              <Share2 className="w-3.5 h-3.5 text-primary" />
+              Share RSVP
+            </button>
+
+            {/* Copy Link */}
+            <button
+              type="button"
+              onClick={async () => {
+                const rsvpUrl = `${window.location.origin}/rsvp`;
+                await navigator.clipboard.writeText(rsvpUrl);
+                toast.success('Link copied! 💕');
+              }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-card-strong text-sm font-sans-elegant font-medium text-foreground hover:border-primary/30 hover:shadow-glow transition-all duration-300"
+            >
+              <Link2 className="w-3.5 h-3.5 text-primary" />
+              Copy Link
+            </button>
+          </div>
         </motion.div>
 
         {/* Edit RSVP Dialog */}
