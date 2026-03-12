@@ -16,10 +16,7 @@ import { useSiteImages, useSiteSettings } from '@/hooks/useSiteContent';
 
 import heroImg from '@/assets/hero-wedding-thumb.webp';
 import couple11 from '@/assets/couple-11-small.webp';
-import coupleImgSmall from '@/assets/couple-lavender-micro.webp';
 import couple2 from '@/assets/couple-2-small.webp';
-import couple3 from '@/assets/couple-3-thumb.webp';
-import couple4 from '@/assets/couple-4-thumb.webp';
 import couple5 from '@/assets/couple-5-small.webp';
 import couple7 from '@/assets/couple-7-small.webp';
 import couple8 from '@/assets/couple-12.jpg';
@@ -628,9 +625,10 @@ const Index = () => {
       <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-8">
         <FallingPetals isMobile={isMobile} />
 
-        <div className="absolute inset-0 mix-blend-soft-light z-[1]">
-          <img src={coupleImgSmall} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} fetchPriority="high" />
-        </div>
+        <div className="absolute inset-0 mix-blend-soft-light z-[1] opacity-[0.1]" style={{
+          background: 'radial-gradient(ellipse at 30% 20%, hsl(var(--plum-light) / 0.3) 0%, transparent 50%), radial-gradient(ellipse at 70% 60%, hsl(var(--lavender-pink) / 0.2) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, hsl(var(--dusty-rose) / 0.15) 0%, transparent 60%)',
+          filter: 'saturate(0.4) brightness(1.2)'
+        }} />
 
         <div
           className="flex flex-col items-center text-center max-w-3xl mx-auto mt-20 md:mt-28 z-20 px-6">
@@ -756,7 +754,7 @@ const Index = () => {
                 onClick={() => toggleTrack('amazing-grace')}>
                 
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-rose-400/20">
-                  <img src={couple3} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={48} height={48} loading="lazy" decoding="async" />
+                  <img src={couple2} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('hymn.amazing')}</p>
@@ -836,7 +834,7 @@ const Index = () => {
                 onClick={() => toggleTrack('blessed-larson')}>
                 
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-violet-400/20">
-                  <img src={couple4} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={48} height={48} loading="lazy" decoding="async" />
+                  <img src={couple7} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">I Have Been Blessed</p>

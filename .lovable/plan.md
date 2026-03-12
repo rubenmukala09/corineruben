@@ -1,40 +1,37 @@
 
 
-## Fix Mobile Performance Issues (91 → higher)
+## Mobile Performance Analysis (66%) — What's Actually Happening
 
-### Analysis of the 5 issues
+After examining the audit data in detail, most of the 12 performance issues flagged are **not from your app code** — they come from platform-level infrastructure and cannot be fixed through code changes.
 
-| Issue | Root Cause | Fixable in Code? |
-|-------|-----------|-----------------|
-| **Multiple page redirects** (780ms) | Platform redirect from lovable.app → corineruben.com | No - infrastructure level |
-| **Document request latency** (100ms) | Same redirect | No |
-| **Forced reflow** (130ms) | Framer Motion layout measurements | No - library behavior |
-| **Network dependency tree** | Critical request chain length = 3 | Partially |
-| **Time to Interactive** (7.9s) | Driven by massive images + JS | Yes - via image optimization |
+### Issues Outside Our Control (platform-level)
 
-### The biggest win: Image delivery (5,377 KiB savings)
+| Issue | Cause | Fixable? |
+|---|---|---|
+| **Redirects** (780ms) | Lovable staging → custom domain redirect | No |
+| **Render blocking requests** (2,240ms) | DM Sans font injected by Lovable badge | No (remove badge in Settings) |
+| **Unused JavaScript** (119 KiB) | Google Tag Manager scripts from Lovable | No |
+| **Cache lifetimes** (16 KiB) | Google Analytics cache headers | No |
+| **Document latency** (100ms) | Redirect chain | No |
+| **Network dependency tree** | Font chain through Google Fonts → gstatic | No |
 
-The Lighthouse audit reveals the core problem. Four images account for **5.4 MB** of unnecessary downloads:
+### Suspicious Audit Data
 
-- `couple-lavender-micro.webp` — **1.4 MB** used as a background at **10% opacity**. Barely visible. Can be replaced with a CSS gradient.
-- `couple-3-thumb.webp` — **1.4 MB** displayed at **48x48 pixels**. A 1024x1024 image for a tiny avatar.
-- `couple-4-thumb.webp` — **1.4 MB** displayed at **48x48 pixels**. Same problem.
-- `couple-5-small.webp` — **1.3 MB** displayed at ~342x428. Oversized for its container.
+The audit's LCP element references `bold-moves.webp` with text "Start your online journey / Build your website today" and a `div.services` selector — **this is NOT your wedding app**. This appears to be a domain parking page at `corineruben.com`. The CLS layout shift is also attributed to this parking page content.
 
-### Plan
+This means the PageSpeed analysis may be hitting a cached or intermittent parking page at your custom domain rather than your actual app.
 
-1. **Replace the background overlay image with a CSS pattern/gradient** in `src/pages/Index.tsx`. The image is rendered at 10% opacity with desaturation — it contributes almost nothing visually but costs 1.4 MB. Replace with a subtle CSS radial gradient that achieves a similar soft texture effect.
+### What Can Be Improved In Code
 
-2. **Replace the two 48x48 avatar images** (`couple-3-thumb`, `couple-4-thumb`) with already-existing smaller images from the project. For example, use `couple-7-small.webp` or `couple-2-small.webp` which are already imported, or simply reuse the same small image for both avatar slots to avoid loading two 1.4 MB files for 48px thumbnails.
+Only two items are partially addressable:
 
-3. **Lazy-load the couple-5-small image** — it appears below the fold in the "Faith & Grace" section. Add `loading="lazy"` and lower its `fetchPriority`.
+1. **SEO score (58%)** — Likely caused by the parking page content being analyzed. Need to verify the custom domain is properly serving the app. If it is, we can add structured data and improve meta tags.
 
-These changes target the **image delivery** warning (5,377 KiB est. savings) which is the primary driver of the poor **Time to Interactive** (7.9s) and **Speed Index** (5.3s) scores. The redirect and forced reflow issues cannot be fixed in application code.
+2. **Font loading strategy** — The Google Fonts stylesheet in `index.html` is already using `media="print" onload="this.media='all'"` pattern (non-blocking). The render-blocking DM Sans flagged in the audit is from the Lovable badge, not our code.
 
-### Technical details
+### Recommended Action
 
-- File modified: `src/pages/Index.tsx`
-- The background image element (line ~632) will be replaced with a `div` using CSS gradients
-- The two avatar `img` tags (lines ~759, ~839) will reference a smaller, already-loaded image
-- Imports for `couple-3-thumb.webp`, `couple-4-thumb.webp`, and `couple-lavender-micro.webp` will be removed
+The most impactful fix is **removing the Lovable badge** in your project Settings, which would eliminate the render-blocking DM Sans request (est. 2,240ms savings) and the unused JavaScript from Google Tag Manager (119 KiB). This alone could push the performance score significantly higher.
+
+No code changes are needed — the issues are infrastructure-level.
 
