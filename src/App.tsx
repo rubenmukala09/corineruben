@@ -91,6 +91,7 @@ const AppShell = () => {
       {!disableAmbientEffects && <FloatingHearts />}
 
       <div className="relative z-10">
+        <ScrollProgress />
         <ScrollToTop />
         <Navigation />
         <Suspense fallback={<PageLoader />}>
