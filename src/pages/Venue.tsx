@@ -36,6 +36,7 @@ const Venue = () => {
   const receptionMapsUrl = settings.reception_maps_url || '';
   const receptionTime = settings.reception_time || '19:00';
   const mapEmbedUrl = settings.map_embed_url || '';
+  const addressVisible = settings.venue_address_visible !== 'false';
 
   const courtVenue = settings.court_wedding_venue || '301 Sycamore St, Brookville — Mayor Letner';
   const courtAfterVenue = settings.court_wedding_after_venue || '10209 Gully Pass Dr, Dayton, OH 45458';
