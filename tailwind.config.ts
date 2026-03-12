@@ -78,10 +78,11 @@ export default {
         sm: "calc(var(--radius) - 8px)",
       },
       boxShadow: {
-        "soft": "0 20px 40px rgba(155, 120, 168, 0.08)",
-        "glow": "0 0 40px -10px rgba(155, 120, 168, 0.3)",
-        "card-hover": "0 20px 40px rgba(155, 120, 168, 0.15)",
-        "glass": "0 20px 40px rgba(155, 120, 168, 0.08)",
+        "soft":      "0 32px 64px -16px rgba(163, 126, 172, 0.12)",
+        "glow":      "0 0 40px -10px rgba(163, 126, 172, 0.3)",
+        "card-hover":"0 40px 80px -20px rgba(163, 126, 172, 0.18)",
+        "glass":     "0 32px 64px -16px rgba(163, 126, 172, 0.12), inset 0 0 0 1px rgba(255,255,255,0.2)",
+        "small":     "0 12px 24px -6px rgba(163, 126, 172, 0.15)",
       },
       keyframes: {
         "accordion-down": {
