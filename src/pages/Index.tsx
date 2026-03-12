@@ -375,7 +375,7 @@ const TransitioningScripture = ({ t }: {t: (key: string) => string;}) => {
               <p className="font-serif-display text-xl md:text-2xl text-foreground italic leading-relaxed mb-4">
                 "{t(FEATURED_VERSES[currentVerse].key)}"
               </p>
-              <p className="font-sans-elegant text-sm text-muted-foreground font-semibold">
+              <p className="font-sans-elegant text-sm text-foreground/70 font-semibold">
                 {FEATURED_VERSES[currentVerse].ref}
               </p>
             </motion.div>
