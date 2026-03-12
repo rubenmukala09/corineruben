@@ -57,9 +57,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await supabase.auth.signOut();
   };
 
-  if (!isReady) {
-    return null;
-  }
+  // Always render children to prevent blank flash on reload.
+  // Components that need auth can check isReady themselves.
 
   return (
     <AuthContext.Provider value={{ session, user: session?.user ?? null, isReady, signOut }}>

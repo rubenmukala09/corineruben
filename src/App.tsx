@@ -1,6 +1,6 @@
 import { Component, lazy, Suspense, type ErrorInfo, type ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean; message: string }> {
   constructor(props: { children: ReactNode }) {
@@ -38,16 +38,21 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 import AuroraBackground from "@/components/AuroraBackground";
 import { MusicProvider } from "@/components/MusicContext";
-import MusicFloatingButton from "@/components/MusicPlayer";
-import FloatingHearts from "@/components/FloatingHearts";
-import GiftFAB from "@/components/GiftFAB";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
-// Route-level code splitting — each page loads only when first visited
-import Index from "./pages/Index";
+// Lazy-load decorative/ambient components — not needed for FCP
+const MusicFloatingButton = lazy(() => import("@/components/MusicPlayer"));
+const FloatingHearts = lazy(() => import("@/components/FloatingHearts"));
+const ScrollProgress = lazy(() => import("@/components/ScrollProgress"));
+
+// Lazy-load non-critical shell components to reduce unused JS on initial load
+const GiftFAB = lazy(() => import("@/components/GiftFAB"));
+const Toaster = lazy(() => import("@/components/ui/toaster").then(m => ({ default: m.Toaster })));
+const Sonner = lazy(() => import("@/components/ui/sonner").then(m => ({ default: m.Toaster })));
+const TooltipProvider = lazy(() => import("@/components/ui/tooltip").then(m => ({ default: m.TooltipProvider })));
+
+// Route-level code splitting — every page lazy-loaded to minimize initial bundle
+const Index        = lazy(() => import("./pages/Index"));
 const Story      = lazy(() => import("./pages/Story"));
 const RSVP       = lazy(() => import("./pages/RSVP"));
 const Dashboard  = lazy(() => import("./pages/Dashboard"));
@@ -69,59 +74,80 @@ const PageLoader = () => (
 
 const queryClient = new QueryClient();
 
+const AppShell = () => {
+  const { pathname } = useLocation();
+  const disableAmbientEffects = pathname.startsWith("/dashboard") || pathname.startsWith("/staff");
+
+  return (
+    <AuthProvider>
+      <Suspense fallback={null}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+        </TooltipProvider>
+      </Suspense>
+
+      {disableAmbientEffects ? (
+        <div className="fixed inset-0 z-0 bg-background" />
+      ) : (
+        <div className="fixed inset-0 z-0">
+          <AuroraBackground variant="hero" />
+        </div>
+      )}
+      <Suspense fallback={null}>
+        {!disableAmbientEffects && <FloatingHearts />}
+      </Suspense>
+
+      <div className="relative z-10">
+        <Suspense fallback={null}><ScrollProgress /></Suspense>
+        <ScrollToTop />
+        <Navigation />
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/story" element={<Story />} />
+            <Route path="/rsvp" element={<RSVP />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/staff" element={<Staff />} />
+            <Route path="/enquiries" element={<Enquiries />} />
+            <Route path="/registry" element={<Registry />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/guestbook" element={<Guestbook />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/venue" element={<Venue />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+        <Footer />
+      </div>
+
+      <Suspense fallback={null}><MusicFloatingButton /></Suspense>
+      <Suspense fallback={null}><GiftFAB /></Suspense>
+    </AuthProvider>
+  );
+};
+
 const App = () => (
   <ErrorBoundary>
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <LanguageProvider>
-        <MusicProvider>
-          <BrowserRouter>
-            <AuthProvider>
-              <TooltipProvider>
-                <Toaster />
-                <Sonner />
-              </TooltipProvider>
-
-              <div className="fixed inset-0 z-0">
-                <AuroraBackground variant="hero" />
-              </div>
-              <FloatingHearts />
-
-              <div className="relative z-10">
-                <ScrollToTop />
-                <Navigation />
-                <Suspense fallback={<PageLoader />}>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/story" element={<Story />} />
-                    <Route path="/rsvp" element={<RSVP />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/dashboard" element={
-                      <ProtectedRoute>
-                        <Dashboard />
-                      </ProtectedRoute>
-                    } />
-                    <Route path="/staff" element={<Staff />} />
-                    <Route path="/enquiries" element={<Enquiries />} />
-                    <Route path="/registry" element={<Registry />} />
-                    <Route path="/faq" element={<FAQ />} />
-                    <Route path="/guestbook" element={<Guestbook />} />
-                    <Route path="/gallery" element={<Gallery />} />
-                    <Route path="/venue" element={<Venue />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Suspense>
-                <Footer />
-              </div>
-
-              <MusicFloatingButton />
-              <GiftFAB />
-            </AuthProvider>
-          </BrowserRouter>
-        </MusicProvider>
-      </LanguageProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <LanguageProvider>
+          <MusicProvider>
+            <BrowserRouter>
+              <AppShell />
+            </BrowserRouter>
+          </MusicProvider>
+        </LanguageProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   </ErrorBoundary>
 );
 

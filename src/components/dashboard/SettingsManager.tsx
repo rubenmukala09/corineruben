@@ -104,6 +104,49 @@ const SettingsManager = () => {
         )}
       </motion.div>
 
+      {/* Section Visibility Toggles */}
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
+        className="glass-card-strong rounded-3xl p-8">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 flex items-center justify-center">
+            <Settings className="w-6 h-6 text-emerald-500" />
+          </div>
+          <div>
+            <h3 className="font-serif-display text-xl font-semibold text-foreground">Homepage Sections</h3>
+            <p className="font-sans-elegant text-xs text-muted-foreground">Show or hide sections on the landing page</p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          {[
+            { key: 'show_ceremony', label: '⛪ Ceremony', desc: 'Ceremony details card on homepage' },
+            { key: 'show_reception', label: '🎉 Reception', desc: 'Reception details card on homepage' },
+            { key: 'show_accommodation', label: '🏨 Accommodation', desc: 'Accommodation details card on homepage' },
+            { key: 'show_transport', label: '🚗 Transport', desc: 'Transport details card on homepage' },
+          ].map(item => {
+            const isVisible = settings[item.key] !== 'false';
+            return (
+              <div key={item.key} className="glass-card rounded-2xl p-4 flex items-center justify-between">
+                <div>
+                  <p className="font-sans-elegant text-sm font-semibold text-foreground">{item.label}</p>
+                  <p className="font-sans-elegant text-xs text-muted-foreground">{item.desc}</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className={`font-sans-elegant text-[10px] uppercase tracking-wider font-medium ${isVisible ? 'text-emerald-500' : 'text-muted-foreground'}`}>
+                    {isVisible ? 'Visible' : 'Hidden'}
+                  </span>
+                  <Switch
+                    checked={isVisible}
+                    onCheckedChange={() => saveSetting(item.key, isVisible ? 'false' : 'true')}
+                    disabled={saving === item.key}
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </motion.div>
+
       {/* General Settings */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
         className="glass-card-strong rounded-3xl p-8">

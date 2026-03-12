@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Send, BookOpen, Loader2 } from 'lucide-react';
+import { Heart, Send, BookOpen } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { supabase } from '@/integrations/supabase/client';
@@ -28,7 +27,6 @@ const Guestbook = () => {
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [entries, setEntries] = useState<GuestbookEntry[]>([]);
-  const [loading, setLoading] = useState(true);
 
   const fetchEntries = async () => {
     const { data } = await supabase
@@ -37,7 +35,6 @@ const Guestbook = () => {
       .eq('approved', true)
       .order('created_at', { ascending: false });
     if (data) setEntries(data);
-    setLoading(false);
   };
 
   useEffect(() => { fetchEntries(); }, []);
@@ -71,7 +68,7 @@ const Guestbook = () => {
         <div className="glass-section p-6 md:p-10">
 
         {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
+        <div className="text-center mb-12">
           <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
             <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('guestbook.badge')}</p>
           </div>
@@ -81,12 +78,11 @@ const Guestbook = () => {
           <p className="font-sans-elegant text-base text-muted-foreground max-w-sm mx-auto" style={{ lineHeight: 1.6 }}>
             {t('guestbook.subtitle')}
           </p>
-        </motion.div>
+        </div>
 
         {/* Submit form */}
-        <motion.form
+        <form
           onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
           className="glass-card-strong rounded-3xl p-5 md:p-8 mb-8 md:mb-10 space-y-4"
         >
           <div className="flex items-center gap-3 mb-2">
@@ -129,14 +125,10 @@ const Guestbook = () => {
             disabled={submitting || !name.trim() || !message.trim()}
             className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {submitting ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <Send className="w-4 h-4" />
-            )}
+            <Send className="w-4 h-4" />
             {t('guestbook.form.submit')}
           </button>
-        </motion.form>
+        </form>
 
         {/* Messages section */}
         <div>
@@ -148,44 +140,32 @@ const Guestbook = () => {
             )}
           </div>
 
-          {loading ? (
-            <div className="flex justify-center py-16">
-              <Loader2 className="w-8 h-8 animate-spin text-primary/50" />
-            </div>
-          ) : entries.length === 0 ? (
-            <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-              className="glass-card-strong rounded-3xl p-12 text-center"
-            >
+          {entries.length === 0 ? (
+            <div className="glass-card-strong rounded-3xl p-12 text-center">
               <p className="text-4xl mb-4">💕</p>
               <p className="font-sans-elegant text-sm text-muted-foreground">{t('guestbook.empty')}</p>
-            </motion.div>
+            </div>
           ) : (
             <div className="space-y-4">
-              <AnimatePresence>
-                {entries.map((entry, i) => (
-                  <motion.div
-                    key={entry.id}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    className={`glass-card-strong rounded-2xl p-6 bg-gradient-to-br ${COLORS[i % COLORS.length]}`}
-                  >
-                    <div className="flex items-start justify-between gap-3 mb-3">
-                      <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center text-xs font-bold text-primary-foreground font-serif-display">
-                          {entry.name.charAt(0).toUpperCase()}
-                        </div>
-                        <span className="font-sans-elegant text-sm font-semibold text-foreground">{entry.name}</span>
+              {entries.map((entry, i) => (
+                <div
+                  key={entry.id}
+                  className={`glass-card-strong rounded-2xl p-6 bg-gradient-to-br ${COLORS[i % COLORS.length]}`}
+                >
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center text-xs font-bold text-primary-foreground font-serif-display">
+                        {entry.name.charAt(0).toUpperCase()}
                       </div>
-                      <span className="font-sans-elegant text-xs text-muted-foreground flex-shrink-0">{formatDate(entry.created_at)}</span>
+                      <span className="font-sans-elegant text-sm font-semibold text-foreground">{entry.name}</span>
                     </div>
-                    <p className="font-sans-elegant text-sm text-foreground/80 leading-relaxed italic">
-                      "{entry.message}"
-                    </p>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                    <span className="font-sans-elegant text-xs text-muted-foreground flex-shrink-0">{formatDate(entry.created_at)}</span>
+                  </div>
+                  <p className="font-sans-elegant text-sm text-foreground/80 leading-relaxed italic">
+                    "{entry.message}"
+                  </p>
+                </div>
+              ))}
             </div>
           )}
         </div>

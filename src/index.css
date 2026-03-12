@@ -971,9 +971,18 @@
   66% { transform: translate(-35px, 30px) scale(0.9); }
 }
 
+@keyframes float-slow {
+  0%, 100% { transform: translateY(-6px); }
+  50% { transform: translateY(8px); }
+}
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
-  .aurora-blob-css, .heart-glow, .animate-float-heart, .animate-petal-fall {
+  .aurora-blob-css, .heart-glow, .animate-float-heart, .animate-petal-fall, .animate-float-slow {
     animation: none !important;
   }
 }
@@ -998,6 +1007,39 @@
   .glass-section {
     padding: 16px;
   }
+}
+
+/* ===== PREMIUM SCROLL SYSTEM ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Elegant thin scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.25);
+  border-radius: 999px;
+  transition: background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.45);
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.2);
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.4);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary) / 0.25) transparent;
 }
 
 /* Hide scrollbars in dialogs */

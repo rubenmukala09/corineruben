@@ -4,7 +4,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Sun, Moon, Menu, X, Globe, Heart, LogOut, LogIn, MessageCircleQuestion } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
@@ -49,11 +48,9 @@ const Navigation = () => {
   ];
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-3 px-4"
-      initial={{ y: 0 }}
-      animate={{ y: visible ? 0 : -100 }}
-      transition={{ duration: 0.35, ease: 'easeInOut' }}
+    <div
+      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-3 px-4 transition-transform duration-350 ease-in-out"
+      style={{ transform: visible ? 'translateY(0)' : 'translateY(-100px)' }}
     >
       <nav
         className={`w-full max-w-3xl nav-glow-border transition-all duration-500 rounded-[22px] border-2 ${
@@ -75,7 +72,6 @@ const Navigation = () => {
             </span>
           </Link>
 
-          {/* Subtle separator */}
           <div className="hidden md:block w-px h-6 bg-white/15 flex-shrink-0" />
 
           {/* ── GROUP 2: Nav links (centered) ── */}
@@ -92,18 +88,15 @@ const Navigation = () => {
                 style={{ letterSpacing: '0.3px' }}
               >
                 {location.pathname === link.to && (
-                  <motion.div
-                    layoutId="nav-indicator"
+                  <div
                     className="absolute inset-0 rounded-full bg-white/15 border border-white/20"
                     style={{ boxShadow: '0 0 12px rgba(255,255,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1)' }}
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
                   />
                 )}
                 <span className="relative z-10">{link.label}</span>
               </Link>
             ))}
 
-            {/* Icon-only links for secondary pages */}
             {[
               { to: '/enquiries', icon: MessageCircleQuestion, label: t('nav.enquiries') },
             ].map(({ to, icon: Icon, label }) => (
@@ -123,10 +116,9 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Subtle separator */}
           <div className="hidden md:block w-px h-6 bg-white/15 flex-shrink-0" />
 
-          {/* ── GROUP 3: Controls (lang, theme, login) ── */}
+          {/* ── GROUP 3: Controls ── */}
           <div className="flex items-center gap-1.5 ml-auto md:ml-0 flex-shrink-0">
             <button
               onClick={() => {
@@ -168,7 +160,6 @@ const Navigation = () => {
               </button>
             )}
 
-            {/* Mobile hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden p-2 rounded-full hover:bg-white/10 transition-all duration-300 text-white/90"
@@ -180,37 +171,29 @@ const Navigation = () => {
         </div>
 
         {/* Mobile menu */}
-        <AnimatePresence>
-          {mobileOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="absolute top-[64px] left-2 right-2 md:hidden overflow-hidden rounded-2xl bg-background/95 dark:bg-background/95 backdrop-blur-2xl border border-border/50 shadow-[0_20px_60px_rgba(139,107,138,0.25)]"
-            >
-              <div className="flex flex-col p-4 gap-1">
-                {mobileLinks.map(link => (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    onClick={() => setMobileOpen(false)}
-                    className={`font-sans-elegant text-[13px] font-medium py-2.5 px-3 rounded-2xl transition-all duration-300 ${
-                      location.pathname === link.to
-                        ? 'text-primary-foreground bg-primary font-semibold'
-                        : 'text-foreground hover:bg-primary/10'
-                    }`}
-                    style={{ letterSpacing: '0.3px' }}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {mobileOpen && (
+          <div className="absolute top-[64px] left-2 right-2 md:hidden overflow-hidden rounded-2xl bg-background/95 dark:bg-background/95 backdrop-blur-2xl border border-border/50 shadow-[0_20px_60px_rgba(139,107,138,0.25)]">
+            <div className="flex flex-col p-4 gap-1">
+              {mobileLinks.map(link => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setMobileOpen(false)}
+                  className={`font-sans-elegant text-[13px] font-medium py-2.5 px-3 rounded-2xl transition-all duration-300 ${
+                    location.pathname === link.to
+                      ? 'text-primary-foreground bg-primary font-semibold'
+                      : 'text-foreground hover:bg-primary/10'
+                  }`}
+                  style={{ letterSpacing: '0.3px' }}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
-    </motion.div>
+    </div>
   );
 };
 

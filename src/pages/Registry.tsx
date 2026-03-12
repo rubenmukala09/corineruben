@@ -1,6 +1,5 @@
 import { useState, lazy, Suspense } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { motion } from 'framer-motion';
 import { Heart, Gift, Sparkles, Share2, Copy, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 const EmbeddedPaymentForm = lazy(() => import('@/components/EmbeddedPaymentForm'));
@@ -48,7 +47,7 @@ const Registry = () => {
     <div className="min-h-screen pt-28 pb-20 relative">
       <div className="container mx-auto px-6 md:px-12 max-w-2xl relative z-10">
         <div className="glass-section p-6 md:p-10">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
+        <div className="text-center mb-12">
           <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
             <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.registry')}</p>
           </div>
@@ -58,49 +57,35 @@ const Registry = () => {
           <p className="font-sans-elegant text-base text-muted-foreground max-w-md mx-auto" style={{ lineHeight: 1.6 }}>
             {t('registry.subtitle')}
           </p>
-        </motion.div>
+        </div>
 
         {/* Heart message card */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
-          className="glass-card-strong rounded-3xl p-10 text-center mb-10"
-        >
+        <div className="glass-card-strong rounded-3xl p-10 text-center mb-10">
           <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center mx-auto mb-6 shadow-glow">
             <Heart className="w-7 h-7 text-primary-foreground" />
           </div>
           <p className="font-sans-elegant text-sm text-muted-foreground max-w-sm mx-auto" style={{ lineHeight: 1.6 }}>
             {t('registry.message')}
           </p>
-        </motion.div>
+        </div>
 
         {/* Gift tiers */}
         <div className="grid grid-cols-2 gap-4 mb-6">
-          {giftTiers.map((tier, i) => (
-            <motion.button
+          {giftTiers.map((tier) => (
+            <button
               key={tier.amount}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
               onClick={() => handleSelectTier(tier.amount)}
               className="glass-card-strong rounded-3xl p-6 text-center card-hover group relative overflow-hidden"
             >
               <div className="text-3xl mb-3">{tier.emoji}</div>
               <div className="font-serif-display text-2xl text-foreground font-bold mb-1">${tier.amount}</div>
               <div className="font-sans-elegant text-xs text-muted-foreground font-medium">{t(tier.labelKey)}</div>
-            </motion.button>
+            </button>
           ))}
         </div>
 
         {/* Custom amount */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.35 }}
-          className="glass-card-strong rounded-3xl p-6 mb-4 card-hover"
-        >
+        <div className="glass-card-strong rounded-3xl p-6 mb-4 card-hover">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-2xl glass-card flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-primary" />
@@ -124,14 +109,10 @@ const Registry = () => {
               {t('registry.give')}
             </button>
           </div>
-        </motion.div>
+        </div>
 
         {/* Animal Fund */}
-        <motion.button
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
+        <button
           onClick={() => handleSelectTier(100)}
           className="w-full glass-card-strong rounded-3xl p-7 card-hover group flex items-center justify-between"
         >
@@ -145,15 +126,10 @@ const Registry = () => {
           <div className="flex items-center gap-2 text-primary">
             <Gift className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" />
           </div>
-        </motion.button>
+        </button>
+
         {/* RSVP Share Card with QR Code */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.45 }}
-          className="glass-card-strong rounded-3xl p-7 mt-6"
-        >
+        <div className="glass-card-strong rounded-3xl p-7 mt-6">
           <div className="flex items-center gap-3 mb-5">
             <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center">
               <Share2 className="w-5 h-5 text-primary-foreground" />
@@ -165,7 +141,6 @@ const Registry = () => {
           </div>
 
           <div className="flex flex-col md:flex-row items-center gap-6">
-            {/* QR Code */}
             <div className="bg-white p-4 rounded-2xl shadow-sm">
               <QRCodeSVG 
                 value={rsvpUrl} 
@@ -177,7 +152,6 @@ const Registry = () => {
               />
             </div>
 
-            {/* Link & Copy */}
             <div className="flex-1 w-full">
               <p className="font-sans-elegant text-xs text-muted-foreground mb-3">
                 Scan the QR code or copy the link to share with guests
@@ -198,7 +172,7 @@ const Registry = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
         </div>

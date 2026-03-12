@@ -372,6 +372,7 @@ const RSVP = () => {
   const receptionMapsUrl = settings.reception_maps_url || '';
   const receptionTime = settings.reception_time || '19:00';
   const mapEmbedUrl = settings.map_embed_url || '';
+  const addressVisible = settings.venue_address_visible !== 'false';
 
   const getTransportDesc = (item: typeof transport[number]) => {
     if (language === 'fr' && item.description_fr) return item.description_fr;
@@ -429,10 +430,6 @@ const RSVP = () => {
                     <p className="font-serif-display text-xl font-semibold text-foreground">{t('venue.court.after')}</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-2 mb-3">
-                  <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  <p className="font-sans-elegant text-sm text-muted-foreground">{courtAfterVenue}</p>
-                </div>
                 <p className="font-sans-elegant text-xs text-muted-foreground/70">{t('court.wedding.after.desc')}</p>
               </motion.div>
             </div>
@@ -468,13 +465,13 @@ const RSVP = () => {
                       <p className="font-serif-display text-xl font-semibold text-foreground">{time}</p>
                     </div>
                   </div>
-                  {address && (
+                  {addressVisible && address && (
                     <div className="flex items-start gap-2 mb-4">
                       <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                       <p className="font-sans-elegant text-sm text-muted-foreground">{address}</p>
                     </div>
                   )}
-                  {url && (
+                  {addressVisible && url && (
                     <a
                       href={url}
                       target="_blank"
