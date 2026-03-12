@@ -88,7 +88,56 @@ const VenueManager = () => {
 
   if (loading) return <div className="flex justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-primary" /></div>;
 
+  const venueVisible = settings.venue_visible !== 'false';
+
+  const toggleVenueVisibility = async () => {
+    const newValue = venueVisible ? 'false' : 'true';
+    // Check if the setting exists
+    const { data: existing } = await supabase.from('site_settings').select('id').eq('key', 'venue_visible').maybeSingle();
+    if (existing) {
+      await supabase.from('site_settings').update({ value: newValue }).eq('key', 'venue_visible');
+    } else {
+      await supabase.from('site_settings').insert({ key: 'venue_visible', value: newValue });
+    }
+    setSettings({ ...settings, venue_visible: newValue });
+    toast.success(newValue === 'true' ? 'Venue page is now visible to guests' : 'Venue page is now hidden from guests');
+  };
+
   return (
+    <div className="space-y-6">
+      {/* Visibility toggle */}
+      <div className="glass-card-strong rounded-3xl p-5 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          {venueVisible ? (
+            <div className="w-10 h-10 rounded-2xl bg-emerald-500/15 flex items-center justify-center">
+              <Eye className="w-5 h-5 text-emerald-400" />
+            </div>
+          ) : (
+            <div className="w-10 h-10 rounded-2xl bg-amber-500/15 flex items-center justify-center">
+              <EyeOff className="w-5 h-5 text-amber-400" />
+            </div>
+          )}
+          <div>
+            <p className="font-sans-elegant text-sm font-bold text-foreground">
+              Venue Page is {venueVisible ? 'Visible' : 'Hidden'}
+            </p>
+            <p className="font-sans-elegant text-xs text-muted-foreground">
+              {venueVisible ? 'Guests can see the venue page' : 'Guests see a "coming soon" message'}
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={toggleVenueVisibility}
+          className={`px-5 py-2.5 rounded-full font-sans-elegant text-xs font-bold transition-all ${
+            venueVisible
+              ? 'bg-amber-500/15 hover:bg-amber-500/25 text-amber-500'
+              : 'bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-500'
+          }`}
+        >
+          {venueVisible ? 'Hide from Guests' : 'Publish to Guests'}
+        </button>
+      </div>
+
     <Tabs defaultValue="addresses" className="space-y-6">
       <TabsList className="glass-card-strong rounded-2xl p-1 flex flex-wrap w-fit gap-1">
         <TabsTrigger value="addresses" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
