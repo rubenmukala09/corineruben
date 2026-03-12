@@ -26,7 +26,7 @@ import ringsImg from '@/assets/rings-gallery.webp';
 
 
 
-/* Decorative aurora orb — pure CSS, no framer-motion animation */
+/* Decorative aurora orb — pure CSS, no animation */
 const AuroraOrb = forwardRef<HTMLDivElement, {position?: 'left' | 'right' | 'center';color?: string;size?: number;delay?: number;}>(({
   position = 'left',
   color = 'rgba(201,169,182,0.3)',
@@ -49,8 +49,6 @@ const AuroraOrb = forwardRef<HTMLDivElement, {position?: 'left' | 'right' | 'cen
         animation: `aurora-css-1 20s ease-in-out infinite`,
         ...posStyle
       }} />);
-
-
 });
 AuroraOrb.displayName = 'AuroraOrb';
 
@@ -75,7 +73,6 @@ const FallingPetals = ({ isMobile = false }: {isMobile?: boolean;}) => {
         </div>
       )}
     </div>);
-
 };
 
 /* Section divider with golden decorative line */
@@ -87,16 +84,11 @@ const SectionDivider = forwardRef<HTMLDivElement, {variant?: 'heart' | 'sparkle'
     <div className="absolute inset-0 flex items-center translate-y-[3px]">
       <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gold-light/15 to-transparent" />
     </div>
-    <motion.div
-    initial={{ opacity: 0, scale: 0.5 }}
-    whileInView={{ opacity: 1, scale: 1 }}
-    viewport={{ once: true }}
-    className="relative z-10 bg-background/60 backdrop-blur-sm px-4 rounded-full">
-    
+    <div className="relative z-10 bg-background/60 backdrop-blur-sm px-4 rounded-full">
       {variant === 'heart' && <Heart className="w-5 h-5 text-gold/50 fill-gold/30" />}
       {variant === 'sparkle' && <Sparkles className="w-5 h-5 text-gold/60" />}
       {variant === 'line' && <span className="text-gold/40 text-xs">✦ ✦ ✦</span>}
-    </motion.div>
+    </div>
   </div>
 );
 SectionDivider.displayName = 'SectionDivider';
@@ -154,18 +146,18 @@ const PersonalCourtSection = forwardRef<HTMLElement, {t: (key: string) => string
     <section ref={ref} className="py-6 md:py-10 relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10">
         {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-8">
+        <div className="text-center mb-8">
           <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
             <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('court.subtitle')}</p>
           </div>
           <h2 className="font-serif-display text-3xl md:text-4xl text-foreground font-semibold mb-3">{t('love.promise')}</h2>
           <p className="font-sans-elegant text-base text-muted-foreground max-w-md mx-auto">{t('love.promise.desc')}</p>
-        </motion.div>
+        </div>
 
-        {/* Quotes carousel — reserve space to prevent layout shift */}
+        {/* Quotes carousel */}
         <div style={{ minHeight: quotes.length > 0 ? undefined : '280px' }}>
         {quotes.length > 0 &&
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <div>
             <div className="glass-card-strong rounded-3xl p-8 md:p-12 relative overflow-hidden">
               <GoldenCorners />
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/8 to-violet-400/8 blur-2xl pointer-events-none" />
@@ -176,20 +168,11 @@ const PersonalCourtSection = forwardRef<HTMLElement, {t: (key: string) => string
               </div>
 
               <div className="min-h-[80px] flex items-center justify-center relative">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                  key={currentIndex}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="text-center absolute inset-x-0 px-4">
-                  
-                    <p className="font-serif-display text-lg md:text-xl text-foreground italic leading-relaxed">
-                      "{quotes[currentIndex].content}"
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
+                <div className="text-center absolute inset-x-0 px-4 transition-opacity duration-600">
+                  <p className="font-serif-display text-lg md:text-xl text-foreground italic leading-relaxed">
+                    "{quotes[currentIndex].content}"
+                  </p>
+                </div>
               </div>
 
               <div className="text-center mt-6">
@@ -209,7 +192,7 @@ const PersonalCourtSection = forwardRef<HTMLElement, {t: (key: string) => string
                 </div>
             }
             </div>
-          </motion.div>
+          </div>
         }
         </div>
 
@@ -222,18 +205,16 @@ const PersonalCourtSection = forwardRef<HTMLElement, {t: (key: string) => string
           { emoji: '🕊️', label: 'Peace' },
           { emoji: '✨', label: 'Grace' }].
           map((item, i) =>
-          <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
-          className="flex flex-col items-center gap-1.5">
+          <div key={i} className="flex flex-col items-center gap-1.5">
               <div className="w-11 h-11 rounded-2xl glass-card-strong flex items-center justify-center">
                 <span className="text-lg">{item.emoji}</span>
               </div>
               <span className="font-sans-elegant text-[9px] tracking-[0.15em] uppercase text-foreground/60 font-medium">{item.label}</span>
-            </motion.div>
+            </div>
           )}
         </div>
       </div>
     </section>);
-
 });
 PersonalCourtSection.displayName = 'PersonalCourtSection';
 
@@ -281,7 +262,7 @@ const AnnouncementsSection = forwardRef<HTMLElement, {t: (key: string) => string
     <section ref={ref} className="py-8 md:py-12 relative overflow-hidden">
       <AuroraOrb position="right" color="rgba(180,140,210,0.25)" size={350} delay={2} />
       <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <div>
           <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
             <GoldenCorners />
             <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
@@ -299,21 +280,12 @@ const AnnouncementsSection = forwardRef<HTMLElement, {t: (key: string) => string
             </p>
 
             <div className="min-h-[100px] flex items-center justify-center">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentIndex}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.6 }}
-                  className="text-center">
-                  
-                  <p className="font-sans-elegant text-sm font-bold text-primary mb-2">{getTitle(announcements[currentIndex])}</p>
-                  <p className="font-serif-display text-base md:text-lg text-foreground italic leading-relaxed">
-                    {getContent(announcements[currentIndex])}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
+              <div className="text-center transition-opacity duration-600">
+                <p className="font-sans-elegant text-sm font-bold text-primary mb-2">{getTitle(announcements[currentIndex])}</p>
+                <p className="font-serif-display text-base md:text-lg text-foreground italic leading-relaxed">
+                  {getContent(announcements[currentIndex])}
+                </p>
+              </div>
             </div>
 
             {announcements.length > 1 &&
@@ -329,10 +301,9 @@ const AnnouncementsSection = forwardRef<HTMLElement, {t: (key: string) => string
               <Heart className="w-4 h-4 text-primary/40 fill-primary/40" />
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>);
-
 });
 AnnouncementsSection.displayName = 'AnnouncementsSection';
 
@@ -353,34 +324,24 @@ const TransitioningScripture = ({ t }: {t: (key: string) => string;}) => {
   }, []);
 
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+    <div>
       <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
         <GoldenCorners />
         <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-amber-400/10 to-pink-400/10 blur-2xl pointer-events-none" />
         <BookOpen className="w-8 h-8 text-amber-400 icon-glow mx-auto mb-6" />
         <div className="min-h-[160px] md:min-h-[140px] flex items-center justify-center">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentVerse}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.7 }}
-              className="text-center absolute inset-x-0 px-6">
-              
-              <p className="font-serif-display text-xl md:text-2xl text-foreground italic leading-relaxed mb-4">
-                "{t(FEATURED_VERSES[currentVerse].key)}"
-              </p>
-              <p className="font-sans-elegant text-sm text-foreground/70 font-semibold">
-                {FEATURED_VERSES[currentVerse].ref}
-              </p>
-            </motion.div>
-          </AnimatePresence>
+          <div className="text-center absolute inset-x-0 px-6 transition-opacity duration-700">
+            <p className="font-serif-display text-xl md:text-2xl text-foreground italic leading-relaxed mb-4">
+              "{t(FEATURED_VERSES[currentVerse].key)}"
+            </p>
+            <p className="font-sans-elegant text-sm text-foreground/70 font-semibold">
+              {FEATURED_VERSES[currentVerse].ref}
+            </p>
+          </div>
         </div>
       </div>
-    </motion.div>);
-
+    </div>);
 };
 
 /* Auto-transitioning scripture component — no cards, floating text */
@@ -409,33 +370,24 @@ const ScriptureTransition = ({ t }: {t: (key: string) => string;}) => {
     <section className="py-10 md:py-14 relative overflow-hidden">
       <AuroraOrb position="center" color="rgba(139,107,138,0.15)" size={400} delay={3} />
       <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-8">
+        <div className="mb-8">
           <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
             <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('index.scripture')}</p>
           </div>
           <h2 className="font-serif-display text-2xl md:text-5xl text-foreground font-semibold mb-3">{t('verse.section.title')}</h2>
           <p className="font-sans-elegant text-base text-muted-foreground max-w-lg mx-auto">{t('verse.section.subtitle')}</p>
-        </motion.div>
+        </div>
 
         <div className="min-h-[220px] md:min-h-[200px] flex items-center justify-center relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentVerse}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8, ease: 'easeInOut' }}
-              className="text-center px-4 absolute inset-x-0">
-              
-              <BookOpen className="w-6 h-6 text-primary/40 mx-auto mb-5" />
-              <p className="font-serif-display text-xl md:text-2xl lg:text-3xl text-foreground italic leading-relaxed mb-5">
-                "{t(VERSES[currentVerse].key)}"
-              </p>
-              <p className="font-sans-elegant text-sm text-foreground/70 font-semibold">
-                — {VERSES[currentVerse].ref}
-              </p>
-            </motion.div>
-          </AnimatePresence>
+          <div className="text-center px-4 absolute inset-x-0 transition-opacity duration-800">
+            <BookOpen className="w-6 h-6 text-primary/40 mx-auto mb-5" />
+            <p className="font-serif-display text-xl md:text-2xl lg:text-3xl text-foreground italic leading-relaxed mb-5">
+              "{t(VERSES[currentVerse].key)}"
+            </p>
+            <p className="font-sans-elegant text-sm text-foreground/70 font-semibold">
+              — {VERSES[currentVerse].ref}
+            </p>
+          </div>
         </div>
 
         <div className="flex items-center justify-center gap-2 mt-6">
@@ -449,12 +401,10 @@ const ScriptureTransition = ({ t }: {t: (key: string) => string;}) => {
               i === currentVerse ? 'bg-primary w-6 h-2' : 'bg-muted-foreground/25 hover:bg-muted-foreground/40 w-2 h-2'}`
             } />
           </button>
-
           )}
         </div>
       </div>
     </section>);
-
 };
 
 
@@ -509,7 +459,6 @@ const Index = () => {
     dialogContent: [
     { icon: Clock, label: t('court.wedding.time'), desc: t('court.wedding.officiant'), highlight: true },
     { icon: MapPin, label: t('court.wedding.ceremony'), desc: courtVenue, highlight: true }]
-
   },
   {
     id: 'court-after',
@@ -519,7 +468,6 @@ const Index = () => {
     iconColor: 'text-amber-400',
     dialogContent: [
     { icon: Utensils, label: t('court.wedding.after'), desc: t('court.wedding.after.desc') }]
-
   }];
 
 
@@ -537,7 +485,6 @@ const Index = () => {
     { icon: Gem, label: t('details.ceremony.program.vows'), desc: t('details.ceremony.program.vows.desc') },
     { icon: Music, label: t('details.ceremony.program.hymns'), desc: t('details.ceremony.program.hymns.desc') },
     { icon: Cross, label: t('details.ceremony.program.blessing'), desc: t('details.ceremony.program.blessing.desc') }]
-
   },
   {
     id: 'reception',
@@ -551,7 +498,6 @@ const Index = () => {
     { icon: Utensils, label: t('details.reception.program.dinner'), desc: t('details.reception.program.dinner.desc') },
     { icon: Music, label: t('details.reception.program.dance'), desc: t('details.reception.program.dance.desc') },
     { icon: Heart, label: t('details.reception.program.cake'), desc: t('details.reception.program.cake.desc') }]
-
   },
   {
     id: 'accommodation',
@@ -563,7 +509,6 @@ const Index = () => {
     { icon: Hotel, label: t('details.accommodation.hotel'), desc: t('details.accommodation.hotel.desc'), highlight: true },
     { icon: MapPin, label: t('details.accommodation.address'), desc: t('details.accommodation.address.desc') },
     { icon: Sparkles, label: t('details.accommodation.rate'), desc: t('details.accommodation.rate.desc') }]
-
   },
   {
     id: 'transport',
@@ -575,7 +520,6 @@ const Index = () => {
     { icon: Car, label: t('details.transport.shuttle'), desc: t('details.transport.shuttle.desc'), highlight: true },
     { icon: MapPin, label: t('details.transport.parking'), desc: t('details.transport.parking.desc') },
     { icon: Clock, label: t('details.transport.schedule'), desc: t('details.transport.schedule.desc') }]
-
   }];
 
 
@@ -629,87 +573,55 @@ const Index = () => {
           filter: 'saturate(0.4) brightness(1.2)'
         }} />
 
-        <div
-          className="flex flex-col items-center text-center max-w-3xl mx-auto mt-20 md:mt-28 z-20 px-6">
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mt-20 md:mt-28 z-20 px-6">
           
           {/* Floating badge — Blessed Union */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.2 }}
-            className="absolute top-24 left-4 md:left-12 z-30 hidden md:block">
-            
-            <motion.div animate={{ y: [-4, 6, -4] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="glass-card-strong rounded-full px-4 py-2 flex items-center gap-2">
+          <div className="absolute top-24 left-4 md:left-12 z-30 hidden md:block">
+            <div className="glass-card-strong rounded-full px-4 py-2 flex items-center gap-2 animate-float-slow">
               <Cross className="w-3.5 h-3.5 text-rose-400 icon-glow" />
               <span className="font-sans-elegant text-[11px] font-bold text-foreground drop-shadow-sm">{t('badge.blessed')}</span>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Floating badge — Soulmates */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.4 }}
-            className="absolute top-28 right-4 md:right-12 z-30 hidden md:block">
-            
-            <motion.div animate={{ y: [5, -5, 5] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="glass-card-strong rounded-2xl px-4 py-2.5 flex items-center gap-2">
+          <div className="absolute top-28 right-4 md:right-12 z-30 hidden md:block">
+            <div className="glass-card-strong rounded-2xl px-4 py-2.5 flex items-center gap-2 animate-float-slow" style={{ animationDelay: '2s' }}>
               <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400 icon-glow" />
               <span className="font-sans-elegant text-[11px] font-bold text-foreground drop-shadow-sm">{t('love.soulmates')}</span>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Love tagline label */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
+          <div
             className="inline-block px-6 py-2.5 rounded-full mb-6"
             style={{ background: 'rgba(255,255,255,0.08)' }}>
-            
             <p className="font-sans-elegant text-xs tracking-[0.3em] uppercase text-foreground/80 dark:text-foreground/90 font-semibold">
               {t('love.tagline')}
             </p>
-          </motion.div>
+          </div>
 
           <h1 className="font-serif-display text-4xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-2 leading-tight">
             {coupleName1}
           </h1>
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.5, type: "spring" }}
-            className="my-3 md:my-4">
-            
+          <div className="my-3 md:my-4">
             <span className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full gradient-primary shadow-glow animate-pulse-love" role="img" aria-label="Heart">
               <Heart className="w-5 h-5 md:w-7 md:h-7 text-primary-foreground fill-primary-foreground" />
             </span>
-          </motion.div>
+          </div>
           <p className="font-serif-display text-4xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-4 md:mb-6 leading-tight" aria-hidden="false">
             {coupleName2}
           </p>
 
           {/* Romantic subtitle */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-            className="font-serif-display text-lg md:text-xl text-primary italic mb-2">
-            
+          <p className="font-serif-display text-lg md:text-xl text-primary italic mb-2">
             {t('love.together')}
-          </motion.p>
+          </p>
 
           <p className="font-sans-elegant text-lg md:text-xl text-foreground/70 dark:text-foreground/80 max-w-xl mb-8 font-medium" style={{ lineHeight: 1.6 }}>
             {isCourtMode ? t('court.wedding.date') : t('hero.date')}
           </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="flex flex-row gap-4 justify-center mb-8">
-            
+          <div className="flex flex-row gap-4 justify-center mb-8">
             <Link to="/rsvp" className="btn-primary">
               <Heart className="w-4 h-4 fill-current" />
               {t('hero.cta')}
@@ -717,25 +629,16 @@ const Index = () => {
             <Link to="/story" className="btn-outline">
               {t('nav.story')}
             </Link>
-          </motion.div>
+          </div>
         </div>
 
         {/* ===== FLOATING CARDS ===== */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.6, ease: 'easeOut' }}
-          className="w-full max-w-6xl mx-auto mt-6 md:mt-10 relative z-20 px-4">
-          
+        <div className="w-full max-w-6xl mx-auto mt-6 md:mt-10 relative z-20 px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
 
             {/* LEFT */}
             <div className="flex flex-col gap-4 items-center md:items-end md:translate-y-8">
-              <motion.div
-                animate={{ y: [-6, 8, -6] }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card-strong rounded-3xl p-4 md:p-5 w-44 md:w-52">
-                
+              <div className="glass-card-strong rounded-3xl p-4 md:p-5 w-44 md:w-52 animate-float-slow">
                 <div className="flex items-center gap-2 mb-3">
                   <Heart className="w-4 h-4 text-rose-400 fill-rose-400 icon-glow" />
                   <span className="font-sans-elegant text-[10px] font-bold text-foreground/70 tracking-wider uppercase">{t('love.loveStory')}</span>
@@ -744,14 +647,12 @@ const Index = () => {
                   "{t('verse.1cor13')}"
                 </p>
                 <p className="font-sans-elegant text-[10px] text-foreground/70 mt-2 font-semibold">1 Corinthians 13:4-7</p>
-              </motion.div>
+              </div>
 
-              <motion.div
-                animate={{ y: [-8, 10, -8] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card-strong rounded-3xl p-4 flex items-center gap-3 cursor-pointer"
+              <div
+                className="glass-card-strong rounded-3xl p-4 flex items-center gap-3 cursor-pointer animate-float-slow"
+                style={{ animationDelay: '1s' }}
                 onClick={() => toggleTrack('amazing-grace')}>
-                
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-rose-400/20">
                   <img src={couple2} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
@@ -762,16 +663,12 @@ const Index = () => {
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ml-1 transition-all duration-300 ${currentTrack === 'amazing-grace' && isPlaying ? 'gradient-primary shadow-glow' : 'bg-background/80 dark:bg-background/40'}`}>
                   {currentTrack === 'amazing-grace' && isPlaying ? <Pause className="w-3 h-3 text-primary-foreground fill-primary-foreground" /> : <Play className="w-3 h-3 text-foreground fill-foreground" />}
                 </div>
-              </motion.div>
+              </div>
             </div>
 
             {/* CENTER — main countdown card */}
             <div className="flex justify-center z-30 relative">
-              <motion.div
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card-dark rounded-3xl p-6 w-full max-w-[260px] md:scale-105">
-                
+              <div className="glass-card-dark rounded-3xl p-6 w-full max-w-[260px] md:scale-105 animate-float-slow" style={{ animationDelay: '0.5s' }}>
                 <div className="flex items-center gap-2 mb-2">
                   <Heart className="w-4 h-4 text-rose-300 fill-rose-300 animate-pulse-love" />
                   <p className="font-sans-elegant text-xs font-medium opacity-80 tracking-[0.1em] uppercase">{t('love.together')}</p>
@@ -812,52 +709,41 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
 
             {/* RIGHT */}
             <div className="flex flex-col gap-4 items-center md:items-start md:-translate-y-6">
-              <motion.div
-                animate={{ y: [6, -8, 6] }}
-                transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card-strong rounded-full px-5 py-3 flex items-center gap-2">
-                
+              <div className="glass-card-strong rounded-full px-5 py-3 flex items-center gap-2 animate-float-slow" style={{ animationDelay: '1.5s' }}>
                 <Heart className="w-4 h-4 text-rose-400 fill-rose-400 icon-glow animate-pulse-love" />
                 <span className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('index.foreverAlways')}</span>
-              </motion.div>
+              </div>
 
-              <motion.div
-                animate={{ y: [-6, 10, -6] }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card-strong rounded-3xl p-4 flex items-center gap-3 cursor-pointer"
+              <div
+                className="glass-card-strong rounded-3xl p-4 flex items-center gap-3 cursor-pointer animate-float-slow"
+                style={{ animationDelay: '2s' }}
                 onClick={() => toggleTrack('blessed-larson')}>
-                
                 <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-violet-400/20">
                   <img src={couple7} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={48} height={48} loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">I Have Been Blessed</p>
-                  
                 </div>
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ml-1 transition-all duration-300 ${currentTrack === 'blessed-larson' && isPlaying ? 'gradient-primary shadow-glow' : 'bg-background/80 dark:bg-background/40'}`}>
                   {currentTrack === 'blessed-larson' && isPlaying ? <Pause className="w-3 h-3 text-primary-foreground fill-primary-foreground" /> : <Play className="w-3 h-3 text-foreground fill-foreground" />}
                 </div>
-              </motion.div>
+              </div>
 
-              <motion.div
-                animate={{ y: [-4, 8, -4] }}
-                transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card-strong rounded-3xl p-3 md:p-4 w-40 md:w-48">
-                
+              <div className="glass-card-strong rounded-3xl p-3 md:p-4 w-40 md:w-48 animate-float-slow" style={{ animationDelay: '2.5s' }}>
                 <div className="flex items-center gap-1.5 mb-1.5">
                   <Sparkles className="w-3 h-3 text-amber-400 icon-glow" />
                   <p className="font-sans-elegant text-xs text-foreground/60 font-medium">{isCourtMode ? t('court.wedding.date') : t('hero.date')}</p>
                 </div>
                 <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('index.beginJourney')}</p>
-              </motion.div>
+              </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
       </section>
 
@@ -868,7 +754,7 @@ const Index = () => {
       {livestreamActive && livestreamUrl &&
       <section className="py-8 md:py-12 relative overflow-hidden">
           <div className="container mx-auto px-6 md:px-12 max-w-4xl relative z-10">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-6">
+            <div className="text-center mb-6">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card-strong mb-5">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
                 <p className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-red-500 font-bold">LIVE</p>
@@ -876,10 +762,9 @@ const Index = () => {
               <h2 className="font-serif-display text-3xl md:text-4xl text-foreground font-semibold mb-3">
                 {livestreamTitle || t('livestream.title') || 'Watch Live'}
               </h2>
-            </motion.div>
+            </div>
 
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-          className="glass-card-strong rounded-3xl overflow-hidden relative">
+            <div className="glass-card-strong rounded-3xl overflow-hidden relative">
               {embedUrl ?
             <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
                   <iframe
@@ -888,9 +773,7 @@ const Index = () => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 title="Live Stream" />
-              
                 </div> :
-
             <div className="p-12 text-center">
                   <div className="w-20 h-20 rounded-full bg-red-500/15 flex items-center justify-center mx-auto mb-6">
                     <Video className="w-10 h-10 text-red-500" />
@@ -903,13 +786,12 @@ const Index = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary inline-flex items-center gap-2 text-base">
-                
                     <ExternalLink className="w-5 h-5" />
                     Watch Live
                   </a>
                 </div>
             }
-            </motion.div>
+            </div>
 
             <div className="flex justify-center mt-4">
               <button onClick={handleShareStream} className="btn-outline rounded-full px-5 py-2.5 text-sm flex items-center gap-2">
@@ -935,12 +817,7 @@ const Index = () => {
         <AuroraOrb position="right" color="rgba(232,196,184,0.25)" size={350} delay={4} />
         <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
           <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.4 }}>
-              
+            <div>
               <div className="relative">
                 <div className="glass-card-strong rounded-3xl p-2.5">
                   <img
@@ -951,13 +828,8 @@ const Index = () => {
                     height={593}
                     loading="lazy"
                     decoding="async" src={couple5} />
-                  
                 </div>
-                <motion.div
-                  animate={{ y: [-8, 8, -8] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -bottom-6 -right-6 glass-card-strong rounded-3xl p-4">
-                  
+                <div className="absolute -bottom-6 -right-6 glass-card-strong rounded-3xl p-4 animate-float-slow">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center shadow-soft animate-pulse-love">
                       <Heart className="w-5 h-5 text-primary-foreground fill-primary-foreground" />
@@ -967,26 +839,17 @@ const Index = () => {
                       <p className="font-sans-elegant text-[10px] font-semibold text-foreground/90 drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">{t('love.together')}</p>
                     </div>
                   </div>
-                </motion.div>
-                <motion.div
-                  animate={{ y: [6, -6, 6] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -top-4 -left-4 glass-card rounded-3xl px-4 py-2.5 hidden md:block">
-                  
+                </div>
+                <div className="absolute -top-4 -left-4 glass-card rounded-3xl px-4 py-2.5 hidden md:block animate-float-slow" style={{ animationDelay: '2s' }}>
                   <div className="flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-amber-400 icon-glow" />
                     <span className="font-sans-elegant text-xs font-semibold text-foreground">{t('love.loveStory')}</span>
                   </div>
-                </motion.div>
+                </div>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.4 }}>
-              
+            <div>
               <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-6">
                 <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.story')}</p>
               </div>
@@ -1013,7 +876,7 @@ const Index = () => {
                 <Heart className="w-4 h-4 fill-current" />
                 {t('nav.story')} →
               </Link>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -1037,18 +900,17 @@ const Index = () => {
         <AuroraOrb position="left" color="rgba(180,140,210,0.2)" size={500} delay={1} />
         <AuroraOrb position="right" color="rgba(212,165,165,0.2)" size={380} delay={6} />
         <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }} className="text-center mb-10">
+          <div className="text-center mb-10">
             <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('badge.faith')}</p>
             </div>
             <h2 className="font-serif-display text-3xl md:text-4xl text-foreground font-semibold mb-3">{t('index.foundedOnFaith')}</h2>
             <p className="font-sans-elegant text-base text-muted-foreground max-w-md mx-auto">{t('love.promise.desc')}</p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Proverbs card with glassmorphism text overlay */}
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
+            <div className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
               <div className="relative h-full min-h-[300px]">
                 <img src={couple2} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={297} height={428} loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/10" />
@@ -1062,17 +924,16 @@ const Index = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
-            {/* Faith feature cards — redesigned */}
+            {/* Faith feature cards */}
             {[
             { icon: Church, title: t('index.ceremony'), desc: t('index.ceremony.desc'), color: 'from-rose-500/20 to-pink-500/10', iconColor: 'text-rose-400', accent: 'rose', emoji: '⛪' },
             { icon: Cross, title: t('index.blessing'), desc: t('index.blessing.desc'), color: 'from-violet-500/20 to-purple-500/10', iconColor: 'text-violet-400', accent: 'violet', emoji: '✝️' },
             { icon: Gem, title: t('index.vows'), desc: t('index.vows.desc'), color: 'from-amber-500/20 to-orange-500/10', iconColor: 'text-amber-400', accent: 'amber', emoji: '💎' },
             { icon: Users, title: t('index.fellowship'), desc: t('index.fellowship.desc'), color: 'from-emerald-500/20 to-teal-500/10', iconColor: 'text-emerald-400', accent: 'emerald', emoji: '🤝' }].
             map((item, i) =>
-            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: i * 0.04, duration: 0.3 }}
-            className="group glass-card-strong rounded-3xl p-6 card-hover relative overflow-hidden border border-border/20">
+            <div key={i} className="group glass-card-strong rounded-3xl p-6 card-hover relative overflow-hidden border border-border/20">
                 {/* Background glow */}
                 <div className={`absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br ${item.color} blur-2xl pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity duration-500`} />
                 <div className={`absolute bottom-0 left-0 w-20 h-20 rounded-full bg-gradient-to-tr ${item.color} blur-2xl pointer-events-none opacity-30`} />
@@ -1090,7 +951,7 @@ const Index = () => {
 
                 {/* Bottom accent line */}
                 <div className={`mt-4 h-0.5 w-12 rounded-full bg-gradient-to-r ${item.color} group-hover:w-full transition-all duration-500`} />
-              </motion.div>
+              </div>
             )}
           </div>
         </div>
@@ -1103,12 +964,12 @@ const Index = () => {
       <section className="py-6 md:py-10 relative overflow-hidden section-below-fold">
         <AuroraOrb position="center" color="rgba(232,196,184,0.25)" size={450} delay={2} />
         <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
-          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }} className="text-center mb-6">
+          <div className="text-center mb-6">
             <div className="love-divider mb-3">
               <Heart className="w-5 h-5 text-rose-400 fill-rose-400 icon-glow" />
             </div>
             <p className="font-serif-display text-lg text-primary italic">{t('index.capturedMoments')}</p>
-          </motion.div>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {(homepageGalleryImages.length > 0 ?
             homepageGalleryImages.map((img) => ({ img: img.url, label: '♥' })) :
@@ -1119,21 +980,16 @@ const Index = () => {
             { img: couple7, label: '♥' }]).
 
             map((item, i) =>
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.04, duration: 0.3 }}
               className="glass-card-strong rounded-3xl p-1.5 overflow-hidden card-hover">
-              
                 <div className="relative rounded-[20px] overflow-hidden aspect-square group">
                   <img src={item.img} alt="Wedding gallery photo" className="w-full h-full object-cover object-[center_20%] group-hover:scale-105 transition-transform duration-700" width={241} height={241} loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent flex items-end justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <span className="text-2xl">{item.label}</span>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             )}
           </div>
         </div>
@@ -1147,19 +1003,13 @@ const Index = () => {
         <AuroraOrb position="left" color="rgba(201,169,182,0.25)" size={400} delay={0} />
         <AuroraOrb position="right" color="rgba(180,140,210,0.2)" size={350} delay={5} />
         <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.3 }}
-            className="text-center mb-12">
-            
+          <div className="text-center mb-12">
             <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.details')}</p>
             </div>
             <h2 className="font-serif-display text-2xl md:text-5xl text-foreground font-semibold mb-4">{t('details.title')}</h2>
             <p className="font-sans-elegant text-base md:text-lg text-muted-foreground max-w-lg mx-auto">{t('details.subtitle')}</p>
-          </motion.div>
+          </div>
 
           <div className={`grid gap-5 ${isCourtMode ? 'grid-cols-2 max-w-lg mx-auto' : 'grid-cols-2 md:grid-cols-4'}`}>
             {detailSections.map((section, i) => {
@@ -1172,21 +1022,16 @@ const Index = () => {
                 'court-after': 'court.wedding.after'
               };
               return (
-                <motion.button
+                <button
                   key={section.id}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.04, duration: 0.3 }}
-                  whileHover={{ scale: 1.05, y: -6 }}
-                  whileTap={{ scale: 0.96 }}
                   onClick={() => setActiveDetail(section.id)}
                   className="group relative rounded-3xl p-4 md:p-7 text-center cursor-pointer overflow-hidden
                     bg-white/60 dark:bg-white/[0.04] backdrop-blur-xl
                     border border-white/40 dark:border-white/10
                     shadow-[0_8px_32px_rgba(139,107,138,0.08),0_2px_8px_rgba(0,0,0,0.04)]
                     hover:shadow-[0_16px_48px_rgba(139,107,138,0.16),0_4px_16px_rgba(0,0,0,0.06)]
-                    transition-shadow duration-500">
+                    hover:scale-105 hover:-translate-y-1.5 active:scale-95
+                    transition-all duration-500">
                   
                   {/* Soft colored glow behind icon */}
                   <div className={`absolute top-4 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full bg-gradient-to-br ${section.color} blur-2xl pointer-events-none opacity-50 group-hover:opacity-80 transition-opacity duration-500`} />
@@ -1212,8 +1057,7 @@ const Index = () => {
                     <ChevronDown className="w-3 h-3 group-hover:translate-y-0.5 transition-transform duration-300" />
                   </div>
 
-                </motion.button>);
-
+                </button>);
             })}
           </div>
         </div>
@@ -1225,23 +1069,14 @@ const Index = () => {
           <SectionDivider variant="sparkle" />
           <section className="py-8 md:py-12 relative overflow-hidden">
             <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10">
-              <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="glass-card-strong rounded-3xl p-8 md:p-12 text-center relative overflow-hidden border border-primary/20">
-              
+              <div className="glass-card-strong rounded-3xl p-8 md:p-12 text-center relative overflow-hidden border border-primary/20">
                 <GoldenCorners />
                 <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-gradient-to-br from-amber-400/10 to-rose-400/10 blur-3xl pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-gradient-to-tr from-violet-400/10 to-primary/10 blur-3xl pointer-events-none" />
                 
-                <motion.div
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                className="text-5xl mb-4">
-                
+                <div className="text-5xl mb-4 animate-pulse-love">
                   ⛪
-                </motion.div>
+                </div>
                 
                 <h3 className="font-serif-display text-2xl md:text-3xl text-foreground font-semibold mb-4">
                   {t('church.wedding.coming.short')}
@@ -1255,7 +1090,7 @@ const Index = () => {
                   <span className="font-sans-elegant text-sm text-primary font-semibold">{t('church.wedding.coming.teaser')}</span>
                   <Heart className="w-4 h-4 text-rose-400 fill-rose-400 animate-pulse-love" />
                 </div>
-              </motion.div>
+              </div>
             </div>
           </section>
         </>
@@ -1280,7 +1115,7 @@ const Index = () => {
       <section className="py-8 md:py-12 relative overflow-hidden section-below-fold">
         <AuroraOrb position="center" color="rgba(180,140,210,0.2)" size={400} delay={4} />
         <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }} className="text-center mb-10">
+          <div className="text-center mb-10">
             <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
               <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('index.explore')}</p>
             </div>
@@ -1290,15 +1125,14 @@ const Index = () => {
             <p className="font-sans-elegant text-lg text-muted-foreground max-w-md mx-auto">
               {t('explore.subtitle')}
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
             {features.map((feat, i) =>
-            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: i * 0.04, duration: 0.3 }}>
+            <div key={i}>
                 <Link
                 to={feat.to}
                 className="glass-card-strong rounded-3xl p-7 flex flex-col items-center text-center card-hover group block h-full relative overflow-hidden">
-                
                   <div className={`absolute top-0 right-0 w-20 h-20 rounded-full bg-gradient-to-br ${feat.bg} blur-xl pointer-events-none`} />
                   <div className={`w-14 h-14 rounded-3xl bg-gradient-to-br ${feat.bg} flex items-center justify-center mb-4 group-hover:shadow-glow group-hover:scale-110 transition-all duration-500`}>
                     <feat.icon className={`w-6 h-6 ${feat.color} icon-glow`} />
@@ -1306,7 +1140,7 @@ const Index = () => {
                   <h3 className="font-serif-display text-lg font-semibold text-foreground mb-2">{feat.label}</h3>
                   <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed">{feat.desc}</p>
                 </Link>
-              </motion.div>
+              </div>
             )}
           </div>
         </div>
@@ -1320,7 +1154,7 @@ const Index = () => {
         <AuroraOrb position="left" color="rgba(212,165,200,0.3)" size={400} delay={0} />
         <AuroraOrb position="right" color="rgba(139,107,138,0.2)" size={350} delay={6} />
         <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: 0.3 }}>
+          <div>
             <div className="glass-card-strong rounded-full w-28 h-28 mx-auto mb-8 flex items-center justify-center overflow-hidden ring-4 ring-primary/15 relative">
               <img src={couple8} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={112} height={112} loading="lazy" decoding="async" />
               <div className="absolute inset-0 flex items-center justify-center bg-foreground/20" />
@@ -1341,7 +1175,7 @@ const Index = () => {
               <Heart className="w-5 h-5 fill-current" />
               {t('hero.cta')}
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -1364,26 +1198,22 @@ const Index = () => {
             </LazyDialogHeader>
             <div className="space-y-3 pt-2 max-h-[60vh] overflow-y-auto pr-1">
               {section.dialogContent.map((item, j) =>
-            <motion.div
+            <div
               key={j}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: j * 0.06 }}
               className={`rounded-2xl p-4 flex items-start gap-3 ${
               (item as {highlight?: boolean;}).highlight ?
               'bg-primary/[0.06] dark:bg-primary/[0.08] border border-primary/15' :
               'glass-card'}`
               }>
-              
                   <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center flex-shrink-0 mt-0.5`}>
                     <item.icon className={`w-4 h-4 ${section.iconColor}`} />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-sans-elegant text-sm font-semibold text-foreground">{item.label}</p>
-                    <p className="font-sans-elegant text-xs text-muted-foreground mt-0.5" style={{ lineHeight: 1.6 }}>{item.desc}</p>
+                  <div>
+                    <p className="font-sans-elegant text-sm font-bold text-foreground">{item.label}</p>
+                    <p className="font-sans-elegant text-xs text-muted-foreground leading-relaxed mt-0.5">{item.desc}</p>
                   </div>
-                </motion.div>
-            )}
+                </div>
+              )}
             </div>
           </LazyDialogContent>
         </LazyDialog>
@@ -1393,7 +1223,6 @@ const Index = () => {
 
 
     </div>);
-
 };
 
 export default Index;
