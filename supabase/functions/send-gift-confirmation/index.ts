@@ -62,20 +62,23 @@ serve(async (req) => {
 
     const data = await res.json();
     if (!res.ok) {
-      console.error("Resend error:", JSON.stringify(data));
-      throw new Error(`Resend API error [${res.status}]: ${JSON.stringify(data)}`);
+      console.warn("Resend could not send gift confirmation:", JSON.stringify(data));
+      return new Response(
+        JSON.stringify({ success: false, emailSent: false, reason: data?.name ?? "resend_error" }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+      );
     }
 
-    return new Response(JSON.stringify({ success: true }), {
+    return new Response(JSON.stringify({ success: true, emailSent: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("Error sending gift confirmation:", errorMessage);
-    return new Response(JSON.stringify({ error: errorMessage }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 500,
-    });
+    return new Response(
+      JSON.stringify({ success: false, emailSent: false, reason: errorMessage }),
+      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+    );
   }
 });

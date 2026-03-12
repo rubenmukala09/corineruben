@@ -82,20 +82,26 @@ serve(async (req) => {
 
     const data = await res.json();
     if (!res.ok) {
-      console.error("Resend error:", JSON.stringify(data));
-      throw new Error(`Resend API error [${res.status}]: ${JSON.stringify(data)}`);
+      // Email sending failed (e.g. domain not verified) — log but do NOT return 500.
+      // The RSVP itself was already saved; a failed confirmation email is non-fatal.
+      console.warn("Resend could not send email:", JSON.stringify(data));
+      return new Response(
+        JSON.stringify({ success: false, emailSent: false, reason: data?.name ?? "resend_error" }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+      );
     }
 
-    return new Response(JSON.stringify({ success: true }), {
+    return new Response(JSON.stringify({ success: true, emailSent: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("Error sending RSVP confirmation:", errorMessage);
-    return new Response(JSON.stringify({ error: errorMessage }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 500,
-    });
+    // Return 200 so the RSVP submission doesn't appear broken to guests.
+    return new Response(
+      JSON.stringify({ success: false, emailSent: false, reason: errorMessage }),
+      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+    );
   }
 });
