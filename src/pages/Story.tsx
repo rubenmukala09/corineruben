@@ -172,10 +172,10 @@ const Story = () => {
     return (
       <motion.div
         key={key}
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ delay: index * 0.04, duration: 0.3 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.4 }}
         className="relative mb-16"
       >
         {/* Timeline dot */}
@@ -205,8 +205,9 @@ const Story = () => {
                   src={image}
                   alt={content.title}
                   className="w-full aspect-[4/3] object-cover object-[center_20%] rounded-[20px] group-hover:scale-105 transition-transform duration-700"
-                  loading="lazy"
-                  decoding="async"
+                  loading={index < 2 ? 'eager' : 'lazy'}
+                  decoding={index < 2 ? 'sync' : 'async'}
+                  fetchPriority={index < 2 ? 'high' : undefined}
                   width={600}
                   height={450}
                 />
@@ -398,17 +399,16 @@ const Story = () => {
 
         {/* Photo grid — masonry style */}
         {photos.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}
+          <div
             className="columns-2 md:columns-3 gap-4 space-y-4"
           >
             {photos.map((photo, i) => (
               <motion.button
                 key={photo.id}
                 type="button"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.04 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
                 whileHover={{ scale: 1.02 }}
                 onClick={() => setLightbox(photo.url)}
                 className="block w-full break-inside-avoid rounded-2xl overflow-hidden cursor-zoom-in shadow-md hover:shadow-xl transition-shadow"
@@ -416,8 +416,10 @@ const Story = () => {
                 <img
                   src={photo.url}
                   alt={photo.alt}
-                  loading="lazy"
-                  className="w-full object-cover object-[center_20%]"
+                  loading={i < 4 ? 'eager' : 'lazy'}
+                  width={400}
+                  height={300}
+                  className="w-full aspect-[4/3] object-cover object-[center_20%]"
                 />
                 {photo.uploader && (
                   <div className="glass-card px-3 py-1.5 text-center">
@@ -426,7 +428,7 @@ const Story = () => {
                 )}
               </motion.button>
             ))}
-          </motion.div>
+          </div>
         )}
       </div>
     </div>
