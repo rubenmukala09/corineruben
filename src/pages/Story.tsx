@@ -8,7 +8,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
 // Personal couple photos
-import couple1 from '@/assets/couple-1.jpg';
+import coupleFirstMeeting from '@/assets/couple-first-meeting.jpg';
 import couple3 from '@/assets/couple-3.jpg';
 import couple5 from '@/assets/couple-5.jpg';
 import couple9 from '@/assets/couple-9.jpg';
