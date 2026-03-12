@@ -51,8 +51,8 @@ const Toaster = lazy(() => import("@/components/ui/toaster").then(m => ({ defaul
 const Sonner = lazy(() => import("@/components/ui/sonner").then(m => ({ default: m.Toaster })));
 const TooltipProvider = lazy(() => import("@/components/ui/tooltip").then(m => ({ default: m.TooltipProvider })));
 
-// Route-level code splitting — each page loads only when first visited
-import Index from "./pages/Index";
+// Route-level code splitting — every page lazy-loaded to minimize initial bundle
+const Index        = lazy(() => import("./pages/Index"));
 const Story      = lazy(() => import("./pages/Story"));
 const RSVP       = lazy(() => import("./pages/RSVP"));
 const Dashboard  = lazy(() => import("./pages/Dashboard"));
