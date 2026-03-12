@@ -517,31 +517,144 @@
     background: hsl(var(--secondary) / 0.25);
   }
 
-  /* ===== GLASS INPUT ===== */
+  /* ===== GLASS INPUT — typing boxes ===== */
+  /*
+   * Typing areas use a warm cream fill so they read as "write here"
+   * — clearly different from glass cards (blur + transparent) and buttons (pill/filled).
+   */
   .glass-input {
-    background: rgba(255, 255, 255, 0.65);
-    -webkit-backdrop-filter: blur(24px);
-    backdrop-filter: blur(24px);
-    border: 1.5px solid rgba(163, 126, 172, 0.35);
-    border-radius: 14px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(163, 126, 172, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+    background: rgba(252, 250, 249, 0.95);   /* warm cream — clearly a writing surface */
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 1.5px solid rgba(163, 126, 172, 0.45);
+    border-radius: 12px;
+    color: hsl(var(--foreground));
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    box-shadow:
+      0 2px 6px rgba(163, 126, 172, 0.07),
+      inset 0 1px 3px rgba(0, 0, 0, 0.04);   /* subtle inward depth — "hollow" */
   }
-  .glass-input:focus {
-    border-color: hsl(var(--primary) / 0.75);
-    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.15), 0 4px 12px hsl(var(--primary) / 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  .glass-input:hover {
+    border-color: rgba(163, 126, 172, 0.65);
+    box-shadow:
+      0 4px 10px rgba(163, 126, 172, 0.10),
+      inset 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+  .glass-input:focus,
+  .glass-input:focus-within {
+    background: rgba(255, 255, 255, 1);      /* fully white when active */
+    border-color: hsl(var(--primary));
+    outline: none;
+    box-shadow:
+      0 0 0 3px hsl(var(--primary) / 0.14),  /* amethyst focus ring */
+      0 4px 12px rgba(163, 126, 172, 0.12),
+      inset 0 1px 3px rgba(0, 0, 0, 0.03);
   }
   .glass-input::placeholder {
-    color: hsl(var(--muted-foreground) / 0.6);
+    color: hsl(var(--muted-foreground) / 0.55);
+    font-style: italic;
+  }
+  textarea.glass-input {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.6;
   }
   .dark .glass-input {
-    background: rgba(28, 24, 40, 0.6);
-    border: 1.5px solid rgba(160, 130, 200, 0.35);
-    box-shadow: 0 2px 8px rgba(10, 8, 18, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    background: rgba(30, 25, 44, 0.88);
+    border: 1.5px solid rgba(160, 130, 200, 0.4);
+    color: hsl(var(--foreground));
+    box-shadow: 0 2px 8px rgba(10, 8, 18, 0.3), inset 0 1px 2px rgba(0, 0, 0, 0.3);
   }
-  .dark .glass-input:focus {
-    border-color: hsl(var(--primary) / 0.65);
-    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.12), 0 4px 12px hsl(var(--primary) / 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  .dark .glass-input:hover {
+    border-color: rgba(160, 130, 200, 0.6);
+  }
+  .dark .glass-input:focus,
+  .dark .glass-input:focus-within {
+    background: rgba(36, 30, 52, 0.96);
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.14), 0 4px 12px rgba(10, 8, 18, 0.2), inset 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  /* ===== SELECT TRIGGER — dropdown chooser ===== */
+  /*
+   * Matches input styling so all "pick / type" fields feel like a family,
+   * but with a chevron indicator to signal it opens a list.
+   */
+  .select-trigger-styled {
+    background: rgba(252, 250, 249, 0.95);
+    border: 1.5px solid rgba(163, 126, 172, 0.45);
+    border-radius: 12px;
+    color: hsl(var(--foreground));
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 6px rgba(163, 126, 172, 0.07), inset 0 1px 3px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+  }
+  .select-trigger-styled:hover {
+    border-color: rgba(163, 126, 172, 0.65);
+    box-shadow: 0 4px 10px rgba(163, 126, 172, 0.10), inset 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+  .select-trigger-styled:focus,
+  .select-trigger-styled[data-state="open"] {
+    background: rgba(255, 255, 255, 1);
+    border-color: hsl(var(--primary));
+    outline: none;
+    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.14), 0 4px 12px rgba(163, 126, 172, 0.12);
+  }
+  .dark .select-trigger-styled {
+    background: rgba(30, 25, 44, 0.88);
+    border: 1.5px solid rgba(160, 130, 200, 0.4);
+    color: hsl(var(--foreground));
+    box-shadow: 0 2px 8px rgba(10, 8, 18, 0.3), inset 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  .dark .select-trigger-styled:focus,
+  .dark .select-trigger-styled[data-state="open"] {
+    background: rgba(36, 30, 52, 0.96);
+    border-color: hsl(var(--primary));
+    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.14), 0 4px 12px rgba(10, 8, 18, 0.2);
+  }
+
+  /* ===== DROPDOWN / SELECT CONTENT ===== */
+  /*
+   * Menu panels float with a strong glass + elevated shadow so they read
+   * as a layer above the page — distinct from cards and inputs.
+   */
+  .dropdown-glass {
+    background: rgba(255, 255, 255, 0.97);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1.5px solid rgba(163, 126, 172, 0.25);
+    border-top: 2px solid hsl(var(--primary) / 0.5);  /* accent top stripe = "menu" */
+    border-radius: 16px;
+    box-shadow:
+      0 8px 32px rgba(163, 126, 172, 0.18),
+      0 2px 8px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+  }
+  .dark .dropdown-glass {
+    background: rgba(26, 22, 38, 0.96);
+    border: 1.5px solid rgba(160, 130, 200, 0.25);
+    border-top: 2px solid hsl(var(--primary) / 0.6);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 2px 8px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* ===== FORM FIELD LABEL ===== */
+  /*
+   * Labels sit clearly above their input with a slightly smaller weight
+   * so they read as "instructions", not headings.
+   */
+  .form-label {
+    display: block;
+    font-family: 'Inter', 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 6px;
   }
 
   /* ===== GLASS SECTION ===== */
@@ -894,4 +1007,47 @@
 }
 [role="dialog"]::-webkit-scrollbar {
   display: none;
+}
+
+/* ===== GLOBAL INTERACTIVE AFFORDANCES ===== */
+/*
+ * Every button / link / clickable thing gets:
+ *   cursor-pointer  — signals "click me"
+ *   active scale    — press feedback (tactile feel)
+ *   smooth transition
+ */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+a[href],
+label[for],
+summary {
+  cursor: pointer;
+}
+
+button:not(:disabled):active,
+[role="button"]:not([aria-disabled="true"]):active {
+  transform: scale(0.97);
+  filter: brightness(0.95);
+  transition: transform 0.08s ease, filter 0.08s ease;
+}
+
+/* Clickable glass cards — lift on hover, press on click */
+.glass-card[role="button"],
+.glass-card-strong[role="button"],
+.glass-card.cursor-pointer,
+.glass-card-strong.cursor-pointer {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.glass-card[role="button"]:hover,
+.glass-card-strong[role="button"]:hover,
+.glass-card.cursor-pointer:hover,
+.glass-card-strong.cursor-pointer:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 48px rgba(163, 126, 172, 0.18);
+}
+.glass-card[role="button"]:active,
+.glass-card-strong[role="button"]:active,
+.glass-card.cursor-pointer:active,
+.glass-card-strong.cursor-pointer:active {
+  transform: translateY(0px) scale(0.98);
 }
