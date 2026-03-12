@@ -1,6 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, Car, Train, ParkingCircle, Hotel, ExternalLink, Church, PartyPopper, Camera, Music, Cake, Sparkles, Waves, Loader2, Info } from 'lucide-react';
+import { MapPin, Clock, Car, Train, ParkingCircle, Hotel, ExternalLink, Church, PartyPopper, Camera, Music, Cake, Sparkles, Waves, Loader2, Info, EyeOff } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useSiteSettings, useVenueData } from '@/hooks/useSiteContent';
 
 const ICON_MAP: Record<string, React.ElementType> = {
@@ -55,6 +56,26 @@ const Venue = () => {
     return (
       <div className="min-h-screen pt-28 pb-20 flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  // If venue is hidden, show coming soon
+  if (settings.venue_visible === 'false') {
+    return (
+      <div className="min-h-screen pt-28 pb-20 flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto px-6">
+          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-5">
+            <EyeOff className="w-7 h-7 text-primary" />
+          </div>
+          <h1 className="font-serif-display text-3xl text-foreground font-semibold mb-3">Coming Soon</h1>
+          <p className="font-sans-elegant text-base text-muted-foreground mb-6">
+            Venue details will be shared soon. Stay tuned! 💕
+          </p>
+          <Link to="/" className="btn-primary">
+            Back to Home
+          </Link>
+        </div>
       </div>
     );
   }
