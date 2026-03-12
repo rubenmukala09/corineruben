@@ -38,10 +38,12 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 import AuroraBackground from "@/components/AuroraBackground";
 import { MusicProvider } from "@/components/MusicContext";
-import MusicFloatingButton from "@/components/MusicPlayer";
-import FloatingHearts from "@/components/FloatingHearts";
-import ScrollProgress from "@/components/ScrollProgress";
 import ProtectedRoute from "@/components/ProtectedRoute";
+
+// Lazy-load decorative/ambient components — not needed for FCP
+const MusicFloatingButton = lazy(() => import("@/components/MusicPlayer"));
+const FloatingHearts = lazy(() => import("@/components/FloatingHearts"));
+const ScrollProgress = lazy(() => import("@/components/ScrollProgress"));
 
 // Lazy-load non-critical shell components to reduce unused JS on initial load
 const GiftFAB = lazy(() => import("@/components/GiftFAB"));
@@ -49,8 +51,8 @@ const Toaster = lazy(() => import("@/components/ui/toaster").then(m => ({ defaul
 const Sonner = lazy(() => import("@/components/ui/sonner").then(m => ({ default: m.Toaster })));
 const TooltipProvider = lazy(() => import("@/components/ui/tooltip").then(m => ({ default: m.TooltipProvider })));
 
-// Route-level code splitting — each page loads only when first visited
-import Index from "./pages/Index";
+// Route-level code splitting — every page lazy-loaded to minimize initial bundle
+const Index        = lazy(() => import("./pages/Index"));
 const Story      = lazy(() => import("./pages/Story"));
 const RSVP       = lazy(() => import("./pages/RSVP"));
 const Dashboard  = lazy(() => import("./pages/Dashboard"));
@@ -92,10 +94,12 @@ const AppShell = () => {
           <AuroraBackground variant="hero" />
         </div>
       )}
-      {!disableAmbientEffects && <FloatingHearts />}
+      <Suspense fallback={null}>
+        {!disableAmbientEffects && <FloatingHearts />}
+      </Suspense>
 
       <div className="relative z-10">
-        <ScrollProgress />
+        <Suspense fallback={null}><ScrollProgress /></Suspense>
         <ScrollToTop />
         <Navigation />
         <Suspense fallback={<PageLoader />}>
@@ -125,7 +129,7 @@ const AppShell = () => {
         <Footer />
       </div>
 
-      <MusicFloatingButton />
+      <Suspense fallback={null}><MusicFloatingButton /></Suspense>
       <Suspense fallback={null}><GiftFAB /></Suspense>
     </AuthProvider>
   );
