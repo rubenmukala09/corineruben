@@ -9,7 +9,6 @@ import { QRCodeSVG } from 'qrcode.react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useSiteSettings, useVenueData } from '@/hooks/useSiteContent';
-import ringsImg from '@/assets/rings-small.webp';
 
 // Table seating config — 30 tables with flower/nature names
 const TABLE_NAMES = [
@@ -630,28 +629,9 @@ const RSVP = () => {
             <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.rsvp')}</p>
           </div>
 
-          {/* Rings decoration around title */}
-          <div className="relative inline-block mb-4">
-            <motion.img
-              src={ringsImg}
-              alt="Wedding rings"
-              className="absolute -top-6 -left-10 w-14 h-14 md:w-20 md:h-20 object-contain opacity-60 rotate-[-15deg] pointer-events-none"
-              initial={{ opacity: 0, scale: 0.5, rotate: -30 }}
-              animate={{ opacity: 0.6, scale: 1, rotate: -15 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-            />
-            <motion.img
-              src={ringsImg}
-              alt="Wedding rings"
-              className="absolute -top-4 -right-8 w-12 h-12 md:w-16 md:h-16 object-contain opacity-40 rotate-[20deg] pointer-events-none"
-              initial={{ opacity: 0, scale: 0.5, rotate: 40 }}
-              animate={{ opacity: 0.4, scale: 1, rotate: 20 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-            />
-            <h1 className="font-serif-display text-3xl md:text-6xl text-foreground font-semibold relative z-10" style={{ letterSpacing: '-0.5px' }}>
-              {t('rsvp.title')}
-            </h1>
-          </div>
+          <h1 className="font-serif-display text-3xl md:text-6xl text-foreground font-semibold mb-4 tracking-tight">
+            {t('rsvp.title')}
+          </h1>
 
           <div className="flex items-center justify-center gap-3 mb-2">
             <Gem className="w-4 h-4 text-primary/50" />
