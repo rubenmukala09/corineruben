@@ -16,10 +16,7 @@ import { useSiteImages, useSiteSettings } from '@/hooks/useSiteContent';
 
 import heroImg from '@/assets/hero-wedding-thumb.webp';
 import couple11 from '@/assets/couple-11-small.webp';
-import coupleImgSmall from '@/assets/couple-lavender-micro.webp';
 import couple2 from '@/assets/couple-2-small.webp';
-import couple3 from '@/assets/couple-3-thumb.webp';
-import couple4 from '@/assets/couple-4-thumb.webp';
 import couple5 from '@/assets/couple-5-small.webp';
 import couple7 from '@/assets/couple-7-small.webp';
 import couple8 from '@/assets/couple-12.jpg';
