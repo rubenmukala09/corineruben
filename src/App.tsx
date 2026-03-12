@@ -126,7 +126,7 @@ const AppShell = () => {
       </div>
 
       <MusicFloatingButton />
-      <GiftFAB />
+      <Suspense fallback={null}><GiftFAB /></Suspense>
     </AuthProvider>
   );
 };
