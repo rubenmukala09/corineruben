@@ -375,7 +375,7 @@ const TransitioningScripture = ({ t }: {t: (key: string) => string;}) => {
               <p className="font-serif-display text-xl md:text-2xl text-foreground italic leading-relaxed mb-4">
                 "{t(FEATURED_VERSES[currentVerse].key)}"
               </p>
-              <p className="font-sans-elegant text-sm text-muted-foreground font-semibold">
+              <p className="font-sans-elegant text-sm text-foreground/70 font-semibold">
                 {FEATURED_VERSES[currentVerse].ref}
               </p>
             </motion.div>
@@ -434,7 +434,7 @@ const ScriptureTransition = ({ t }: {t: (key: string) => string;}) => {
               <p className="font-serif-display text-xl md:text-2xl lg:text-3xl text-foreground italic leading-relaxed mb-5">
                 "{t(VERSES[currentVerse].key)}"
               </p>
-              <p className="font-sans-elegant text-sm text-muted-foreground font-semibold">
+              <p className="font-sans-elegant text-sm text-foreground/70 font-semibold">
                 — {VERSES[currentVerse].ref}
               </p>
             </motion.div>
@@ -746,7 +746,7 @@ const Index = () => {
                 <p className="font-serif-display text-sm text-foreground italic leading-relaxed">
                   "{t('verse.1cor13')}"
                 </p>
-                <p className="font-sans-elegant text-[10px] text-muted-foreground mt-2 font-semibold">1 Corinthians 13:4-7</p>
+                <p className="font-sans-elegant text-[10px] text-foreground/70 mt-2 font-semibold">1 Corinthians 13:4-7</p>
               </motion.div>
 
               <motion.div
