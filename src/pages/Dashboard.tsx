@@ -1021,20 +1021,29 @@ const Dashboard = () => {
               className="glass-card-strong rounded-3xl overflow-hidden">
               <Table>
                 <TableHeader>
-                  <TableRow className="border-border/20">
-                    <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Email</TableHead>
-                    <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Subscribed On</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {subscribers.length === 0 ? (
-                    <TableRow><TableCell colSpan={2} className="text-center py-8 text-muted-foreground font-sans-elegant">No subscribers yet</TableCell></TableRow>
-                  ) : subscribers.map(s => (
-                    <TableRow key={s.id} className="border-border/10 hover:bg-primary/5">
-                      <TableCell className="font-sans-elegant text-sm text-foreground">{s.email}</TableCell>
-                      <TableCell className="font-sans-elegant text-sm text-muted-foreground">{new Date(s.created_at).toLocaleDateString()}</TableCell>
-                    </TableRow>
-                  ))}
+                   <TableRow className="border-border/20">
+                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Email</TableHead>
+                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">Subscribed On</TableHead>
+                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground w-12"></TableHead>
+                   </TableRow>
+                 </TableHeader>
+                 <TableBody>
+                   {subscribers.length === 0 ? (
+                     <TableRow><TableCell colSpan={3} className="text-center py-8 text-muted-foreground font-sans-elegant">No subscribers yet</TableCell></TableRow>
+                   ) : subscribers.map(s => (
+                     <TableRow key={s.id} className="border-border/10 hover:bg-primary/5">
+                       <TableCell className="font-sans-elegant text-sm text-foreground">{s.email}</TableCell>
+                       <TableCell className="font-sans-elegant text-sm text-muted-foreground">{new Date(s.created_at).toLocaleDateString()}</TableCell>
+                       <TableCell>
+                         <button type="button" onClick={async () => {
+                           await supabase.from('newsletter_subscribers').delete().eq('id', s.id);
+                           setSubscribers(prev => prev.filter(x => x.id !== s.id));
+                         }} className="w-8 h-8 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 flex items-center justify-center transition-colors">
+                           <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                         </button>
+                       </TableCell>
+                     </TableRow>
+                   ))}
                 </TableBody>
               </Table>
             </motion.div>
