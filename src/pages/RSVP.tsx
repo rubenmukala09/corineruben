@@ -469,13 +469,13 @@ const RSVP = () => {
                       <p className="font-serif-display text-xl font-semibold text-foreground">{time}</p>
                     </div>
                   </div>
-                  {address && (
+                  {addressVisible && address && (
                     <div className="flex items-start gap-2 mb-4">
                       <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                       <p className="font-sans-elegant text-sm text-muted-foreground">{address}</p>
                     </div>
                   )}
-                  {url && (
+                  {addressVisible && url && (
                     <a
                       href={url}
                       target="_blank"
