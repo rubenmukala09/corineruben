@@ -428,7 +428,7 @@ const Story = () => {
                 )}
               </motion.button>
             ))}
-          </motion.div>
+          </div>
         )}
       </div>
     </div>
