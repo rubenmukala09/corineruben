@@ -14,9 +14,20 @@ function asyncCssPlugin(): Plugin {
     name: 'async-css',
     enforce: 'post',
     transformIndexHtml(html) {
+      // Remove malformed source preloads/scripts that can cause MIME errors in production audits
+      const sanitizedHtml = html
+        .replace(
+          /<link[^>]*rel=["']modulepreload["'][^>]*href=["'](?:\/src\/main\.tsx|data:application\/octet-stream[^"']*)["'][^>]*>\s*/g,
+          ''
+        )
+        .replace(
+          /<script[^>]*type=["']module["'][^>]*src=["']data:application\/octet-stream[^"']*["'][^>]*><\/script>\s*/g,
+          ''
+        );
+
       // Match Vite-injected stylesheet links (hashed asset CSS files only)
-      return html.replace(
-        /<link rel="stylesheet" crossorigin href="(\/assets\/[^"]+\.css)">/g,
+      return sanitizedHtml.replace(
+        /<link rel="stylesheet" crossorigin href="(\/assets\/[^\"]+\.css)">/g,
         `<link rel="stylesheet" href="$1" media="print" onload="this.media='all'" crossorigin>
     <noscript><link rel="stylesheet" href="$1" crossorigin></noscript>`
       );
