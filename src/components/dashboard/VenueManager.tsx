@@ -8,9 +8,9 @@ import { motion } from 'framer-motion';
 
 const VenueManager = () => {
   const [settings, setSettings] = useState<Record<string, string>>({});
-  const [schedule, setSchedule] = useState<Record<string, string>[]>([]);
-  const [hotels, setHotels] = useState<Record<string, string>[]>([]);
-  const [transport, setTransport] = useState<Record<string, string>[]>([]);
+  const [schedule, setSchedule] = useState<Record<string, any>[]>([]);
+  const [hotels, setHotels] = useState<Record<string, any>[]>([]);
+  const [transport, setTransport] = useState<Record<string, any>[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
