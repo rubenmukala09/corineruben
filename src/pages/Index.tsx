@@ -473,7 +473,10 @@ const Index = () => {
   const { t } = useLanguage();
   const { isPlaying, currentTrack, toggleTrack } = useMusic();
   const isMobile = useIsMobile();
-  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [countdown, setCountdown] = useState(() => {
+    const diff = Math.max(0, new Date(settings.active_event === 'court' ? (settings.court_wedding_date || '2026-03-16T14:00:00') : (settings.wedding_date || '2026-10-16T15:00:00')).getTime() - Date.now());
+    return { days: Math.floor(diff / 86400000), hours: Math.floor((diff % 86400000) / 3600000), minutes: Math.floor((diff % 3600000) / 60000), seconds: Math.floor((diff % 60000) / 1000) };
+  });
   const [activeDetail, setActiveDetail] = useState<string | null>(null);
   const { images: homepageGalleryImages, loading: imagesLoading } = useSiteImages('homepage_gallery');
   const { settings, loading: settingsLoading } = useSiteSettings();
