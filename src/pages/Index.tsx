@@ -518,7 +518,6 @@ const Index = () => {
     color: 'from-amber-500/20 to-orange-500/10',
     iconColor: 'text-amber-400',
     dialogContent: [
-    { icon: MapPin, label: t('court.wedding.after'), desc: courtAfterVenue, highlight: true },
     { icon: Utensils, label: t('court.wedding.after'), desc: t('court.wedding.after.desc') }]
 
   }];
