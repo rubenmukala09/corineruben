@@ -625,9 +625,10 @@ const Index = () => {
       <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-8">
         <FallingPetals isMobile={isMobile} />
 
-        <div className="absolute inset-0 mix-blend-soft-light z-[1]">
-          <img src={coupleImgSmall} alt="Wedding background" className="w-full h-full object-cover opacity-[0.1]" style={{ filter: 'saturate(0.4) brightness(1.2)' }} width={1920} height={1080} fetchPriority="high" />
-        </div>
+        <div className="absolute inset-0 mix-blend-soft-light z-[1] opacity-[0.1]" style={{
+          background: 'radial-gradient(ellipse at 30% 20%, hsl(var(--plum-light) / 0.3) 0%, transparent 50%), radial-gradient(ellipse at 70% 60%, hsl(var(--lavender-pink) / 0.2) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, hsl(var(--dusty-rose) / 0.15) 0%, transparent 60%)',
+          filter: 'saturate(0.4) brightness(1.2)'
+        }} />
 
         <div
           className="flex flex-col items-center text-center max-w-3xl mx-auto mt-20 md:mt-28 z-20 px-6">
