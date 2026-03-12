@@ -192,7 +192,7 @@ const Venue = () => {
             </div>
 
             {/* Map embed */}
-            {mapEmbedUrl && (
+            {addressVisible && mapEmbedUrl && (
               <motion.div
                 initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.2 }}
                 className="glass-card-strong rounded-3xl overflow-hidden mb-10"
