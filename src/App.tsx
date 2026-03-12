@@ -94,10 +94,12 @@ const AppShell = () => {
           <AuroraBackground variant="hero" />
         </div>
       )}
-      {!disableAmbientEffects && <FloatingHearts />}
+      <Suspense fallback={null}>
+        {!disableAmbientEffects && <FloatingHearts />}
+      </Suspense>
 
       <div className="relative z-10">
-        <ScrollProgress />
+        <Suspense fallback={null}><ScrollProgress /></Suspense>
         <ScrollToTop />
         <Navigation />
         <Suspense fallback={<PageLoader />}>
