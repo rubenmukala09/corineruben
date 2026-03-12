@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git clone https://github.com/rubenmukala09/smart-union-hub.git .)",
+      "Bash(git remote add origin https://github.com/rubenmukala09/smart-union-hub.git)",
+      "Bash(git fetch origin)",
+      "Bash(git reset --hard origin/main)",
+      "Bash(git reset --hard origin/master)",
+      "Bash(git remote add smart-union https://github.com/rubenmukala09/smart-union-hub.git)",
+      "Bash(git fetch smart-union)"
+    ]
+  }
+}
