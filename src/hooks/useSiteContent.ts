@@ -103,7 +103,7 @@ export const useSiteSettings = () => {
       const { data } = await supabase.from('site_settings').select('*');
       if (data) {
         const map: Record<string, string> = {};
-        data.forEach((s: any) => { map[s.key] = s.value; });
+        data.forEach((s: { key: string; value: string }) => { map[s.key] = s.value; });
         setSettings(map);
       }
       setLoading(false);

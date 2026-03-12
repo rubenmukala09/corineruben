@@ -594,7 +594,7 @@ const Index = () => {
   const handleShareStream = async () => {
     const shareUrl = window.location.origin;
     if (navigator.share) {
-      try {await navigator.share({ title: livestreamTitle || "Corine & Ruben's Wedding Live", url: shareUrl });} catch {}
+      try {await navigator.share({ title: livestreamTitle || "Corine & Ruben's Wedding Live", url: shareUrl });} catch (_e) { /* share cancelled or unsupported */ }
     } else {
       navigator.clipboard.writeText(shareUrl);
       toast.success('Link copied!');

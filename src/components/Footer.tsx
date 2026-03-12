@@ -1,16 +1,50 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Heart, Instagram, Mail, MapPin, Send } from 'lucide-react';
+import { Heart, Instagram, Mail, MapPin, Send, MessageSquare, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 const Footer = () => {
   const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [subscribing, setSubscribing] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
+
+  // Contact form
+  const [contactOpen, setContactOpen] = useState(false);
+  const [contactName, setContactName] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactMessage, setContactMessage] = useState('');
+  const [contactSending, setContactSending] = useState(false);
+  const [contactSent, setContactSent] = useState(false);
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!contactName.trim() || !contactEmail.trim() || !contactMessage.trim()) return;
+    setContactSending(true);
+    try {
+      const { error } = await supabase.from('contact_messages').insert({
+        name: contactName.trim(),
+        email: contactEmail.trim().toLowerCase(),
+        message: contactMessage.trim(),
+      });
+      if (error) throw error;
+      setContactSent(true);
+      setContactName('');
+      setContactEmail('');
+      setContactMessage('');
+      toast.success('Message sent! We\'ll get back to you soon.');
+      setTimeout(() => { setContactSent(false); setContactOpen(false); }, 3000);
+    } catch (err) {
+      console.error(err);
+      toast.error('Something went wrong. Please try again.');
+    } finally {
+      setContactSending(false);
+    }
+  };
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -155,8 +189,96 @@ const Footer = () => {
             {t('footer.made')} <Heart className="w-3 h-3 text-dusty-rose fill-dusty-rose" /> {t('footer.copyright')}
           </p>
           <p className="font-serif-display text-lg font-semibold text-[hsl(var(--footer-fg))]">Corine & Ruben's Wedding</p>
+          <button
+            type="button"
+            onClick={() => setContactOpen(true)}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[hsl(var(--footer-fg))]/10 hover:bg-[hsl(var(--footer-fg))]/20 border border-[hsl(var(--footer-fg))]/15 transition-all duration-300 font-sans-elegant text-sm text-[hsl(var(--footer-muted))] hover:text-[hsl(var(--footer-fg))]"
+          >
+            <MessageSquare className="w-4 h-4" />
+            Contact Us
+          </button>
         </div>
       </div>
+
+      {/* Contact Modal */}
+      {contactOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setContactOpen(false)} />
+          <div className="relative w-full max-w-md glass-card-strong rounded-3xl p-8 shadow-2xl">
+            <button
+              type="button"
+              aria-label="Close contact form"
+              onClick={() => setContactOpen(false)}
+              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-muted/50 hover:bg-muted flex items-center justify-center transition-colors"
+            >
+              <X className="w-4 h-4 text-muted-foreground" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-2xl gradient-primary flex items-center justify-center">
+                <MessageSquare className="w-5 h-5 text-primary-foreground" />
+              </div>
+              <div>
+                <h2 className="font-serif-display text-xl font-semibold text-foreground">Contact Us</h2>
+                <p className="font-sans-elegant text-xs text-muted-foreground">We'd love to hear from you</p>
+              </div>
+            </div>
+
+            {contactSent ? (
+              <div className="text-center py-8">
+                <Heart className="w-10 h-10 text-dusty-rose fill-dusty-rose mx-auto mb-3" />
+                <p className="font-serif-display text-lg font-semibold text-foreground mb-1">Thank you!</p>
+                <p className="font-sans-elegant text-sm text-muted-foreground">We'll get back to you soon.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleContactSubmit} className="space-y-4">
+                <div>
+                  <label className="font-sans-elegant text-xs font-medium text-muted-foreground mb-1.5 block">Your Name</label>
+                  <Input
+                    value={contactName}
+                    onChange={e => setContactName(e.target.value)}
+                    placeholder="Jane Doe"
+                    className="rounded-xl glass-card border-border/30 font-sans-elegant"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="font-sans-elegant text-xs font-medium text-muted-foreground mb-1.5 block">Email Address</label>
+                  <Input
+                    type="email"
+                    value={contactEmail}
+                    onChange={e => setContactEmail(e.target.value)}
+                    placeholder="jane@example.com"
+                    className="rounded-xl glass-card border-border/30 font-sans-elegant"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="font-sans-elegant text-xs font-medium text-muted-foreground mb-1.5 block">Message</label>
+                  <Textarea
+                    value={contactMessage}
+                    onChange={e => setContactMessage(e.target.value)}
+                    placeholder="Write your message here..."
+                    className="rounded-xl glass-card border-border/30 font-sans-elegant min-h-[120px]"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={contactSending || !contactName.trim() || !contactEmail.trim() || !contactMessage.trim()}
+                  className="w-full btn-primary justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {contactSending ? (
+                    <span className="flex items-center gap-2"><Send className="w-4 h-4 animate-pulse" /> Sending...</span>
+                  ) : (
+                    <span className="flex items-center gap-2"><Send className="w-4 h-4" /> Send Message</span>
+                  )}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </footer>
   );
 };

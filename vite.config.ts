@@ -27,7 +27,7 @@ function asyncCssPlugin(): Plugin {
 
       // Match Vite-injected stylesheet links (hashed asset CSS files only)
       return sanitizedHtml.replace(
-        /<link rel="stylesheet" crossorigin href="(\/assets\/[^\"]+\.css)">/g,
+        /<link rel="stylesheet" crossorigin href="(\/assets\/[^"]+\.css)">/g,
         `<link rel="stylesheet" href="$1" media="print" onload="this.media='all'" crossorigin>
     <noscript><link rel="stylesheet" href="$1" crossorigin></noscript>`
       );

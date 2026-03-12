@@ -119,6 +119,10 @@ interface NewsletterRow {
   id: string; email: string; created_at: string;
 }
 
+interface ContactMessageRow {
+  id: string; name: string; email: string; message: string; read: boolean; created_at: string;
+}
+
 const Dashboard = () => {
   const { t } = useLanguage();
   const { signOut } = useAuth();
@@ -132,6 +136,7 @@ const Dashboard = () => {
   const [quotes, setQuotes] = useState<QuoteRow[]>([]);
   const [enquiries, setEnquiries] = useState<EnquiryRow[]>([]);
   const [subscribers, setSubscribers] = useState<NewsletterRow[]>([]);
+  const [contacts, setContacts] = useState<ContactMessageRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [annTitle, setAnnTitle] = useState('');
   const [annTitleFr, setAnnTitleFr] = useState('');
@@ -144,7 +149,7 @@ const Dashboard = () => {
   const [quotePosting, setQuotePosting] = useState(false);
   const [copied, setCopied] = useState(false);
   const [donateLink, setDonateLink] = useState('');
-  const [donateLabel, setDonateLabel] = useState('Gift / Donate');
+  const [donateLabel, setDonateLabel] = useState('');
   const [donateCopied, setDonateCopied] = useState(false);
   const [answerTexts, setAnswerTexts] = useState<Record<string, string>>({});
   const [answerSending, setAnswerSending] = useState<string | null>(null);
@@ -157,21 +162,28 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [rsvpRes, giftRes, annRes, quoteRes, enqRes, subRes] = await Promise.all([
-        supabase.from('rsvps').select('*').order('created_at', { ascending: false }),
-        supabase.from('gifts').select('*').order('created_at', { ascending: false }),
-        supabase.from('announcements').select('*').order('created_at', { ascending: false }),
-        supabase.from('quotes').select('*').order('created_at', { ascending: false }),
-        supabase.from('enquiries').select('*').order('created_at', { ascending: false }),
-        supabase.from('newsletter_subscribers').select('*').order('created_at', { ascending: false }),
-      ]);
-      if (rsvpRes.data) setRsvps(rsvpRes.data);
-      if (giftRes.data) setGifts(giftRes.data);
-      if (annRes.data) setAnnouncements(annRes.data);
-      if (quoteRes.data) setQuotes(quoteRes.data);
-      if (enqRes.data) setEnquiries(enqRes.data as EnquiryRow[]);
-      if (subRes.data) setSubscribers(subRes.data as NewsletterRow[]);
-      setLoading(false);
+      try {
+        const [rsvpRes, giftRes, annRes, quoteRes, enqRes, subRes, contactRes] = await Promise.all([
+          supabase.from('rsvps').select('*').order('created_at', { ascending: false }),
+          supabase.from('gifts').select('*').order('created_at', { ascending: false }),
+          supabase.from('announcements').select('*').order('created_at', { ascending: false }),
+          supabase.from('quotes').select('*').order('created_at', { ascending: false }),
+          supabase.from('enquiries').select('*').order('created_at', { ascending: false }),
+          supabase.from('newsletter_subscribers').select('*').order('created_at', { ascending: false }),
+          supabase.from('contact_messages').select('*').order('created_at', { ascending: false }),
+        ]);
+        if (rsvpRes.data) setRsvps(rsvpRes.data);
+        if (giftRes.data) setGifts(giftRes.data);
+        if (annRes.data) setAnnouncements(annRes.data);
+        if (quoteRes.data) setQuotes(quoteRes.data);
+        if (enqRes.data) setEnquiries(enqRes.data as EnquiryRow[]);
+        if (subRes.data) setSubscribers(subRes.data as NewsletterRow[]);
+        if (contactRes.data) setContacts(contactRes.data as ContactMessageRow[]);
+      } catch (err) {
+        console.error('Dashboard fetch error:', err);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchData();
   }, []);
@@ -264,7 +276,7 @@ const Dashboard = () => {
         body: { subject: blastSubject.trim(), content: blastContent.trim() },
       });
       if (error) throw error;
-      if (data) setBlastResult({ sent: data.sent, total: data.total });
+      if (data) setBlastResult({ sent: data.sent ?? 0, total: data.total ?? 0 });
       setBlastSubject('');
       setBlastContent('');
     } catch (err) {
@@ -382,6 +394,14 @@ const Dashboard = () => {
             <TabsTrigger value="livestream" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Video className="w-3.5 h-3.5 mr-1.5" /> Live Stream
             </TabsTrigger>
+            <TabsTrigger value="contact" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground relative">
+              <Mail className="w-3.5 h-3.5 mr-1.5" /> Contact
+              {contacts.filter(c => !c.read).length > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white text-[9px] font-bold flex items-center justify-center">
+                  {contacts.filter(c => !c.read).length}
+                </span>
+              )}
+            </TabsTrigger>
             <TabsTrigger value="settings" className="rounded-full px-4 py-2 font-sans-elegant text-xs font-bold data-[state=active]:gradient-primary data-[state=active]:text-primary-foreground">
               <Settings className="w-3.5 h-3.5 mr-1.5" /> Settings
             </TabsTrigger>
@@ -458,7 +478,7 @@ const Dashboard = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-sans-elegant text-sm font-semibold text-foreground truncate">{r.name}</p>
-                        <p className="font-sans-elegant text-xs text-muted-foreground">{r.guests} {t('dashboard.guestsLabel')}{r.guests > 1 ? '' : ''} · {new Date(r.created_at).toLocaleDateString()}</p>
+                        <p className="font-sans-elegant text-xs text-muted-foreground">{r.guests} {t('dashboard.guestsLabel')}{r.guests !== 1 ? 's' : ''} · {new Date(r.created_at).toLocaleDateString()}</p>
                       </div>
                       <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${
                         r.status === 'confirmed' ? 'bg-emerald-500/15 text-emerald-500' :
@@ -823,6 +843,7 @@ const Dashboard = () => {
                       )}
                       {enq.status === 'pending' && (
                         <button
+                          type="button"
                           onClick={() => handleAnswerEnquiry(enq.id)}
                           disabled={answerSending === enq.id || !answerTexts[enq.id]?.trim()}
                           className="btn-primary mt-3 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -833,6 +854,7 @@ const Dashboard = () => {
                       )}
                     </div>
                     <button
+                      type="button"
                       onClick={() => handleDeleteEnquiry(enq.id)}
                       className="w-9 h-9 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 flex items-center justify-center transition-colors flex-shrink-0"
                       title={t('dashboard.deleteConfirm')}
@@ -943,7 +965,7 @@ const Dashboard = () => {
                       { label: '📢 General Update', subject: 'Family Update 💕', body: 'Dear loved ones,\n\nWe wanted to share some news with you...\n\n[Add your message here]\n\nWith love!' },
                       { label: '🙏 Thank You', subject: 'Thank You All! 🙏', body: 'Dear family and friends,\n\nWe want to express our heartfelt gratitude to each and every one of you for your love, support, and generosity.\n\nYou make our lives so beautiful!' },
                     ].map((tpl, i) => (
-                      <button key={i} onClick={() => { setBlastSubject(tpl.subject); setBlastContent(tpl.body); }}
+                      <button key={i} type="button" onClick={() => { setBlastSubject(tpl.subject); setBlastContent(tpl.body); }}
                         className="px-3 py-1.5 rounded-full glass-card text-xs font-sans-elegant font-medium text-foreground hover:bg-primary/10 transition-colors">
                         {tpl.label}
                       </button>
@@ -952,6 +974,7 @@ const Dashboard = () => {
                 </div>
 
                 <button
+                  type="button"
                   onClick={handleSendBlast}
                   disabled={blastSending || !blastSubject.trim() || !blastContent.trim()}
                   className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
@@ -1027,6 +1050,7 @@ const Dashboard = () => {
               <div className="flex items-center gap-2 glass-card rounded-full p-1.5 pl-5">
                 <p className="font-sans-elegant text-sm text-foreground truncate flex-1 text-left">{staffUrl}</p>
                 <button
+                  type="button"
                   onClick={() => {
                     navigator.clipboard.writeText(staffUrl);
                     setCopied(true);
@@ -1053,18 +1077,8 @@ const Dashboard = () => {
                 </div>
                 <h3 className="font-serif-display text-xl font-semibold text-foreground mb-2">Donate / Gift QR Code</h3>
                 <p className="font-sans-elegant text-sm text-muted-foreground mb-4">
-                  Paste any payment link or use the Stripe link below to generate a QR code guests can scan to donate.
+                  Paste any payment link to generate a QR code guests can scan to give a gift.
                 </p>
-                <button
-                  onClick={() => {
-                    setDonateLink('https://buy.stripe.com/14A5kv9wL8AOeop6hN57W00');
-                    setDonateLabel('Wedding Gift 💐');
-                  }}
-                  className="btn-primary !rounded-full !px-4 !py-2 text-xs inline-flex items-center gap-2"
-                >
-                  <Gift className="w-3.5 h-3.5" />
-                  Use Stripe Payment Link
-                </button>
               </div>
 
               <div className="space-y-3 mb-6">
@@ -1099,6 +1113,7 @@ const Dashboard = () => {
                   <div className="flex items-center gap-2 glass-card rounded-full p-1.5 pl-5">
                     <p className="font-sans-elegant text-sm text-foreground truncate flex-1 text-left">{donateLink}</p>
                     <button
+                      type="button"
                       onClick={() => {
                         navigator.clipboard.writeText(donateLink);
                         setDonateCopied(true);
@@ -1121,6 +1136,66 @@ const Dashboard = () => {
                   <p className="font-sans-elegant text-sm text-muted-foreground">Enter a payment link above to generate a QR code</p>
                 </div>
               )}
+            </motion.div>
+          </TabsContent>
+
+          {/* ═══ CONTACT TAB ═══ */}
+          <TabsContent value="contact" className="space-y-6">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <StatCard icon={Mail} label="Total Messages" value={contacts.length} color="text-blue-400" bg="from-blue-500/20 to-cyan-500/10" />
+              <StatCard icon={Bell} label="Unread" value={contacts.filter(c => !c.read).length} sub={contacts.filter(c => !c.read).length > 0 ? '⚡ Needs attention' : '✓ All read'} color="text-amber-400" bg="from-amber-500/20 to-orange-500/10" />
+            </div>
+
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+              {contacts.length === 0 ? (
+                <div className="glass-card-strong rounded-3xl p-12 text-center">
+                  <Mail className="w-8 h-8 text-muted-foreground/40 mx-auto mb-3" />
+                  <p className="font-sans-elegant text-sm text-muted-foreground">No contact messages yet.</p>
+                </div>
+              ) : contacts.map(c => (
+                <div key={c.id} className={`glass-card-strong rounded-3xl p-6 flex items-start gap-4 transition-all ${!c.read ? 'border border-primary/30' : ''}`}>
+                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center flex-shrink-0 mt-1 ${!c.read ? 'bg-gradient-to-br from-blue-500/20 to-cyan-500/10' : 'bg-muted/40'}`}>
+                    <Mail className={`w-5 h-5 ${!c.read ? 'text-blue-400' : 'text-muted-foreground'}`} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <p className="font-sans-elegant text-sm font-semibold text-foreground">{c.name}</p>
+                      <a href={`mailto:${c.email}`} className="font-sans-elegant text-xs text-primary hover:underline">{c.email}</a>
+                      {!c.read && <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-500/15 text-blue-500 uppercase tracking-wide">New</span>}
+                    </div>
+                    <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">{c.message}</p>
+                    <p className="font-sans-elegant text-[10px] text-muted-foreground/60 mt-2">
+                      {new Date(c.created_at).toLocaleDateString()} · {new Date(c.created_at).toLocaleTimeString()}
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-2 flex-shrink-0">
+                    {!c.read && (
+                      <button
+                        type="button"
+                        title="Mark as read"
+                        onClick={async () => {
+                          await supabase.from('contact_messages').update({ read: true }).eq('id', c.id);
+                          setContacts(prev => prev.map(m => m.id === c.id ? { ...m, read: true } : m));
+                        }}
+                        className="w-9 h-9 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 flex items-center justify-center transition-colors"
+                      >
+                        <Check className="w-4 h-4 text-emerald-500" />
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      title="Delete message"
+                      onClick={async () => {
+                        await supabase.from('contact_messages').delete().eq('id', c.id);
+                        setContacts(prev => prev.filter(m => m.id !== c.id));
+                      }}
+                      className="w-9 h-9 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 flex items-center justify-center transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4 text-rose-500" />
+                    </button>
+                  </div>
+                </div>
+              ))}
             </motion.div>
           </TabsContent>
         </Tabs>

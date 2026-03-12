@@ -363,7 +363,7 @@ const RSVP = () => {
   const courtVenue = settings.court_wedding_venue || '301 Sycamore St, Brookville — Mayor Letner';
   const courtAfterVenue = settings.court_wedding_after_venue || '10209 Gully Pass Dr, Dayton, OH 45458';
 
-  const allSteps: Step[] = isCourtMode ? ['info', 'gift'] : ['info', 'meal', 'table', 'gift'];
+  const allSteps: Step[] = isCourtMode ? ['info'] : ['info', 'meal', 'table'];
   const currentStepIndex = allSteps.indexOf(step);
 
   const ceremonyAddress = settings.ceremony_address || '';
@@ -678,7 +678,7 @@ const RSVP = () => {
               onClick={async () => {
                 const rsvpUrl = `${window.location.origin}/rsvp`;
                 if (navigator.share) {
-                  try { await navigator.share({ title: 'RSVP – Corine & Ruben Wedding', url: rsvpUrl }); } catch {}
+                  try { await navigator.share({ title: 'RSVP – Corine & Ruben Wedding', url: rsvpUrl }); } catch (_e) { /* share cancelled or unsupported */ }
                 } else {
                   await navigator.clipboard.writeText(rsvpUrl);
                   toast.success('RSVP link copied! 💕');
@@ -863,7 +863,7 @@ const RSVP = () => {
                   >
                     🎉 {t('rsvp.yes')}
                   </button>
-                  <button type="button" onClick={() => { setAttending(false); if (name.trim()) setStep('gift'); }}
+                  <button type="button" onClick={() => { setAttending(false); if (name.trim()) handleSubmitRsvp(); }}
                     className={`flex-1 py-3.5 rounded-full text-sm font-sans-elegant font-medium transition-all duration-500 ${
                       attending === false ? 'gradient-primary text-primary-foreground shadow-glow' : 'glass-card hover:border-primary/30 text-foreground'
                     }`}
@@ -945,7 +945,7 @@ const RSVP = () => {
                 </motion.div>
               )}
 
-              <button disabled={!canProceedInfo} onClick={() => attending ? (isCourtMode ? setStep('gift') : setStep('meal')) : setStep('gift')}
+              <button disabled={!canProceedInfo} onClick={() => attending ? (isCourtMode ? handleSubmitRsvp() : setStep('meal')) : handleSubmitRsvp()}
                 className="w-full btn-primary justify-center disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:transform-none"
               >
                 {attending ? t('rsvp.next') : t('rsvp.next')}
@@ -1281,10 +1281,10 @@ const RSVP = () => {
 
               <div className="flex gap-3">
                 <button onClick={() => setStep('meal')} className="flex-1 btn-outline justify-center">{t('rsvp.back')}</button>
-                <button onClick={() => setStep('gift')}
+                <button onClick={() => handleSubmitRsvp()}
                   className="flex-1 btn-primary justify-center"
                 >
-                  {t('rsvp.next')} <ChevronRight className="w-4 h-4" />
+                  {t('rsvp.submit')} <Check className="w-4 h-4" />
                 </button>
               </div>
             </motion.div>

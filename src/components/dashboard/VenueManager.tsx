@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Save, Loader2, Trash2, Plus, MapPin, Clock, Hotel, Car } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -8,9 +8,9 @@ import { motion } from 'framer-motion';
 
 const VenueManager = () => {
   const [settings, setSettings] = useState<Record<string, string>>({});
-  const [schedule, setSchedule] = useState<any[]>([]);
-  const [hotels, setHotels] = useState<any[]>([]);
-  const [transport, setTransport] = useState<any[]>([]);
+  const [schedule, setSchedule] = useState<Record<string, string>[]>([]);
+  const [hotels, setHotels] = useState<Record<string, string>[]>([]);
+  const [transport, setTransport] = useState<Record<string, string>[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -24,7 +24,7 @@ const VenueManager = () => {
       ]);
       if (settingsRes.data) {
         const map: Record<string, string> = {};
-        settingsRes.data.forEach((s: any) => { map[s.key] = s.value; });
+        settingsRes.data.forEach((s: { key: string; value: string }) => { map[s.key] = s.value; });
         setSettings(map);
       }
       if (scheduleRes.data) setSchedule(scheduleRes.data);
@@ -210,7 +210,7 @@ const SettingField = ({ label, value, onSave, textarea }: {
     <div>
       <label className="font-sans-elegant text-xs font-medium text-muted-foreground mb-1 block">{label}</label>
       <div className="flex gap-2">
-        <Component value={val} onChange={(e: any) => { setVal(e.target.value); setDirty(true); }}
+        <Component value={val} onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => { setVal(e.target.value); setDirty(true); }}
           className={`flex-1 rounded-xl ${textarea ? '' : 'h-9'} glass-card border-border/30 font-sans-elegant text-sm`} />
         {dirty && (
           <button onClick={() => { onSave(val); setDirty(false); }}

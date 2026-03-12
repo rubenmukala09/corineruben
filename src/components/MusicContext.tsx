@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useState, useRef, createContext, useContext, useCallback } from 'react';
 import { toast } from 'sonner';
 
