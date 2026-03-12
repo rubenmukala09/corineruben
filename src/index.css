@@ -1000,6 +1000,39 @@
   }
 }
 
+/* ===== PREMIUM SCROLL SYSTEM ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Elegant thin scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.25);
+  border-radius: 999px;
+  transition: background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.45);
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.2);
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.4);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary) / 0.25) transparent;
+}
+
 /* Hide scrollbars in dialogs */
 [role="dialog"] {
   scrollbar-width: none;
@@ -1010,12 +1043,6 @@
 }
 
 /* ===== GLOBAL INTERACTIVE AFFORDANCES ===== */
-/*
- * Every button / link / clickable thing gets:
- *   cursor-pointer  — signals "click me"
- *   active scale    — press feedback (tactile feel)
- *   smooth transition
- */
 button:not(:disabled),
 [role="button"]:not([aria-disabled="true"]),
 a[href],
@@ -1031,7 +1058,7 @@ button:not(:disabled):active,
   transition: transform 0.08s ease, filter 0.08s ease;
 }
 
-/* Clickable glass cards — lift on hover, press on click */
+/* Clickable glass cards */
 .glass-card[role="button"],
 .glass-card-strong[role="button"],
 .glass-card.cursor-pointer,
