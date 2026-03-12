@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Send, MessageCircleQuestion, CheckCircle, Heart } from 'lucide-react';
@@ -24,7 +23,6 @@ const Enquiries = () => {
       question: question.trim(),
     });
     if (!error) {
-      // Send email notification via edge function
       try {
         await supabase.functions.invoke('send-contact-email', {
           body: {
@@ -48,7 +46,7 @@ const Enquiries = () => {
     <div className="min-h-screen pt-28 pb-20 relative">
       <div className="container mx-auto px-6 md:px-12 max-w-2xl relative z-10">
         <div className="glass-section p-6 md:p-10">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
+        <div className="text-center mb-12">
           <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
             <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">
               {t('enquiries.badge')}
@@ -60,11 +58,10 @@ const Enquiries = () => {
           <p className="font-sans-elegant text-base text-muted-foreground max-w-md mx-auto">
             {t('enquiries.subtitle')}
           </p>
-        </motion.div>
+        </div>
 
         {sent ? (
-          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
-            className="glass-card-strong rounded-3xl p-12 text-center">
+          <div className="glass-card-strong rounded-3xl p-12 text-center">
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500/20 to-teal-500/10 flex items-center justify-center mx-auto mb-6">
               <CheckCircle className="w-8 h-8 text-emerald-400" />
             </div>
@@ -74,9 +71,9 @@ const Enquiries = () => {
               <MessageCircleQuestion className="w-4 h-4" />
               {t('enquiries.sent.another')}
             </button>
-          </motion.div>
+          </div>
         ) : (
-          <motion.form onSubmit={handleSubmit} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+          <form onSubmit={handleSubmit}
             className="glass-card-strong rounded-3xl p-5 md:p-10 space-y-5 md:space-y-6">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary/20 to-violet-500/10 flex items-center justify-center">
@@ -108,11 +105,7 @@ const Enquiries = () => {
 
             <button type="submit" disabled={sending || !name.trim() || !email.trim() || !question.trim()}
               className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed">
-              {sending ? (
-                <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-              ) : (
-                <Send className="w-4 h-4" />
-              )}
+              <Send className="w-4 h-4" />
               {t('enquiries.form.submit')}
             </button>
 
@@ -121,7 +114,7 @@ const Enquiries = () => {
               <p className="font-sans-elegant text-[10px] text-muted-foreground">{t('enquiries.form.note')}</p>
               <Heart className="w-3 h-3 text-primary/40 fill-primary/40" />
             </div>
-          </motion.form>
+          </form>
         )}
         </div>
       </div>
