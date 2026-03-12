@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@18.5.0";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
+
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -56,21 +56,7 @@ serve(async (req) => {
       },
     });
 
-    // Record gift in database (pending status tracked via Stripe metadata)
-    try {
-      const supabaseClient = createClient(
-        Deno.env.get("SUPABASE_URL") ?? "",
-        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
-      );
-      await supabaseClient.from("gifts").insert({
-        from_name: guestName || "Anonymous",
-        amount: amount,
-        message: message || null,
-      });
-    } catch (dbErr) {
-      console.error("Failed to record gift in DB:", dbErr);
-      // Don't block payment if DB insert fails
-    }
+    // Gift is recorded in DB only after successful payment (in send-gift-confirmation)
 
     console.log("Checkout session created:", session.id);
 
