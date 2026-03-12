@@ -56,21 +56,7 @@ serve(async (req) => {
       },
     });
 
-    // Record gift in database (pending status tracked via Stripe metadata)
-    try {
-      const supabaseClient = createClient(
-        Deno.env.get("SUPABASE_URL") ?? "",
-        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
-      );
-      await supabaseClient.from("gifts").insert({
-        from_name: guestName || "Anonymous",
-        amount: amount,
-        message: message || null,
-      });
-    } catch (dbErr) {
-      console.error("Failed to record gift in DB:", dbErr);
-      // Don't block payment if DB insert fails
-    }
+    // Gift is recorded in DB only after successful payment (in send-gift-confirmation)
 
     console.log("Checkout session created:", session.id);
 

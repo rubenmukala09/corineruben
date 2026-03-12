@@ -37,20 +37,7 @@ serve(async (req) => {
       description: `Wedding Gift from ${guestName || "Anonymous"}`,
     });
 
-    // Record gift in database (pending)
-    try {
-      const supabaseClient = createClient(
-        Deno.env.get("SUPABASE_URL") ?? "",
-        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
-      );
-      await supabaseClient.from("gifts").insert({
-        from_name: guestName || "Anonymous",
-        amount: amount,
-        message: message || null,
-      });
-    } catch (dbErr) {
-      console.error("Failed to record gift in DB:", dbErr);
-    }
+    // Gift is recorded in DB only after successful payment (in send-gift-confirmation)
 
     return new Response(
       JSON.stringify({

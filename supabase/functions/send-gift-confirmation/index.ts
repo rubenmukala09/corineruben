@@ -36,6 +36,21 @@ serve(async (req) => {
 
     const { guestName, guestEmail, amount, message } = await req.json();
 
+    // Record the completed gift in the database
+    try {
+      const supabaseClient = createClient(
+        Deno.env.get("SUPABASE_URL") ?? "",
+        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+      );
+      await supabaseClient.from("gifts").insert({
+        from_name: guestName || "Anonymous",
+        amount: amount,
+        message: message || null,
+      });
+    } catch (dbErr) {
+      console.error("Failed to record gift in DB:", dbErr);
+    }
+
     const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") ?? "corrinemaloba@gmail.com";
     const FROM_TEST   = "onboarding@resend.dev";
     const FROM_PROD   = Deno.env.get("SENDER_EMAIL") ?? FROM_TEST;
