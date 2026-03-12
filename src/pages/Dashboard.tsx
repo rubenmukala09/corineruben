@@ -513,35 +513,44 @@ const Dashboard = () => {
               className="glass-card-strong rounded-3xl overflow-hidden">
               <Table>
                 <TableHeader>
-                  <TableRow className="border-border/20">
-                    <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">{t('dashboard.guest')}</TableHead>
-                    <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">{t('dashboard.partySize')}</TableHead>
-                    <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">{t('dashboard.status')}</TableHead>
-                    <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">{t('dashboard.cuisine')}</TableHead>
-                    <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">{t('dashboard.table')}</TableHead>
-                    <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">{t('dashboard.message')}</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredRsvps.length === 0 ? (
-                    <TableRow><TableCell colSpan={6} className="text-center py-8 text-muted-foreground font-sans-elegant">{t('dashboard.noGuests')}</TableCell></TableRow>
-                  ) : filteredRsvps.map(r => (
-                    <TableRow key={r.id} className="border-border/10 hover:bg-primary/5">
-                      <TableCell className="font-sans-elegant text-sm font-semibold text-foreground">{r.name}</TableCell>
-                      <TableCell className="font-sans-elegant text-sm text-muted-foreground">{r.guests}</TableCell>
-                      <TableCell>
-                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${
-                          r.status === 'confirmed' ? 'bg-emerald-500/15 text-emerald-500' :
-                          r.status === 'pending' ? 'bg-amber-500/15 text-amber-500' :
-                          'bg-rose-500/15 text-rose-500'
-                        }`}>{r.status}</span>
-                      </TableCell>
-                      <TableCell className="font-sans-elegant text-sm text-muted-foreground capitalize">{r.cuisine || '—'}</TableCell>
-                      <TableCell className="font-sans-elegant text-sm text-muted-foreground">{r.table_name || '—'}</TableCell>
-                      <TableCell className="font-sans-elegant text-xs text-muted-foreground max-w-[150px] truncate">{r.message || '—'}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
+                   <TableRow className="border-border/20">
+                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">{t('dashboard.guest')}</TableHead>
+                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">{t('dashboard.partySize')}</TableHead>
+                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">{t('dashboard.status')}</TableHead>
+                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">{t('dashboard.cuisine')}</TableHead>
+                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">{t('dashboard.table')}</TableHead>
+                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground">{t('dashboard.message')}</TableHead>
+                     <TableHead className="font-sans-elegant text-xs font-bold tracking-wide uppercase text-muted-foreground w-12"></TableHead>
+                   </TableRow>
+                 </TableHeader>
+                 <TableBody>
+                   {filteredRsvps.length === 0 ? (
+                     <TableRow><TableCell colSpan={7} className="text-center py-8 text-muted-foreground font-sans-elegant">{t('dashboard.noGuests')}</TableCell></TableRow>
+                   ) : filteredRsvps.map(r => (
+                     <TableRow key={r.id} className="border-border/10 hover:bg-primary/5">
+                       <TableCell className="font-sans-elegant text-sm font-semibold text-foreground">{r.name}</TableCell>
+                       <TableCell className="font-sans-elegant text-sm text-muted-foreground">{r.guests}</TableCell>
+                       <TableCell>
+                         <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide ${
+                           r.status === 'confirmed' ? 'bg-emerald-500/15 text-emerald-500' :
+                           r.status === 'pending' ? 'bg-amber-500/15 text-amber-500' :
+                           'bg-rose-500/15 text-rose-500'
+                         }`}>{r.status}</span>
+                       </TableCell>
+                       <TableCell className="font-sans-elegant text-sm text-muted-foreground capitalize">{r.cuisine || '—'}</TableCell>
+                       <TableCell className="font-sans-elegant text-sm text-muted-foreground">{r.table_name || '—'}</TableCell>
+                       <TableCell className="font-sans-elegant text-xs text-muted-foreground max-w-[150px] truncate">{r.message || '—'}</TableCell>
+                       <TableCell>
+                         <button type="button" onClick={async () => {
+                           await supabase.from('rsvps').delete().eq('id', r.id);
+                           setRsvps(prev => prev.filter(x => x.id !== r.id));
+                         }} className="w-8 h-8 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 flex items-center justify-center transition-colors">
+                           <Trash2 className="w-3.5 h-3.5 text-rose-500" />
+                         </button>
+                       </TableCell>
+                     </TableRow>
+                   ))}
+                 </TableBody>
               </Table>
             </motion.div>
           </TabsContent>
