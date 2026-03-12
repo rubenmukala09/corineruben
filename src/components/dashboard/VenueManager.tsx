@@ -85,19 +85,22 @@ const VenueManager = () => {
   if (loading) return <div className="flex justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-primary" /></div>;
 
   const venueVisible = settings.venue_visible !== 'false';
+  const addressVisible = settings.venue_address_visible !== 'false';
 
-  const toggleVenueVisibility = async () => {
-    const newValue = venueVisible ? 'false' : 'true';
-    // Check if the setting exists
-    const { data: existing } = await supabase.from('site_settings').select('id').eq('key', 'venue_visible').maybeSingle();
+  const toggleSetting = async (key: string, currentValue: boolean, onLabel: string, offLabel: string) => {
+    const newValue = currentValue ? 'false' : 'true';
+    const { data: existing } = await supabase.from('site_settings').select('id').eq('key', key).maybeSingle();
     if (existing) {
-      await supabase.from('site_settings').update({ value: newValue }).eq('key', 'venue_visible');
+      await supabase.from('site_settings').update({ value: newValue }).eq('key', key);
     } else {
-      await supabase.from('site_settings').insert({ key: 'venue_visible', value: newValue });
+      await supabase.from('site_settings').insert({ key, value: newValue });
     }
-    setSettings({ ...settings, venue_visible: newValue });
-    toast.success(newValue === 'true' ? 'Venue page is now visible to guests' : 'Venue page is now hidden from guests');
+    setSettings({ ...settings, [key]: newValue });
+    toast.success(newValue === 'true' ? onLabel : offLabel);
   };
+
+  const toggleVenueVisibility = () => toggleSetting('venue_visible', venueVisible, 'Venue page is now visible to guests', 'Venue page is now hidden from guests');
+  const toggleAddressVisibility = () => toggleSetting('venue_address_visible', addressVisible, 'Venue address is now visible to guests', 'Venue address is now hidden from guests');
 
   return (
     <div className="space-y-6">
@@ -131,6 +134,39 @@ const VenueManager = () => {
           }`}
         >
           {venueVisible ? 'Hide from Guests' : 'Publish to Guests'}
+        </button>
+      </div>
+
+      {/* Address visibility toggle */}
+      <div className="glass-card-strong rounded-3xl p-5 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          {addressVisible ? (
+            <div className="w-10 h-10 rounded-2xl bg-emerald-500/15 flex items-center justify-center">
+              <MapPin className="w-5 h-5 text-emerald-400" />
+            </div>
+          ) : (
+            <div className="w-10 h-10 rounded-2xl bg-amber-500/15 flex items-center justify-center">
+              <EyeOff className="w-5 h-5 text-amber-400" />
+            </div>
+          )}
+          <div>
+            <p className="font-sans-elegant text-sm font-bold text-foreground">
+              Venue Address is {addressVisible ? 'Visible' : 'Hidden'}
+            </p>
+            <p className="font-sans-elegant text-xs text-muted-foreground">
+              {addressVisible ? 'Guests can see the venue address & directions' : 'Address & directions are hidden from guests'}
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={toggleAddressVisibility}
+          className={`px-5 py-2.5 rounded-full font-sans-elegant text-xs font-bold transition-all ${
+            addressVisible
+              ? 'bg-amber-500/15 hover:bg-amber-500/25 text-amber-500'
+              : 'bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-500'
+          }`}
+        >
+          {addressVisible ? 'Hide Address' : 'Show Address'}
         </button>
       </div>
 

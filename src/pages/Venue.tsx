@@ -36,6 +36,7 @@ const Venue = () => {
   const receptionMapsUrl = settings.reception_maps_url || '';
   const receptionTime = settings.reception_time || '19:00';
   const mapEmbedUrl = settings.map_embed_url || '';
+  const addressVisible = settings.venue_address_visible !== 'false';
 
   const courtVenue = settings.court_wedding_venue || '301 Sycamore St, Brookville — Mayor Letner';
   const courtAfterVenue = settings.court_wedding_after_venue || '10209 Gully Pass Dr, Dayton, OH 45458';
@@ -169,25 +170,29 @@ const Venue = () => {
                       <p className="font-serif-display text-xl font-semibold text-foreground">{time}</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-2 mb-4">
-                    <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                    <p className="font-sans-elegant text-sm text-muted-foreground">{address}</p>
-                  </div>
-                  <a
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full btn-primary text-xs font-semibold"
-                  >
-                    <ExternalLink className="w-3.5 h-3.5" />
-                    {t('venue.getDirections')}
-                  </a>
+                  {addressVisible && address && (
+                    <div className="flex items-start gap-2 mb-4">
+                      <MapPin className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                      <p className="font-sans-elegant text-sm text-muted-foreground">{address}</p>
+                    </div>
+                  )}
+                  {addressVisible && url && (
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full btn-primary text-xs font-semibold"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      {t('venue.getDirections')}
+                    </a>
+                  )}
                 </motion.div>
               ))}
             </div>
 
             {/* Map embed */}
-            {mapEmbedUrl && (
+            {addressVisible && mapEmbedUrl && (
               <motion.div
                 initial="hidden" animate="show" variants={fadeUp} transition={{ delay: 0.2 }}
                 className="glass-card-strong rounded-3xl overflow-hidden mb-10"
