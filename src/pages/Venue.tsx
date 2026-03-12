@@ -1,6 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import { motion } from 'framer-motion';
-import { MapPin, Clock, Car, Train, ParkingCircle, Hotel, ExternalLink, Church, PartyPopper, Camera, Music, Cake, Sparkles, Waves, Loader2, Info } from 'lucide-react';
+import { MapPin, Clock, Car, Train, ParkingCircle, Hotel, ExternalLink, Church, PartyPopper, Camera, Music, Cake, Sparkles, Waves, Loader2, Info, EyeOff } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useSiteSettings, useVenueData } from '@/hooks/useSiteContent';
 
 const ICON_MAP: Record<string, React.ElementType> = {
