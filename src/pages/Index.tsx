@@ -583,7 +583,17 @@ const Index = () => {
   }];
 
 
-  const detailSections = isCourtMode ? courtDetailSections : churchDetailSections;
+  const sectionVisibility: Record<string, boolean> = {
+    ceremony: settings.show_ceremony !== 'false',
+    reception: settings.show_reception !== 'false',
+    accommodation: settings.show_accommodation !== 'false',
+    transport: settings.show_transport !== 'false',
+    'court-ceremony': settings.show_ceremony !== 'false',
+    'court-after': settings.show_reception !== 'false',
+  };
+
+  const detailSections = (isCourtMode ? courtDetailSections : churchDetailSections)
+    .filter(s => sectionVisibility[s.id] !== false);
 
   /* ─── Live Stream helpers ─── */
   const livestreamUrl = settings.livestream_url || '';
