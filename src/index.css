@@ -34,7 +34,7 @@
     --secondary-foreground: 292 22% 20%;
 
     --muted: 290 6% 92%;
-    --muted-foreground: 293 7% 52%;       /* #8C7C8E — muted lilac-grey */
+    --muted-foreground: 282 12% 38%;       /* deep muted plum — 5:1+ contrast */
 
     /* Soft Lavender accent — #E4D5E8 */
     --accent: 287 30% 87%;
