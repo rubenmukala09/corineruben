@@ -38,10 +38,12 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 import AuroraBackground from "@/components/AuroraBackground";
 import { MusicProvider } from "@/components/MusicContext";
-import MusicFloatingButton from "@/components/MusicPlayer";
-import FloatingHearts from "@/components/FloatingHearts";
-import ScrollProgress from "@/components/ScrollProgress";
 import ProtectedRoute from "@/components/ProtectedRoute";
+
+// Lazy-load decorative/ambient components — not needed for FCP
+const MusicFloatingButton = lazy(() => import("@/components/MusicPlayer"));
+const FloatingHearts = lazy(() => import("@/components/FloatingHearts"));
+const ScrollProgress = lazy(() => import("@/components/ScrollProgress"));
 
 // Lazy-load non-critical shell components to reduce unused JS on initial load
 const GiftFAB = lazy(() => import("@/components/GiftFAB"));
