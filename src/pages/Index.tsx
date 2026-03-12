@@ -948,7 +948,7 @@ const Index = () => {
                 <div className="glass-card-strong rounded-3xl p-2.5">
                   <img
                     alt={`${coupleName1} & ${coupleName2}`}
-                    className="w-full object-cover object-[center_30%] aspect-[4/5] border-2 shadow-2xl rounded-2xl"
+                    className="w-full object-cover object-[center_20%] aspect-[4/5] border-2 shadow-2xl rounded-2xl"
                     style={{ boxShadow: '0 20px 40px rgba(107, 78, 113, 0.15)' }}
                     width={474}
                     height={593}
@@ -1053,7 +1053,7 @@ const Index = () => {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
               <div className="relative h-full min-h-[300px]">
-                <img src={couple2} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_25%]" width={297} height={428} loading="lazy" decoding="async" />
+                <img src={couple2} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={297} height={428} loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/10" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <div className="rounded-2xl bg-background/20 backdrop-blur-xl border border-white/20 p-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
