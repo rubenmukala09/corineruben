@@ -111,13 +111,13 @@ const Navigation = React.memo(() => {
                 height={34}
                 loading="eager"
                 decoding="sync"
-                className="w-[34px] h-[34px] object-contain flex-shrink-0"
+                className="w-[38px] h-[38px] object-contain flex-shrink-0"
               />
               <div className="flex flex-col leading-none min-w-0">
-                <span className="text-[15px] font-bold text-foreground tracking-tight">
+                <span className="text-[17px] font-extrabold text-foreground tracking-tight">
                   InVision Network
                 </span>
-                <span className="text-[9px] font-semibold text-muted-foreground hidden sm:block tracking-widest uppercase">
+                <span className="text-[10px] font-bold text-muted-foreground hidden sm:block tracking-widest uppercase">
                   AI Scam Protection
                 </span>
               </div>
