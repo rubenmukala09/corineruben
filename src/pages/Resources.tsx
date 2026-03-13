@@ -368,8 +368,11 @@ function Resources() {
                           alt={book.name}
                           width={240}
                           height={320}
-                          loading="lazy"
-                          decoding="async"
+                          loading={bookIndex < 10 ? "eager" : "lazy"}
+                          decoding={bookIndex < 10 ? "sync" : "async"}
+                          fetchPriority={bookIndex < 5 ? "high" : undefined}
+                          className="w-full h-full object-cover"
+                        />
                           className="w-full h-full object-cover"
                         />
                       </div>
