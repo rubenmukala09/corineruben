@@ -373,8 +373,6 @@ function Resources() {
                           fetchPriority={bookIndex < 5 ? "high" : undefined}
                           className="w-full h-full object-cover"
                         />
-                          className="w-full h-full object-cover"
-                        />
                       </div>
                       {/* Hover overlay */}
                       <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors duration-150 flex items-center justify-center">
