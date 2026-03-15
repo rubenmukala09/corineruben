@@ -8,8 +8,5 @@
 
 /* Global zoom out to 75% */
 #root {
-  transform: scale(0.75);
-  transform-origin: top center;
-  width: 133.33vw;
-  margin-left: -16.665vw;
+  zoom: 0.75;
 }
