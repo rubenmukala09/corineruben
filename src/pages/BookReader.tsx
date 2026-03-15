@@ -279,7 +279,7 @@ export default function BookReader() {
 
               <TabsContent value="library">
                 <InternalLibrary
-                  ownedBookIds={session.bookIds}
+                  ownedBookIds={effectiveOwnedIds}
                   onBuy={handleBuyFromLibrary}
                   onRead={handleReadFromLibrary}
                   email={session.email}
