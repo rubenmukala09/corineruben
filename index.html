@@ -298,8 +298,7 @@
       content="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/social-images/social-1761862743436-shield_purpleb.png"
     />
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://invisionnetwork.org" />
+    <!-- Canonical URL is set per-page by react-helmet-async (SEO component) -->
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
@@ -311,37 +310,85 @@
     />
     <meta name="apple-mobile-web-app-title" content="InVision" />
 
-    <!-- Structured Data (JSON-LD) -->
+    <!-- Structured Data (JSON-LD) — LocalBusiness baseline (per-page schemas injected by SEO component) -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
+        "@type": "LocalBusiness",
         "name": "InVision Network",
-        "description": "AI Scam Protection Training for Families & Seniors",
-        "url": "https://invisionnetwork.org",
-        "logo": "https://invisionnetwork.org/favicon.png",
+        "description": "Cybersecurity training and AI protection services for families, seniors, and businesses in Southwest Ohio",
+        "url": "https://www.invisionnetwork.org",
+        "logo": "https://www.invisionnetwork.org/favicon.png",
+        "image": "https://www.invisionnetwork.org/images/hero-corporate-protection.webp",
         "foundingDate": "2024",
+        "founders": [
+          { "@type": "Person", "name": "Ruben Nk" },
+          { "@type": "Person", "name": "Corine Mk" }
+        ],
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "Dayton",
+          "addressLocality": "Kettering",
           "addressRegion": "OH",
+          "postalCode": "45429",
           "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 39.6895,
+          "longitude": -84.1688
+        },
+        "telephone": "+14074465749",
+        "priceRange": "$$",
+        "areaServed": {
+          "@type": "GeoCircle",
+          "geoMidpoint": {
+            "@type": "GeoCoordinates",
+            "latitude": 39.6895,
+            "longitude": -84.1688
+          },
+          "geoRadius": "80000",
+          "description": "Southwest Ohio, 50-mile radius from Kettering"
         },
         "contactPoint": {
           "@type": "ContactPoint",
-          "telephone": "+1-937-301-8749",
+          "telephone": "+14074465749",
           "contactType": "Customer Service",
-          "availableLanguage": ["English", "French", "Spanish"]
+          "availableLanguage": ["English", "Spanish", "French"]
         },
         "sameAs": [
           "https://twitter.com/invisionnetwork",
           "https://facebook.com/invisionnetwork",
           "https://linkedin.com/company/invisionnetwork"
         ],
-        "offers": {
-          "@type": "Offer",
-          "category": "Training & Consulting",
-          "description": "AI Scam Protection Training and Consultation Services"
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "InVision Network Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Cybersecurity Training for Seniors & Families",
+                "description": "In-person and virtual AI scam protection training"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "AI Business Automation",
+                "description": "AI receptionists, follow-up automation, and website design"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "AI Services Insurance & Maintenance Plans",
+                "description": "Scam recovery insurance and AI system maintenance plans"
+              }
+            }
+          ]
         }
       }
     </script>

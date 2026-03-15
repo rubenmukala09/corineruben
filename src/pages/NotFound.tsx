@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { SEO, PAGE_SEO } from "@/components/SEO";
 import { useState } from "react";
 import {
   Search,
@@ -37,7 +38,9 @@ function NotFound() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <>
+      <SEO {...PAGE_SEO.notFound} />
+      <div className="min-h-screen flex flex-col bg-background">
       <Navigation />
 
       <div className="flex-1 flex items-center justify-center px-4 py-20 relative">
@@ -128,6 +131,7 @@ function NotFound() {
 
       <Footer />
     </div>
+    </>
   );
 }
 

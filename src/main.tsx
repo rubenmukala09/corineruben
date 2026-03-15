@@ -1,4 +1,4 @@
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import "./i18n";
@@ -8,8 +8,16 @@ if (window.location.search.includes("r=")) {
   window.history.replaceState({}, "", window.location.pathname);
 }
 
-// Mount immediately
-createRoot(document.getElementById("root")!).render(<App />);
+// Mount immediately.
+// If #root already contains pre-rendered HTML (from scripts/prerender.mjs),
+// hydrate it so crawlers' static content is upgraded to a live React app
+// without a full re-render flash. Otherwise fall back to a fresh createRoot.
+const rootEl = document.getElementById("root")!;
+if (rootEl.hasChildNodes()) {
+  hydrateRoot(rootEl, <App />);
+} else {
+  createRoot(rootEl).render(<App />);
+}
 
 // Defer non-critical initialization
 if ("requestIdleCallback" in window) {

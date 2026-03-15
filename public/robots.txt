@@ -1,26 +1,37 @@
 # robots.txt for InVision Network
+# https://www.invisionnetwork.org
 
 User-agent: *
 Allow: /
 
-# Disallow admin and API routes
+# Disallow admin, auth, and portal routes (require authentication)
 Disallow: /admin/
-Disallow: /api/
+Disallow: /portal/
+Disallow: /auth
+Disallow: /auth/
 Disallow: /login
 Disallow: /signup
-Disallow: /portal/
-Disallow: /*.json$
-Disallow: /auth/
+Disallow: /reset-password
+Disallow: /application-pending
 
-# Allow images and CSS
+# Disallow internal/demo pages
+Disallow: /demo/
+Disallow: /style-showcase
+Disallow: /maintenance
+
+# Allow static assets explicitly
 Allow: /assets/
+Allow: /images/
 Allow: /*.css$
 Allow: /*.js$
+Allow: /*.webp$
+Allow: /*.jpg$
+Allow: /*.png$
 
 # Sitemap location
-Sitemap: https://invisionnetwork.org/sitemap.xml
+Sitemap: https://www.invisionnetwork.org/sitemap.xml
 
-# Specific bot rules
+# Per-bot rules
 User-agent: Googlebot
 Allow: /
 
@@ -31,4 +42,7 @@ User-agent: Twitterbot
 Allow: /
 
 User-agent: facebookexternalhit
+Allow: /
+
+User-agent: LinkedInBot
 Allow: /

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SEO, PAGE_SEO } from "@/components/SEO";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
@@ -47,6 +48,8 @@ export default function HelpCenter() {
   };
 
   return (
+    <>
+      <SEO {...PAGE_SEO.help} />
       <div className="min-h-screen bg-background">
         <div className="bg-primary/5 py-16">
           <div className="container mx-auto max-w-3xl text-center px-4">
@@ -135,6 +138,6 @@ export default function HelpCenter() {
           </div>
         </div>
       </div>
-    
+    </>
   );
 }

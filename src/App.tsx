@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -302,6 +303,7 @@ function App() {
   }, []);
 
   return (
+    <HelmetProvider>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
           <Toaster />
@@ -321,9 +323,9 @@ function App() {
                         <AnalyticsTracker />
                       </Suspense>
                       <ErrorBoundary>
-                        <div id="main-content" tabIndex={-1} role="main">
+                        <main id="main-content" tabIndex={-1}>
                           <PublicRoutes />
-                        </div>
+                        </main>
                       </ErrorBoundary>
                       <RouteTracker />
                       <Suspense fallback={null}>
@@ -344,6 +346,7 @@ function App() {
           </SubscriptionProvider>
       </AuthProvider>
     </QueryClientProvider>
+    </HelmetProvider>
   );
 }
 

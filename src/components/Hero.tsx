@@ -93,6 +93,7 @@ const Hero = ({
             <img
               src={backgroundImage}
               alt=""
+              aria-hidden="true"
               width={1920}
               height={1080}
               loading="eager"
