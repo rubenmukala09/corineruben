@@ -134,7 +134,7 @@ export default function BookAccessManager() {
               className="bg-[#1F2937] border-[#374151] text-[#F9FAFB]"
             />
             <Input
-              placeholder="Book IDs (comma-sep, or leave blank for all)"
+              placeholder="Book IDs (comma-sep, or leave blank for ALL books)"
               value={genBookIds}
               onChange={(e) => setGenBookIds(e.target.value)}
               className="bg-[#1F2937] border-[#374151] text-[#F9FAFB]"
