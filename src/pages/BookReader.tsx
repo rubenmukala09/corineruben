@@ -164,9 +164,14 @@ export default function BookReader() {
 
   if (!session) return null;
 
-  const availableBooks = session.bookIds
-    .map((id) => getBookData(id))
-    .filter((b): b is BookData => b !== null);
+  const hasAllAccess = session.bookIds.includes("all");
+  const availableBooks = hasAllAccess
+    ? BOOK_CATALOG.map((b) => getBookData(b.id)).filter((b): b is BookData => b !== null)
+    : session.bookIds.map((id) => getBookData(id)).filter((b): b is BookData => b !== null);
+
+  const effectiveOwnedIds = hasAllAccess
+    ? BOOK_CATALOG.map((b) => b.id)
+    : session.bookIds;
 
   // Dashboard view (no book selected)
   if (!selectedBook) {
