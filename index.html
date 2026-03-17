@@ -2,85 +2,450 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Corine &amp; Ruben's Wedding</title>
-    <meta name="description" content="Celebrate the court wedding of Corine &amp; Ruben on March 16, 2026. RSVP, explore our love story, browse the gift registry, and get all the details for our special day.">
-    <meta name="author" content="Corine &amp; Ruben" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://corineruben.com" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+    />
 
-    <!-- Favicon -->
-
-    <!-- Preconnects -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <!-- Preconnect hints for early connection establishment -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
-    <link rel="preconnect" href="https://ghidhlnenkzfimrcdsvg.supabase.co" crossorigin />
+    <!-- DNS prefetch for backend (not preconnect - avoids unused preconnect warning) -->
+    <link rel="dns-prefetch" href="https://avoafweoebstkgjnbadv.supabase.co" />
+
+    <!-- Load primary fonts (Rubik + Lora) with optimized font-display -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rubik:wght@400;500;600;700;800&family=Lora:wght@400;500;600;700&display=optional"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rubik:wght@400;500;600;700;800&family=Lora:wght@400;500;600;700&display=optional"
+      />
+    </noscript>
+
+    <!-- Critical CSS inlined for FCP/LCP - prevents FOUC -->
+    <style>
+      /* System font stack for instant text paint - prevents layout shift */
+      @font-face {
+        font-family: "Rubik";
+        font-style: normal;
+        font-weight: 400 800;
+        font-display: optional;
+        src: local("Rubik"), local("Rubik-Regular");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "Lora";
+        font-style: normal;
+        font-weight: 400 700;
+        font-display: optional;
+        src: local("Lora"), local("Lora-Regular");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        border-width: 0;
+        border-style: solid;
+      }
+      html {
+        line-height: 1.5;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        font-family:
+          "Inter",
+          "Rubik",
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+      }
+      body {
+        margin: 0;
+        line-height: 1.65;
+        background-color: #f8f8fc;
+        color: #0f172a;
+        font-synthesis: none;
+        overflow-x: hidden;
+        width: 100%;
+      }
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        isolation: isolate;
+      }
+      /* Prevent cumulative layout shift (CLS) */
+      img, video, iframe {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      /* Prevent font loading flash */
+      .no-js body {
+        visibility: hidden;
+      }
+      .no-js.fonts-loaded body {
+        visibility: visible;
+      }
+      .fixed {
+        position: fixed;
+      }
+      .relative {
+        position: relative;
+      }
+      .flex {
+        display: flex;
+      }
+      .hidden {
+        display: none;
+      }
+      .h-screen {
+        height: 100vh;
+      }
+      .w-full {
+        width: 100%;
+      }
+      .min-h-screen {
+        min-height: 100vh;
+      }
+      .items-center {
+        align-items: center;
+      }
+      .justify-center {
+        justify-content: center;
+      }
+      .overflow-hidden {
+        overflow: hidden;
+      }
+      .z-50 {
+        z-index: 50;
+      }
+      .bg-primary {
+        background-color: #7c3aed;
+      }
+      .text-white {
+        color: #fff;
+      }
+      .bg-background {
+        background-color: #fff;
+      }
+      /* LCP element - gradient text for nav brand */
+      .gradient-text-primary {
+        background: linear-gradient(
+          135deg,
+          hsl(260, 70%, 35%),
+          hsl(260, 60%, 55%)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .sticky {
+        position: sticky;
+      }
+      .top-0 {
+        top: 0;
+      }
+      .bg-card {
+        background-color: #fff;
+      }
+      .border-b {
+        border-bottom-width: 1px;
+      }
+      .border-border {
+        border-color: #e2e8f0;
+      }
+      .shadow-lg {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+      nav {
+        z-index: 9999;
+      }
+      h1 {
+        font-weight: 700;
+        line-height: 0.95;
+        letter-spacing: -0.025em;
+      }
+      @media (min-width: 640px) {
+        h1 {
+          font-size: 2.25rem;
+        }
+      }
+      @media (min-width: 768px) {
+        h1 {
+          font-size: 3rem;
+        }
+      }
+      @media (min-width: 1024px) {
+        h1 {
+          font-size: 3.75rem;
+        }
+      }
+      .lcp-text {
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        color: #64748b;
+        line-height: 1.6;
+        margin: 0 0 2rem;
+      }
+    </style>
+
+    <!-- DNS prefetch for other origins -->
     <link rel="dns-prefetch" href="https://js.stripe.com" />
-    
+    <link rel="dns-prefetch" href="https://m.stripe.network" />
 
-    <!-- Playfair Display — LCP font: preload CSS to start font-file discovery ASAP -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=optional" as="style" onload="this.onload=null;this.rel='stylesheet'" crossorigin />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=optional" /></noscript>
-    <!-- Secondary fonts — deferred to unblock FCP -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" /></noscript>
+    <!-- Preload hero image for LCP - match actual served format -->
+    <link rel="preload" as="image" href="/images/hero-corporate-protection.webp" type="image/webp" fetchpriority="high" />
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Corine &amp; Ruben Wedding" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:url" content="https://corineruben.com" />
-    
-    
-    <meta property="og:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/BW4tP0NskoQeQxXuAuZjCl5F7bK2/social-images/social-1772862809451-wedding-icon-set-bride-and-groom-vector-2626047.webp">
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Corine and Ruben Wedding" />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    
-    
-    <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/BW4tP0NskoQeQxXuAuZjCl5F7bK2/social-images/social-1772862809451-wedding-icon-set-bride-and-groom-vector-2626047.webp">
-    <meta name="twitter:image:alt" content="Corine and Ruben Wedding" />
-
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Event",
-      "name": "Corine & Ruben Wedding",
-      "description": "Celebrate the court wedding of Corine & Ruben on March 16, 2026. RSVP, explore our love story, browse the gift registry, and get all the details for our special day.",
-      "startDate": "2026-03-16T14:00:00",
-      "endDate": "2026-03-16T22:00:00",
-      "url": "https://corineruben.com",
-      "image": "https://storage.googleapis.com/gpt-engineer-file-uploads/BW4tP0NskoQeQxXuAuZjCl5F7bK2/social-images/social-1772862809451-wedding-icon-set-bride-and-groom-vector-2626047.webp",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "organizer": [
-        { "@type": "Person", "name": "Corine" },
-        { "@type": "Person", "name": "Ruben" }
-      ]
-    }
+    <!-- Google Analytics - deferred to reduce main-thread impact -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("consent", "default", {
+        analytics_storage: "denied",
+        ad_storage: "denied",
+      });
+      var gaLoaded = false;
+      function isAnalyticsAllowed() {
+        try {
+          var consent = localStorage.getItem("invision-cookie-consent");
+          if (!consent) return false;
+          var prefsRaw = localStorage.getItem("invision-cookie-preferences");
+          if (!prefsRaw) return false;
+          var prefs = JSON.parse(prefsRaw);
+          return !!prefs.analytics;
+        } catch (e) {
+          return false;
+        }
+      }
+      function loadGA() {
+        if (gaLoaded || !isAnalyticsAllowed()) return;
+        gaLoaded = true;
+        var s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtag/js?id=G-B1MKM2FPV7";
+        document.head.appendChild(s);
+        gtag("consent", "update", {
+          analytics_storage: "granted",
+          ad_storage: "denied",
+        });
+        gtag("js", new Date());
+        gtag("config", "G-B1MKM2FPV7", { send_page_view: false });
+      }
+      function scheduleLoadGA() {
+        if (gaLoaded) return;
+        if ("requestIdleCallback" in window) {
+          requestIdleCallback(loadGA, { timeout: 4000 });
+        } else {
+          setTimeout(loadGA, 2000);
+        }
+      }
+      if (isAnalyticsAllowed()) {
+        scheduleLoadGA();
+      }
+      window.addEventListener("cookie-consent-updated", function () {
+        scheduleLoadGA();
+      });
     </script>
 
-    <meta property="og:title" content="Corine &amp; Ruben's Wedding">
-  <meta name="twitter:title" content="Corine &amp; Ruben's Wedding">
-  <meta property="og:description" content="Celebrate the court wedding of Corine &amp; Ruben on March 16, 2026. RSVP, explore our love story, browse the gift registry, and get all the details for our special day.">
-  <meta name="twitter:description" content="Celebrate the court wedding of Corine &amp; Ruben on March 16, 2026. RSVP, explore our love story, browse the gift registry, and get all the details for our special day.">
-</head>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <title>InVision Network | Cybersecurity & AI Protection in Ohio</title>
+    <meta
+      name="description"
+      content="InVision Network provides expert cybersecurity training and AI protection for Ohio families and businesses. Protect your identity and data from online scams."
+    />
+    <meta name="author" content="InVision Network" />
+    <meta
+      name="keywords"
+      content="AI scam protection, deepfake detection, senior scam training, family cybersecurity, phishing defense, Dayton Ohio"
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+
+    <!-- Google Site Verification -->
+    <meta
+      name="google-site-verification"
+      content="google7d90b5b18423192a.html"
+    />
+
+    <!-- Preconnect hints moved to top of head for maximum LCP benefit -->
+
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/social-images/social-1761862743436-shield_purpleb.png"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@invisionnetwork" />
+    <meta
+      name="twitter:image"
+      content="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/social-images/social-1761862743436-shield_purpleb.png"
+    />
+
+    <!-- Canonical URL is set per-page by react-helmet-async (SEO component) -->
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#6D28D9" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="InVision" />
+
+    <!-- Structured Data (JSON-LD) — LocalBusiness baseline (per-page schemas injected by SEO component) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "InVision Network",
+        "description": "Cybersecurity training and AI protection services for families, seniors, and businesses in Southwest Ohio",
+        "url": "https://www.invisionnetwork.org",
+        "logo": "https://www.invisionnetwork.org/favicon.png",
+        "image": "https://www.invisionnetwork.org/images/hero-corporate-protection.webp",
+        "foundingDate": "2024",
+        "founders": [
+          { "@type": "Person", "name": "Ruben Nk" },
+          { "@type": "Person", "name": "Corine Mk" }
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Kettering",
+          "addressRegion": "OH",
+          "postalCode": "45429",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 39.6895,
+          "longitude": -84.1688
+        },
+        "telephone": "+14074465749",
+        "priceRange": "$$",
+        "areaServed": {
+          "@type": "GeoCircle",
+          "geoMidpoint": {
+            "@type": "GeoCoordinates",
+            "latitude": 39.6895,
+            "longitude": -84.1688
+          },
+          "geoRadius": "80000",
+          "description": "Southwest Ohio, 50-mile radius from Kettering"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+14074465749",
+          "contactType": "Customer Service",
+          "availableLanguage": ["English", "Spanish", "French"]
+        },
+        "sameAs": [
+          "https://twitter.com/invisionnetwork",
+          "https://facebook.com/invisionnetwork",
+          "https://linkedin.com/company/invisionnetwork"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "InVision Network Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Cybersecurity Training for Seniors & Families",
+                "description": "In-person and virtual AI scam protection training"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "AI Business Automation",
+                "description": "AI receptionists, follow-up automation, and website design"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "AI Services Insurance & Maintenance Plans",
+                "description": "Scam recovery insurance and AI system maintenance plans"
+              }
+            }
+          ]
+        }
+      }
+    </script>
+
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://storage.googleapis.com/gpt-engineer-file-uploads/UpYpYr7MTVdr1jgHmL94ALNUlk93/uploads/1761862729082-shield_purpleb.png"
+    />
+    <meta
+      property="og:title"
+      content="InVision Network | Cybersecurity & AI Protection in Ohio"
+    />
+    <meta
+      name="twitter:title"
+      content="InVision Network | Cybersecurity & AI Protection in Ohio"
+    />
+    <meta
+      property="og:description"
+      content="InVision Network provides expert cybersecurity training and AI protection for Ohio families and businesses. Protect your identity and data from online scams."
+    />
+    <meta
+      name="twitter:description"
+      content="InVision Network provides expert cybersecurity training and AI protection for Ohio families and businesses. Protect your identity and data from online scams."
+    />
+  </head>
 
   <body>
-    <div id="root">
-      <!-- Inline skeleton for instant FCP — replaced by React on mount -->
-      <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Georgia,'Times New Roman',serif;text-align:center;padding:2rem;background:linear-gradient(135deg,hsl(300 20% 97%) 0%,hsl(330 30% 95%) 50%,hsl(280 20% 96%) 100%)">
-        <p style="font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;color:#9b8a8e;margin-bottom:1.5rem">A Love Written in the Stars</p>
-        <h1 style="font-size:clamp(2.5rem,8vw,5rem);font-weight:600;color:#3d2e3d;margin:0;line-height:1.1">Corine</h1>
-        <div style="margin:.75rem 0"><span style="display:inline-flex;align-items:center;justify-content:center;width:3rem;height:3rem;border-radius:50%;background:linear-gradient(135deg,#c9a9b6,#b07d95);color:#fff;font-size:1.25rem">♥</span></div>
-        <p style="font-size:clamp(2.5rem,8vw,5rem);font-weight:600;color:#3d2e3d;margin:0;line-height:1.1">Ruben</p>
-      </div>
-    </div>
+    <!-- LCP image: in initial HTML so preload scanner discovers it immediately -->
+    <img src="/images/hero-corporate-protection.webp" alt="" width="1920" height="1080" fetchpriority="high" decoding="sync" style="position:absolute;width:0;height:0;overflow:hidden;opacity:0;pointer-events:none" aria-hidden="true" />
+    <div id="root"></div>
+
+    <!-- Font loading optimization script -->
+    <script>
+      // Detect when fonts are loaded to prevent FOUT
+      if ('fonts' in document) {
+        Promise.all([
+          document.fonts.load('400 1rem Rubik'),
+          document.fonts.load('600 1rem Rubik'),
+          document.fonts.load('700 1rem Rubik')
+        ]).then(function() {
+          document.documentElement.classList.add('fonts-loaded');
+        }).catch(function() {
+          // Fallback if font loading fails
+          document.documentElement.classList.add('fonts-loaded');
+        });
+
+        // Timeout fallback
+        setTimeout(function() {
+          document.documentElement.classList.add('fonts-loaded');
+        }, 1500);
+      } else {
+        // Browsers without Font Loading API
+        document.documentElement.classList.add('fonts-loaded');
+      }
+    </script>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

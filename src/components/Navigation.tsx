@@ -1,200 +1,336 @@
-import { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useTheme } from '@/contexts/ThemeContext';
-import { useAuth } from '@/contexts/AuthContext';
-import { Sun, Moon, Menu, X, Globe, Heart, LogOut, LogIn, MessageCircleQuestion } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import * as React from "react";
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  Menu,
+  X,
+  Phone,
+  LayoutDashboard,
+  Heart,
+  ChevronDown,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PrefetchLink } from "@/components/PrefetchLink";
+import { ShoppingCart } from "@/components/ShoppingCart";
+import { useAuth } from "@/contexts/AuthContext";
+import { SITE } from "@/config/site";
+import invisionLogo from "@/assets/shield-logo.png";
+import { DonationModal } from "@/components/DonationModal";
 
-const Navigation = () => {
-  const { language, setLanguage, t } = useLanguage();
-  const { theme, toggleTheme } = useTheme();
-  const { user, signOut } = useAuth();
-  const navigate = useNavigate();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [visible, setVisible] = useState(true);
-  const [scrolled, setScrolled] = useState(false);
-  const lastScrollY = useRef(0);
+const primaryLinks = [
+  { name: "AI & Business", href: "/business" },
+  { name: "Learn & Train", href: "/training" },
+  { name: "Resources", href: "/resources" },
+  { name: "About", href: "/about" },
+];
+
+const secondaryLinks = [
+  { name: "Careers", href: "/careers" },
+  { name: "FAQ", href: "/faq" },
+  { name: "Contact", href: "/contact" },
+];
+
+const allLinks = [...primaryLinks, ...secondaryLinks];
+
+const Navigation = React.memo(() => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [donateOpen, setDonateOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const location = useLocation();
+  const { user, roleConfig } = useAuth();
+  const moreRef = React.useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      setScrolled(currentY > 20);
-      if (currentY > 100) {
-        setVisible(currentY < lastScrollY.current || currentY < 80);
-      } else {
-        setVisible(true);
+  const isAdminOrStaff = user && roleConfig;
+
+  // Close "More" dropdown on outside click
+  React.useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
+        setMoreOpen(false);
       }
-      lastScrollY.current = currentY;
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    if (moreOpen) document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [moreOpen]);
 
-  const navLinks = [
-    { to: '/', label: t('nav.home') },
-    { to: '/story', label: t('nav.story') },
-    { to: '/rsvp', label: t('nav.rsvp') },
-    ...(user ? [{ to: '/dashboard', label: 'Dashboard' }] : []),
-  ];
+  const hasOpenedMenu = React.useRef(false);
+  React.useEffect(() => {
+    if (mobileMenuOpen) {
+      hasOpenedMenu.current = true;
+      document.body.style.overflow = "hidden";
+    } else if (hasOpenedMenu.current) {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      if (hasOpenedMenu.current) {
+        document.body.style.overflow = "";
+      }
+    };
+  }, [mobileMenuOpen]);
 
-  const mobileLinks = [
-    ...navLinks,
-    { to: '/gallery', label: t('nav.gallery') },
-    { to: '/guestbook', label: t('nav.guestbook') },
-    { to: '/faq', label: t('nav.faq') },
-    { to: '/enquiries', label: t('nav.enquiries') },
-  ];
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleBrandClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.location.href = "/";
+  };
+
+  const isActiveLink = (href: string) => {
+    return (
+      location.pathname === href || location.pathname.startsWith(href + "/")
+    );
+  };
+
+  const isSecondaryActive = secondaryLinks.some((l) => isActiveLink(l.href));
 
   return (
-    <div
-      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-3 px-4 transition-transform duration-350 ease-in-out"
-      style={{ transform: visible ? 'translateY(0)' : 'translateY(-100px)' }}
-    >
-      <nav
-        className={`w-full max-w-3xl nav-glow-border transition-all duration-500 rounded-[22px] border-2 ${
-          scrolled
-            ? 'border-white/20 bg-gradient-to-r from-plum/90 via-plum-dark/85 to-plum/90 backdrop-blur-2xl shadow-[0_8px_40px_rgba(107,78,113,0.4),0_2px_8px_rgba(0,0,0,0.2)]'
-            : 'border-white/15 bg-gradient-to-r from-plum/80 via-plum-dark/75 to-plum/80 backdrop-blur-xl shadow-[0_4px_24px_rgba(107,78,113,0.3),0_1px_4px_rgba(0,0,0,0.15)]'
-        }`}
-        style={{ height: '56px' }}
-      >
-        <div className="px-4 md:px-5 flex items-center h-full gap-3">
+    <>
+      {/* Mobile backdrop */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-foreground/40 z-[9998] lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
 
-          {/* ── GROUP 1: Logo ── */}
-          <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
-            <span className="w-8 h-8 rounded-full bg-white/15 border border-white/25 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 shadow-[0_0_12px_rgba(255,255,255,0.1)]">
-              <Heart className="w-3.5 h-3.5 text-white fill-white" />
-            </span>
-            <span className="font-serif-display text-sm md:text-base font-extrabold tracking-wide text-white group-hover:text-white/90 transition-colors whitespace-nowrap" style={{ letterSpacing: '0.5px' }}>
-              Corine & Ruben
-            </span>
-          </Link>
+      <nav className="sticky top-0 z-[9999] bg-card/95 backdrop-blur-md border-b border-border/40">
+        <div className="container mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
+          <div className="flex items-center justify-between h-[68px]">
+            {/* Logo */}
+            <a
+              href="/"
+              className="flex items-center gap-2.5 hover:opacity-90 transition-opacity duration-150 flex-shrink-0 no-underline"
+              onClick={handleBrandClick}
+            >
+              <img
+                src={invisionLogo}
+                alt="InVision Network Shield Logo"
+                width={34}
+                height={34}
+                loading="eager"
+                decoding="sync"
+                className="w-[38px] h-[38px] object-contain flex-shrink-0"
+              />
+              <div className="flex flex-col leading-none min-w-0">
+                <span className="text-[17px] font-extrabold text-foreground tracking-tight">
+                  InVision Network
+                </span>
+                <span className="text-[10px] font-bold text-muted-foreground hidden sm:block tracking-widest uppercase">
+                  AI Scam Protection
+                </span>
+              </div>
+            </a>
 
-          <div className="hidden md:block w-px h-6 bg-white/15 flex-shrink-0" />
+            {/* Desktop Navigation — centered */}
+            <div className="hidden lg:flex items-center gap-1">
+              {primaryLinks.map((link) => {
+                const isActive = isActiveLink(link.href);
+                return (
+                  <PrefetchLink
+                    key={link.name}
+                    to={link.href}
+                    className={`relative text-[15px] px-3 py-2 rounded-md transition-colors duration-150 ${
+                      isActive
+                        ? "text-primary font-bold bg-primary/5"
+                        : "text-foreground/80 font-semibold hover:text-foreground hover:bg-muted/50"
+                    }`}
+                  >
+                    {link.name}
+                  </PrefetchLink>
+                );
+              })}
 
-          {/* ── GROUP 2: Nav links (centered) ── */}
-          <div className="hidden md:flex items-center gap-0.5 flex-1 justify-center">
-            {navLinks.map(link => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={`font-sans-elegant text-xs font-bold transition-all duration-300 relative px-3 py-1.5 rounded-full whitespace-nowrap ${
-                  location.pathname === link.to
-                    ? 'text-white'
-                    : 'text-white/65 hover:text-white hover:bg-white/10'
-                }`}
-                style={{ letterSpacing: '0.3px' }}
-              >
-                {location.pathname === link.to && (
-                  <div
-                    className="absolute inset-0 rounded-full bg-white/15 border border-white/20"
-                    style={{ boxShadow: '0 0 12px rgba(255,255,255,0.15), inset 0 1px 0 rgba(255,255,255,0.1)' }}
+              {/* More dropdown */}
+              <div className="relative" ref={moreRef}>
+                <button
+                  onClick={() => setMoreOpen(!moreOpen)}
+                  className={`flex items-center gap-1 text-[15px] px-3 py-2 rounded-md transition-colors duration-150 ${
+                    isSecondaryActive
+                      ? "text-primary font-bold bg-primary/5"
+                      : "text-foreground/80 font-semibold hover:text-foreground hover:bg-muted/50"
+                  }`}
+                >
+                  More
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${moreOpen ? "rotate-180" : ""}`}
                   />
+                </button>
+
+                {moreOpen && (
+                  <div className="absolute top-full left-0 mt-1 w-44 bg-card rounded-lg border border-border shadow-lg py-1 z-50">
+                    {secondaryLinks.map((link) => {
+                      const isActive = isActiveLink(link.href);
+                      return (
+                        <PrefetchLink
+                          key={link.name}
+                          to={link.href}
+                          className={`block px-4 py-2.5 text-sm transition-colors ${
+                            isActive
+                              ? "text-primary font-semibold bg-primary/5"
+                              : "text-foreground hover:bg-muted/60"
+                          }`}
+                          onClick={() => setMoreOpen(false)}
+                        >
+                          {link.name}
+                        </PrefetchLink>
+                      );
+                    })}
+                  </div>
                 )}
-                <span className="relative z-10">{link.label}</span>
-              </Link>
-            ))}
+              </div>
+            </div>
 
-            {[
-              { to: '/enquiries', icon: MessageCircleQuestion, label: t('nav.enquiries') },
-            ].map(({ to, icon: Icon, label }) => (
-              <Link
-                key={to}
-                to={to}
-                className={`relative p-1.5 rounded-full transition-all duration-300 ml-0.5 ${
-                  location.pathname === to
-                    ? 'text-white bg-white/15 border border-white/20'
-                    : 'text-white/50 hover:text-white hover:bg-white/10'
-                }`}
-                aria-label={label}
-                title={label}
+            {/* Right Side — streamlined */}
+            <div className="flex items-center gap-2">
+              <ShoppingCart />
+
+              {/* Phone — icon only on smaller desktops, with number on xl */}
+              <a
+                href={SITE.phone.tel}
+                className="hidden lg:flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors duration-150 no-underline px-2 py-1.5 rounded-md hover:bg-muted/50"
+                aria-label={`Call us at ${SITE.phone.display}`}
               >
-                <Icon className="w-4 h-4" />
-              </Link>
-            ))}
-          </div>
+                <Phone className="w-4 h-4" />
+                <span className="hidden xl:inline text-sm font-medium">
+                  {SITE.phone.display}
+                </span>
+              </a>
 
-          <div className="hidden md:block w-px h-6 bg-white/15 flex-shrink-0" />
-
-          {/* ── GROUP 3: Controls ── */}
-          <div className="flex items-center gap-1.5 ml-auto md:ml-0 flex-shrink-0">
-            <button
-              onClick={() => {
-                const langs: Array<'en' | 'fr' | 'es'> = ['en', 'fr', 'es'];
-                const idx = langs.indexOf(language);
-                setLanguage(langs[(idx + 1) % langs.length]);
-              }}
-              className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-bold rounded-full border border-white/20 text-white/80 hover:text-white hover:border-white/35 transition-all"
-              aria-label={`Switch language, current: ${language.toUpperCase()}`}
-            >
-              <Globe className="w-3.5 h-3.5" />
-              {language.toUpperCase()}
-            </button>
-
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-white/10 transition-all duration-300 text-white/65 hover:text-white"
-              aria-label="Toggle theme"
-            >
-              {theme === 'light' ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
-            </button>
-
-            {user ? (
+              {/* Donate — subtle icon button */}
               <button
-                onClick={signOut}
-                className="p-2 rounded-full hover:bg-white/10 transition-all duration-300 text-white/65 hover:text-white"
-                aria-label="Sign out"
+                type="button"
+                onClick={() => setDonateOpen(true)}
+                className="hidden lg:flex items-center gap-1.5 text-sm font-medium px-2.5 py-1.5 rounded-md text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors"
+                aria-label="Donate"
               >
-                <LogOut className="w-3.5 h-3.5" />
+                <Heart className="w-4 h-4" />
+                <span className="hidden xl:inline">Donate</span>
               </button>
-            ) : (
-              <button
-                onClick={() => navigate('/login')}
-                className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-bold rounded-full border border-white/20 text-white/80 hover:text-white hover:border-white/35 transition-all"
-                aria-label="Login"
-              >
-                <LogIn className="w-3.5 h-3.5" />
-                Login
-              </button>
-            )}
 
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 rounded-full hover:bg-white/10 transition-all duration-300 text-white/90"
-              aria-label="Toggle menu"
-            >
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+              {/* Divider */}
+              <div className="hidden lg:block w-px h-6 bg-border/60 mx-1" />
+
+              {/* Login / Dashboard */}
+              <Button
+                asChild
+                size="sm"
+                className="h-9 px-5 text-sm text-primary-foreground font-semibold rounded-lg shadow-sm"
+              >
+                {isAdminOrStaff ? (
+                  <Link
+                    to="/admin"
+                    aria-label="Go to Dashboard"
+                    className="flex items-center gap-1.5"
+                  >
+                    <LayoutDashboard className="h-4 w-4" />
+                    Dashboard
+                  </Link>
+                ) : (
+                  <Link to="/portal" aria-label="Login to your account">
+                    Login
+                  </Link>
+                )}
+              </Button>
+
+              {/* Mobile menu button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 rounded-lg hover:bg-muted/60 transition-colors duration-150 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? (
+                  <X className="h-5 w-5 text-foreground" />
+                ) : (
+                  <Menu className="h-5 w-5 text-foreground" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Mobile menu */}
-        {mobileOpen && (
-          <div className="absolute top-[64px] left-2 right-2 md:hidden overflow-hidden rounded-2xl bg-background/95 dark:bg-background/95 backdrop-blur-2xl border border-border/50 shadow-[0_20px_60px_rgba(139,107,138,0.25)]">
-            <div className="flex flex-col p-4 gap-1">
-              {mobileLinks.map(link => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setMobileOpen(false)}
-                  className={`font-sans-elegant text-[13px] font-medium py-2.5 px-3 rounded-2xl transition-all duration-300 ${
-                    location.pathname === link.to
-                      ? 'text-primary-foreground bg-primary font-semibold'
-                      : 'text-foreground hover:bg-primary/10'
-                  }`}
-                  style={{ letterSpacing: '0.3px' }}
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden fixed top-16 left-0 right-0 bottom-0 bg-card border-t border-border z-[10001] overflow-y-auto overscroll-contain pb-[calc(env(safe-area-inset-bottom)+1.25rem)] [-webkit-overflow-scrolling:touch]">
+            <div className="container mx-auto px-4 py-4 space-y-1">
+              {allLinks.map((link) => {
+                const isActive = isActiveLink(link.href);
+                return (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    className={`block text-[15px] transition-colors duration-150 font-medium px-4 py-3 rounded-lg ${
+                      isActive
+                        ? "text-primary font-semibold bg-primary/5"
+                        : "text-foreground/80 hover:text-foreground hover:bg-muted/40"
+                    }`}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      scrollToTop();
+                    }}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+
+              {/* Mobile Actions */}
+              <div className="pt-4 border-t border-border mt-3 space-y-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full h-11 text-[15px] font-semibold border-primary/20 text-primary hover:bg-primary/5"
+                  onClick={() => {
+                    setDonateOpen(true);
+                    setMobileMenuOpen(false);
+                  }}
                 >
-                  {link.label}
-                </Link>
-              ))}
+                  <Heart className="h-4 w-4 mr-2" />
+                  Donate
+                </Button>
+
+                <Button
+                  asChild
+                  className="w-full h-11 text-[15px] font-semibold text-primary-foreground rounded-lg"
+                >
+                  {isAdminOrStaff ? (
+                    <Link
+                      to="/admin"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <LayoutDashboard className="h-4 w-4" />
+                      Dashboard
+                    </Link>
+                  ) : (
+                    <Link to="/portal" onClick={() => setMobileMenuOpen(false)}>
+                      Login
+                    </Link>
+                  )}
+                </Button>
+
+                <a
+                  href={SITE.phone.tel}
+                  className="flex items-center justify-center gap-2 text-[15px] text-muted-foreground font-medium px-4 py-3 rounded-lg hover:bg-muted/40 transition-colors duration-150"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Phone className="h-4 w-4" />
+                  {SITE.phone.display}
+                </a>
+              </div>
             </div>
           </div>
         )}
       </nav>
-    </div>
+
+      <DonationModal
+        open={donateOpen}
+        onOpenChange={setDonateOpen}
+        type="general"
+      />
+    </>
   );
-};
+});
 
 export default Navigation;

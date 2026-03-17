@@ -1,156 +1,138 @@
-import { useLocation, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useLanguage } from '@/contexts/LanguageContext';
-import { motion } from "framer-motion";
-import { Home, ArrowLeft, Heart, MapPin, Calendar, Mail } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { SEO, PAGE_SEO } from "@/components/SEO";
+import { useState } from "react";
+import {
+  Search,
+  Home,
+  Shield,
+  Briefcase,
+  BookOpen,
+  Phone,
+  MessageCircle,
+  ArrowRight,
+  Sparkles,
+} from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import { SITE } from "@/config/site";
 
-const NotFound = () => {
+const popularPages = [
+  { icon: Home, label: "Home", desc: "Back to the main page", path: "/" },
+  { icon: Briefcase, label: "AI for Business", desc: "Enterprise security solutions", path: "/business" },
+  { icon: Shield, label: "Family Protection", desc: "Training plans and pricing", path: "/training" },
+  { icon: BookOpen, label: "Resources", desc: "Free guides and tools", path: "/resources" },
+  { icon: Phone, label: "Contact Us", desc: "Talk to our team", path: "/contact" },
+];
+
+function NotFound() {
   const location = useLocation();
-  const { t } = useLanguage();
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
-  const quickLinks = [
-    { icon: Home, label: t('nav.home'), path: "/", desc: t('notfound.backToStart') },
-    { icon: Heart, label: t('nav.story'), path: "/story", desc: t('notfound.howWeMet') },
-    { icon: Calendar, label: t('nav.rsvp'), path: "/rsvp", desc: t('notfound.confirmAttendance') },
-    { icon: MapPin, label: t('nav.details'), path: "/details", desc: t('notfound.venueSchedule') },
-  ];
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      window.location.href = `/resources?search=${encodeURIComponent(searchQuery)}`;
+    }
+  };
 
   return (
-    <div className="relative min-h-screen overflow-hidden gradient-hero flex items-center justify-center px-6 md:px-12 py-24">
-      <div
-        className="floating-blob w-[500px] h-[500px] bg-primary/20 top-[-10%] left-[-5%]"
-        style={{ transform: `translate(${mousePos.x * 30}px, ${mousePos.y * 20}px)` }}
-      />
-      <div
-        className="floating-blob w-[400px] h-[400px] bg-pale-lilac/25 bottom-[-10%] right-[-5%]"
-        style={{ transform: `translate(${-mousePos.x * 20}px, ${-mousePos.y * 15}px)` }}
-      />
-      <div
-        className="floating-blob w-[300px] h-[300px] bg-dusty-rose/15 top-[40%] right-[20%]"
-        style={{ transform: `translate(${mousePos.x * 15}px, ${-mousePos.y * 25}px)` }}
-      />
+    <>
+      <SEO {...PAGE_SEO.notFound} />
+      <div className="min-h-screen flex flex-col bg-background">
+      <Navigation />
 
-      <div className="relative z-10 w-full max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="glass-card-strong rounded-3xl p-8 md:p-14 text-center mb-8"
-        >
-          <motion.div
-            animate={{ y: [-8, 8, -8], rotate: [0, 5, -5, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="flex items-center justify-center gap-3 mb-6"
-          >
-            <Heart className="w-5 h-5 text-dusty-rose/50" />
-            <Heart className="w-7 h-7 text-dusty-rose/70 fill-dusty-rose/20" />
-            <Heart className="w-5 h-5 text-dusty-rose/50" />
-          </motion.div>
+      <div className="flex-1 flex items-center justify-center px-4 py-20 relative">
+        {/* Ambient glows */}
+        <div className="absolute top-[10%] right-[15%] w-72 h-72 rounded-full bg-primary/[0.04] blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[15%] left-[10%] w-60 h-60 rounded-full bg-accent/[0.04] blur-[100px] pointer-events-none" />
 
-          <motion.h1
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="font-serif-display text-8xl md:text-9xl font-semibold gradient-text mb-4 leading-none"
-          >
-            404
-          </motion.h1>
-
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
-            <h2 className="font-serif-display text-2xl md:text-3xl text-foreground mb-3 font-semibold">
-              {t('notfound.title')}
-            </h2>
-            <p className="font-sans-elegant text-lg md:text-xl text-muted-foreground max-w-md mx-auto mb-2" style={{ lineHeight: 1.6 }}>
-              {t('notfound.desc')}
-            </p>
-            <p className="font-sans-elegant text-xs text-muted-foreground/60 tracking-wider uppercase mt-4">
-              {t('notfound.requested')}: <span className="text-primary/70">{location.pathname}</span>
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
-          >
-            <Link to="/" className="btn-primary">
-              <Home className="w-4 h-4" />
-              {t('notfound.returnHome')}
-            </Link>
-            <button onClick={() => window.history.back()} className="btn-outline">
-              <ArrowLeft className="w-4 h-4" />
-              {t('notfound.goBack')}
-            </button>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4"
-        >
-          {quickLinks.map((link, i) => (
-            <motion.div
-              key={link.path}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 + i * 0.1 }}
-              whileHover={{ y: -6, scale: 1.02 }}
-            >
-              <Link
-                to={link.path}
-                className="glass-card-strong rounded-3xl p-6 flex flex-col items-center text-center gap-2.5 card-hover group block"
-              >
-                <div className="w-12 h-12 rounded-3xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
-                  <link.icon className="w-5 h-5 text-primary" />
-                </div>
-                <span className="font-sans-elegant text-sm font-semibold text-foreground">{link.label}</span>
-                <span className="font-sans-elegant text-xs text-muted-foreground">{link.desc}</span>
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.3 }}
-          className="mt-8 glass-card-strong rounded-3xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-3xl bg-accent/30 flex items-center justify-center">
-              <Mail className="w-5 h-5 text-primary" />
+        <div className="max-w-2xl w-full animate-fade-in">
+          <div className="text-center mb-10">
+            {/* Shield icon */}
+            <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-gradient-to-br from-primary/12 to-accent/8 border border-primary/15 mb-8 shadow-[0_12px_40px_-12px_hsl(var(--primary)/0.12)]">
+              <Shield className="w-12 h-12 text-primary" />
             </div>
-            <div>
-              <p className="font-sans-elegant text-sm font-semibold text-foreground">{t('notfound.needHelp')}</p>
-              <p className="font-sans-elegant text-xs text-muted-foreground">{t('notfound.reachOut')}</p>
+
+            {/* Badge pill */}
+            <div className="flex justify-center mb-4">
+              <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] border border-primary/15 bg-primary/5 shadow-sm">
+                <Sparkles className="w-3.5 h-3.5 text-primary" />
+                <span className="text-primary">Error 404</span>
+              </span>
             </div>
+
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+              Page Not Found
+            </h1>
+            <p className="text-muted-foreground text-lg max-w-md mx-auto leading-relaxed">
+              The page you're looking for doesn't exist or has been moved. Let's get you back on track.
+            </p>
           </div>
-          <Link
-            to="/rsvp"
-            className="font-sans-elegant text-xs font-semibold tracking-wider uppercase text-primary hover:text-primary/80 transition-colors"
-          >
-            {t('notfound.contactUs')} →
-          </Link>
-        </motion.div>
+
+          {/* Search */}
+          <form onSubmit={handleSearch} className="relative mb-10">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search InVision Network..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-14 pl-12 pr-4 text-base rounded-2xl border-2 border-border bg-card/80 backdrop-blur-sm shadow-sm focus:border-primary"
+            />
+          </form>
+
+          {/* Quick Links */}
+          <div className="space-y-3 mb-10">
+            <p className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">Quick Navigation</p>
+            {popularPages.map((page) => (
+              <Link
+                key={page.path}
+                to={page.path}
+                className="flex items-center gap-4 p-4 rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm hover:border-primary/30 hover:bg-primary/[0.03] transition-all group"
+              >
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary/10 to-accent/8 border border-primary/10 flex items-center justify-center flex-shrink-0 group-hover:shadow-sm transition-shadow">
+                  <page.icon className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <span className="font-semibold text-foreground block">{page.label}</span>
+                  <span className="text-sm text-muted-foreground">{page.desc}</span>
+                </div>
+                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+              </Link>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button asChild size="lg">
+              <Link to="/">
+                <Home className="w-5 h-5 mr-2" />
+                Back to Home
+              </Link>
+            </Button>
+            <Button asChild variant="outline" size="lg">
+              <Link to="/contact">
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Contact Support
+              </Link>
+            </Button>
+          </div>
+
+          <p className="text-center text-sm text-muted-foreground mt-6">
+            Or call us at{" "}
+            <a href={SITE.phone.tel} className="text-primary font-medium hover:underline">
+              {SITE.phone.display}
+            </a>
+          </p>
+        </div>
       </div>
+
+      <Footer />
     </div>
+    </>
   );
-};
+}
 
 export default NotFound;

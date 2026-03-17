@@ -1,3 +1,37 @@
+# robots.txt for InVision Network
+# https://www.invisionnetwork.org
+
+User-agent: *
+Allow: /
+
+# Disallow admin, auth, and portal routes (require authentication)
+Disallow: /admin/
+Disallow: /portal/
+Disallow: /auth
+Disallow: /auth/
+Disallow: /login
+Disallow: /signup
+Disallow: /reset-password
+Disallow: /application-pending
+
+# Disallow internal/demo pages
+Disallow: /demo/
+Disallow: /style-showcase
+Disallow: /maintenance
+
+# Allow static assets explicitly
+Allow: /assets/
+Allow: /images/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.webp$
+Allow: /*.jpg$
+Allow: /*.png$
+
+# Sitemap location
+Sitemap: https://www.invisionnetwork.org/sitemap.xml
+
+# Per-bot rules
 User-agent: Googlebot
 Allow: /
 
@@ -10,10 +44,5 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
-Disallow: /dashboard
-Disallow: /staff
-Disallow: /login
-
-Sitemap: https://corineruben.com/sitemap.xml

@@ -1,0 +1,191 @@
+/* ===== REFINED ANIMATION SYSTEM ===== */
+/* Fast, subtle, consistent 150-200ms timing */
+
+/* ===== SCROLL REVEAL ===== */
+
+.scroll-fade-up,
+.scroll-rise {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.2s cubic-bezier(0.2, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.scroll-fade-in,
+.scroll-reveal {
+  opacity: 0;
+  transition: opacity 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.scroll-scale-in {
+  opacity: 0;
+  transform: scale(0.98);
+  transition:
+    opacity 0.2s cubic-bezier(0.2, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.scroll-slide-left {
+  opacity: 0;
+  transform: translateX(-12px);
+  transition:
+    opacity 0.2s cubic-bezier(0.2, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.scroll-slide-right {
+  opacity: 0;
+  transform: translateX(12px);
+  transition:
+    opacity 0.2s cubic-bezier(0.2, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.scroll-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ===== HOVER EFFECTS - 150ms ===== */
+
+.hover-lift {
+  transition:
+    transform 0.15s cubic-bezier(0.2, 0, 0.2, 1),
+    box-shadow 0.15s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.08);
+}
+
+.hover-scale {
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.btn-press {
+  transition: transform 0.1s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.btn-press:active {
+  transform: scale(0.98);
+}
+
+/* ===== BASIC KEYFRAMES ===== */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes skeleton-wave {
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes accordion-expand {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+
+@keyframes accordion-collapse {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted)) 0%,
+    hsl(var(--muted-foreground) / 0.15) 50%,
+    hsl(var(--muted)) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-wave 1.5s ease-in-out infinite;
+  border-radius: 0.375rem;
+}
+
+/* Staggered children - faster delays */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 0.2s cubic-bezier(0.2, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.stagger-children.visible > *:nth-child(1) {
+  transition-delay: 0;
+}
+.stagger-children.visible > *:nth-child(2) {
+  transition-delay: 40ms;
+}
+.stagger-children.visible > *:nth-child(3) {
+  transition-delay: 80ms;
+}
+.stagger-children.visible > *:nth-child(4) {
+  transition-delay: 120ms;
+}
+.stagger-children.visible > *:nth-child(5) {
+  transition-delay: 160ms;
+}
+.stagger-children.visible > *:nth-child(6) {
+  transition-delay: 200ms;
+}
+
+.stagger-children.visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== PAUSE INFINITE ANIMATIONS WHEN NOT HOVERED ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .btn-shine::before,
+  .fluid-motion,
+  .dynamic-gradient-overlay::before {
+    animation-play-state: paused;
+  }
+  .btn-shine:hover::before,
+  .fluid-motion:hover,
+  .dynamic-gradient-overlay:hover::before {
+    animation-play-state: running;
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

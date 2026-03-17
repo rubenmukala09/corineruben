@@ -1,1228 +1,208 @@
-import { useState, useEffect, forwardRef, lazy, Suspense } from 'react';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { Link } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { useMusic } from '@/components/MusicContext';
-/* framer-motion removed for performance — using CSS transitions instead */
-import { ChevronDown, Heart, MapPin, Calendar, Clock, Utensils, Gift, Sparkles, Play, Pause, Music, Users, Flower2, BookOpen, Cross, Church, Gem, PartyPopper, Hotel, Car, Check, X, Megaphone, Video, Share2, ExternalLink } from 'lucide-react';
-const LazyDialog = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.Dialog })));
-const LazyDialogContent = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogContent })));
-const LazyDialogHeader = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogHeader })));
-const LazyDialogTitle = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogTitle })));
-const LazyDialogDescription = lazy(() => import('@/components/ui/dialog').then(m => ({ default: m.DialogDescription })));
-import { Input } from '@/components/ui/input';
-import { toast } from 'sonner';
-import { useSiteImages, useSiteSettings } from '@/hooks/useSiteContent';
+import { lazy, Suspense, useState, useRef, useEffect, forwardRef } from "react";
+import { Link } from "react-router-dom";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import { HeroHomepage } from "@/components/HeroHomepage";
+import { HomeIntroSection } from "@/components/HomeIntroSection";
+import { ScamShieldSubmission } from "@/components/ScamShieldSubmission";
+import { PageTransition } from "@/components/PageTransition";
+import { Button } from "@/components/ui/button";
+import { SEO, PAGE_SEO } from "@/components/SEO";
+import seniorCoupleActive from "@/assets/senior-couple-active.jpg";
+import { SITE } from "@/config/site";
+import { TrustBadgesSection } from "@/components/home/TrustBadgesSection";
+import SiteOrientationGrid from "@/components/home/SiteOrientationGrid";
+import PromoStrip from "@/components/home/PromoStrip";
+import { ThreatTicker } from "@/components/home/ThreatTicker";
+import { TestimonialCarousel } from "@/components/home/TestimonialCarousel";
+import { LiveSecurityStats } from "@/components/home/LiveSecurityStats";
+import { WorkshopsPromo } from "@/components/home/WorkshopsPromo";
+import { FamilyTrustSection } from "@/components/home/FamilyTrustSection";
+// NatureAccent removed for performance
+import { ArrowRight, CheckCircle, Phone, Shield } from "lucide-react";
 
-import heroImg from '@/assets/hero-wedding-thumb.webp';
-import couple11 from '@/assets/couple-11-small.webp';
-import couple2 from '@/assets/couple-2-small.webp';
-import couple5 from '@/assets/couple-5-small.webp';
-import couple7 from '@/assets/couple-7-small.webp';
-import couple8 from '@/assets/couple-12.jpg';
-import cakeImg from '@/assets/cake-gallery.webp';
-import ringsImg from '@/assets/rings-gallery.webp';
-
-
-
-
-/* Decorative aurora orb — pure CSS, no animation */
-const AuroraOrb = forwardRef<HTMLDivElement, {position?: 'left' | 'right' | 'center';color?: string;size?: number;delay?: number;}>(({
-  position = 'left',
-  color = 'rgba(201,169,182,0.3)',
-  size = 400
-}, ref) => {
-  const posStyle = position === 'left' ?
-  { left: '-12%', top: '20%' } :
-  position === 'right' ?
-  { right: '-12%', top: '30%' } :
-  { left: '30%', top: '10%' };
-
-  return (
-    <div
-      ref={ref}
-      className="absolute rounded-full pointer-events-none z-0 aurora-blob-css"
-      style={{
-        width: size, height: size,
-        background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
-        filter: 'blur(80px)',
-        animation: `aurora-css-1 20s ease-in-out infinite`,
-        ...posStyle
-      }} />);
-});
-AuroraOrb.displayName = 'AuroraOrb';
-
-/* FloatingHearts removed — using global one from App.tsx */
-
-/* Falling petals component — hidden on mobile for performance */
-const FallingPetals = ({ isMobile = false }: {isMobile?: boolean;}) => {
-  if (isMobile) return null;
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
-      {Array.from({ length: 8 }).map((_, i) =>
-      <div
-        key={i}
-        className="absolute animate-petal-fall"
-        style={{
-          left: `${10 + i * 12 % 80}%`,
-          top: '-30px',
-          '--duration': `${14 + i * 2.5}s`,
-          '--delay': `${i * 2}s`
-        } as React.CSSProperties}>
-          <span className="text-primary/15 text-lg">🌸</span>
-        </div>
-      )}
-    </div>);
-};
-
-/* Section divider with golden decorative line */
-const SectionDivider = forwardRef<HTMLDivElement, {variant?: 'heart' | 'sparkle' | 'line';}>(({ variant = 'heart' }, ref) =>
-<div ref={ref} className="relative py-4 flex items-center justify-center overflow-hidden">
-    <div className="absolute inset-0 flex items-center">
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
-    </div>
-    <div className="absolute inset-0 flex items-center translate-y-[3px]">
-      <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-gold-light/15 to-transparent" />
-    </div>
-    <div className="relative z-10 bg-background/60 backdrop-blur-sm px-4 rounded-full">
-      {variant === 'heart' && <Heart className="w-5 h-5 text-gold/50 fill-gold/30" />}
-      {variant === 'sparkle' && <Sparkles className="w-5 h-5 text-gold/60" />}
-      {variant === 'line' && <span className="text-gold/40 text-xs">✦ ✦ ✦</span>}
-    </div>
-  </div>
+const FAQPreview = lazy(() =>
+  import("@/components/home/FAQPreview").then((m) => ({
+    default: m.FAQPreview,
+  })),
 );
-SectionDivider.displayName = 'SectionDivider';
 
-/* Golden corner frame decoration for sections */
-const GoldenCorners = forwardRef<HTMLDivElement, {className?: string;}>(({ className = '' }, ref) =>
-<div ref={ref} className={`absolute inset-0 pointer-events-none z-[1] ${className}`}>
-    {/* Top-left */}
-    <div className="absolute top-0 left-0 w-12 h-12">
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-gold/40 to-transparent" />
-      <div className="absolute top-0 left-0 h-full w-[1px] bg-gradient-to-b from-gold/40 to-transparent" />
-    </div>
-    {/* Top-right */}
-    <div className="absolute top-0 right-0 w-12 h-12">
-      <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-l from-gold/40 to-transparent" />
-      <div className="absolute top-0 right-0 h-full w-[1px] bg-gradient-to-b from-gold/40 to-transparent" />
-    </div>
-    {/* Bottom-left */}
-    <div className="absolute bottom-0 left-0 w-12 h-12">
-      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-gold/40 to-transparent" />
-      <div className="absolute bottom-0 left-0 h-full w-[1px] bg-gradient-to-t from-gold/40 to-transparent" />
-    </div>
-    {/* Bottom-right */}
-    <div className="absolute bottom-0 right-0 w-12 h-12">
-      <div className="absolute bottom-0 right-0 w-full h-[1px] bg-gradient-to-l from-gold/40 to-transparent" />
-      <div className="absolute bottom-0 right-0 h-full w-[1px] bg-gradient-to-t from-gold/40 to-transparent" />
-    </div>
-  </div>
+const BlogPreview = lazy(() =>
+  import("@/components/home/BlogPreview").then((m) => ({
+    default: m.BlogPreview,
+  })),
 );
-GoldenCorners.displayName = 'GoldenCorners';
 
-/* ===== Personal Court — Promise + Dynamic quotes from DB ===== */
-const PersonalCourtSection = forwardRef<HTMLElement, {t: (key: string) => string;coupleNames: string;}>(({ t, coupleNames }, ref) => {
-  const [quotes, setQuotes] = useState<{id: string;content: string;}[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+const NewsletterSection = lazy(() =>
+  import("@/components/home/NewsletterSection").then((m) => ({
+    default: m.NewsletterSection,
+  })),
+);
 
-  useEffect(() => {
-    const fetchQuotes = async () => {
-      const { supabase } = await import('@/integrations/supabase/client');
-      const { data } = await supabase.from('quotes').select('*').order('created_at', { ascending: false });
-      if (data) setQuotes(data);
-    };
-    fetchQuotes();
-  }, []);
+const LazySection = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<div className="h-48" />}>{children}</Suspense>
+);
 
-  useEffect(() => {
-    if (quotes.length <= 1) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % quotes.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [quotes.length]);
-
-  return (
-    <section ref={ref} className="py-6 md:py-10 relative overflow-hidden">
-      <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
-            <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('court.subtitle')}</p>
-          </div>
-          <h2 className="font-serif-display text-3xl md:text-4xl text-foreground font-semibold mb-3">{t('love.promise')}</h2>
-          <p className="font-sans-elegant text-base text-muted-foreground max-w-md mx-auto">{t('love.promise.desc')}</p>
-        </div>
-
-        {/* Quotes carousel */}
-        <div style={{ minHeight: quotes.length > 0 ? undefined : '280px' }}>
-        {quotes.length > 0 &&
-        <div>
-            <div className="glass-card-strong rounded-3xl p-8 md:p-12 relative overflow-hidden">
-              <GoldenCorners />
-              <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/8 to-violet-400/8 blur-2xl pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-amber-400/8 to-pink-400/8 blur-2xl pointer-events-none" />
-
-              <div className="text-center mb-6">
-                <span className="text-3xl">💕</span>
-              </div>
-
-              <div className="min-h-[80px] flex items-center justify-center relative">
-                <div className="text-center absolute inset-x-0 px-4 transition-opacity duration-600">
-                  <p className="font-serif-display text-lg md:text-xl text-foreground italic leading-relaxed">
-                    "{quotes[currentIndex].content}"
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-center mt-6">
-                <div className="flex items-center justify-center gap-2">
-                  <Heart className="w-3 h-3 text-rose-400 fill-rose-400" />
-                  <span className="font-sans-elegant text-xs text-muted-foreground font-semibold">{coupleNames}</span>
-                </div>
-              </div>
-
-              {quotes.length > 1 &&
-            <div className="flex items-center justify-center gap-1.5 mt-6">
-                  {quotes.map((_, i) =>
-              <button key={i} onClick={() => setCurrentIndex(i)}
-              aria-label={`Go to quote ${i + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary w-6' : 'bg-muted-foreground/20 w-1.5'}`} />
-              )}
-                </div>
-            }
-            </div>
-          </div>
-        }
-        </div>
-
-        {/* Values row */}
-        <div className="flex justify-center gap-4 mt-6">
-          {[
-          { emoji: '💕', label: 'Love' },
-          { emoji: '🌹', label: 'Beauty' },
-          { emoji: '💒', label: 'Union' },
-          { emoji: '🕊️', label: 'Peace' },
-          { emoji: '✨', label: 'Grace' }].
-          map((item, i) =>
-          <div key={i} className="flex flex-col items-center gap-1.5">
-              <div className="w-11 h-11 rounded-2xl glass-card-strong flex items-center justify-center">
-                <span className="text-lg">{item.emoji}</span>
-              </div>
-              <span className="font-sans-elegant text-[9px] tracking-[0.15em] uppercase text-foreground/60 font-medium">{item.label}</span>
-            </div>
-          )}
-        </div>
-      </div>
-    </section>);
-});
-PersonalCourtSection.displayName = 'PersonalCourtSection';
-
-
-const AnnouncementsSection = forwardRef<HTMLElement, {t: (key: string) => string;}>(({ t }, ref) => {
-  const { language } = useLanguage();
-  const [announcements, setAnnouncements] = useState<{id: string;title: string;content: string;created_at: string;title_fr?: string | null;title_es?: string | null;content_fr?: string | null;content_es?: string | null;}[]>([]);
-  const [loaded, setLoaded] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const getTitle = (ann: typeof announcements[number]) => {
-    if (language === 'fr' && ann.title_fr) return ann.title_fr;
-    if (language === 'es' && ann.title_es) return ann.title_es;
-    return ann.title;
-  };
-
-  const getContent = (ann: typeof announcements[number]) => {
-    if (language === 'fr' && ann.content_fr) return ann.content_fr;
-    if (language === 'es' && ann.content_es) return ann.content_es;
-    return ann.content;
-  };
+const Index = forwardRef<HTMLDivElement>(function Index(_props, _ref) {
+  const [scamShieldOpen, setScamShieldOpen] = useState(false);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const [ctaVisible, setCtaVisible] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { supabase } = await import('@/integrations/supabase/client');
-      const { data } = await supabase.from('announcements').select('*').order('created_at', { ascending: false });
-      if (data) setAnnouncements(data);
-      setLoaded(true);
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (announcements.length <= 1) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % announcements.length);
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [announcements.length]);
-
-  if (loaded && announcements.length === 0) return null;
-  if (!loaded) return <section ref={ref} aria-hidden="true" style={{ minHeight: '380px' }} />;
-
-  return (
-    <section ref={ref} className="py-8 md:py-12 relative overflow-hidden">
-      <AuroraOrb position="right" color="rgba(180,140,210,0.25)" size={350} delay={2} />
-      <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
-        <div>
-          <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
-            <GoldenCorners />
-            <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-pink-400/10 to-rose-400/10 blur-2xl pointer-events-none" />
-
-            <div className="love-divider mb-6">
-              <Megaphone className="w-6 h-6 text-primary icon-glow" />
-            </div>
-
-            <h2 className="font-serif-display text-2xl md:text-3xl text-foreground font-semibold mb-2">
-              {t('announcements.title')}
-            </h2>
-            <p className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-muted-foreground font-medium mb-4">
-              {t('announcements.subtitle')}
-            </p>
-
-            <div className="min-h-[100px] flex items-center justify-center">
-              <div className="text-center transition-opacity duration-600">
-                <p className="font-sans-elegant text-sm font-bold text-primary mb-2">{getTitle(announcements[currentIndex])}</p>
-                <p className="font-serif-display text-base md:text-lg text-foreground italic leading-relaxed">
-                  {getContent(announcements[currentIndex])}
-                </p>
-              </div>
-            </div>
-
-            {announcements.length > 1 &&
-            <div className="flex items-center justify-center gap-2 mt-6">
-                {announcements.map((_, i) =>
-              <button key={i} onClick={() => setCurrentIndex(i)} type="button" aria-label={`Go to announcement ${i + 1}`}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary w-6' : 'bg-muted-foreground/25'}`} />
-              )}
-              </div>
-            }
-
-            <div className="love-divider mt-6">
-              <Heart className="w-4 h-4 text-primary/40 fill-primary/40" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>);
-});
-AnnouncementsSection.displayName = 'AnnouncementsSection';
-
-/* ===== Transitioning Scripture (Genesis 2:24 + Jeremiah 31:3) ===== */
-const FEATURED_VERSES = [
-{ key: 'verse.genesis', ref: 'Genesis 2:24' },
-{ key: 'love.quote1.text', ref: 'Jeremiah 31:3' }];
-
-
-const TransitioningScripture = ({ t }: {t: (key: string) => string;}) => {
-  const [currentVerse, setCurrentVerse] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentVerse((prev) => (prev + 1) % FEATURED_VERSES.length);
-    }, 5000);
-    return () => clearInterval(interval);
+    const el = ctaRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setCtaVisible(true); observer.disconnect(); } },
+      { rootMargin: "-50px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <div>
-      <div className="glass-card-strong rounded-3xl p-10 md:p-14 relative overflow-hidden">
-        <GoldenCorners />
-        <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br from-rose-400/10 to-violet-400/10 blur-2xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-gradient-to-tr from-amber-400/10 to-pink-400/10 blur-2xl pointer-events-none" />
-        <BookOpen className="w-8 h-8 text-amber-400 icon-glow mx-auto mb-6" />
-        <div className="min-h-[160px] md:min-h-[140px] flex items-center justify-center">
-          <div className="text-center absolute inset-x-0 px-6 transition-opacity duration-700">
-            <p className="font-serif-display text-xl md:text-2xl text-foreground italic leading-relaxed mb-4">
-              "{t(FEATURED_VERSES[currentVerse].key)}"
-            </p>
-            <p className="font-sans-elegant text-sm text-foreground/70 font-semibold">
-              {FEATURED_VERSES[currentVerse].ref}
-            </p>
+    <PageTransition variant="fade">
+      <div className="min-h-screen bg-background">
+        <SEO {...PAGE_SEO.home} />
+        <Navigation />
+
+        <main>
+          {/* 1. Hero */}
+          <section id="hero">
+            <HeroHomepage />
+          </section>
+
+          {/* 2. Live Threat Ticker */}
+          <ThreatTicker />
+
+          {/* 3. Stats + Who We Are + Real Results */}
+          <div id="stats">
+            <HomeIntroSection />
           </div>
-        </div>
-      </div>
-    </div>);
-};
 
-/* Auto-transitioning scripture component — no cards, floating text */
-const VERSES = [
-{ key: 'verse.1cor13.full', ref: '1 Corinthians 13:4-7' },
-{ key: 'verse.ecclesiastes', ref: 'Ecclesiastes 4:9-12' },
-{ key: 'verse.colossians', ref: 'Colossians 3:14' },
-{ key: 'verse.genesis', ref: 'Genesis 2:24' },
-{ key: 'verse.romans12', ref: 'Romans 12:10' },
-{ key: 'verse.galatians', ref: 'Galatians 5:22-23' },
-{ key: 'verse.proverbs', ref: 'Proverbs 3:5-6' },
-{ key: 'verse.psalm37', ref: 'Psalm 37:4' }];
-
-
-const ScriptureTransition = ({ t }: {t: (key: string) => string;}) => {
-  const [currentVerse, setCurrentVerse] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentVerse((prev) => (prev + 1) % VERSES.length);
-    }, 10000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <section className="py-10 md:py-14 relative overflow-hidden">
-      <AuroraOrb position="center" color="rgba(139,107,138,0.15)" size={400} delay={3} />
-      <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
-        <div className="mb-8">
-          <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
-            <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('index.scripture')}</p>
+          {/* 4. Live Security Command Center — dark premium dashboard */}
+          <div id="live-security">
+            <LiveSecurityStats />
           </div>
-          <h2 className="font-serif-display text-2xl md:text-5xl text-foreground font-semibold mb-3">{t('verse.section.title')}</h2>
-          <p className="font-sans-elegant text-base text-muted-foreground max-w-lg mx-auto">{t('verse.section.subtitle')}</p>
-        </div>
 
-        <div className="min-h-[220px] md:min-h-[200px] flex items-center justify-center relative">
-          <div className="text-center px-4 absolute inset-x-0 transition-opacity duration-800">
-            <BookOpen className="w-6 h-6 text-primary/40 mx-auto mb-5" />
-            <p className="font-serif-display text-xl md:text-2xl lg:text-3xl text-foreground italic leading-relaxed mb-5">
-              "{t(VERSES[currentVerse].key)}"
-            </p>
-            <p className="font-sans-elegant text-sm text-foreground/70 font-semibold">
-              — {VERSES[currentVerse].ref}
-            </p>
+          {/* 5. Services Grid */}
+          <div id="services">
+            <SiteOrientationGrid />
           </div>
-        </div>
 
-        <div className="flex items-center justify-center gap-2 mt-6">
-          {VERSES.map((_, i) =>
-          <button
-            key={i}
-            onClick={() => setCurrentVerse(i)}
-            className="relative flex items-center justify-center w-6 h-6"
-            aria-label={`Verse ${i + 1}`}>
-            <span className={`block rounded-full transition-all duration-300 ${
-              i === currentVerse ? 'bg-primary w-6 h-2' : 'bg-muted-foreground/25 hover:bg-muted-foreground/40 w-2 h-2'}`
-            } />
-          </button>
-          )}
-        </div>
-      </div>
-    </section>);
-};
+          {/* 6. Protection Training Promo */}
+          <div id="workshops">
+            <WorkshopsPromo />
+          </div>
 
+          {/* 7. How It Works — 3 Steps */}
+          <div id="get-protected">
+            <PromoStrip />
+          </div>
 
-const Index = () => {
-  const { t } = useLanguage();
-  const { isPlaying, currentTrack, toggleTrack } = useMusic();
-  const isMobile = useIsMobile();
-  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [activeDetail, setActiveDetail] = useState<string | null>(null);
-  const { images: homepageGalleryImages, loading: imagesLoading } = useSiteImages('homepage_gallery');
-  const { settings, loading: settingsLoading } = useSiteSettings();
+          {/* 8. Family Trust Section */}
+          <div id="trust">
+            <FamilyTrustSection />
+          </div>
 
-  const coupleName1 = settings.couple_name_1 || 'Corine';
-  const coupleName2 = settings.couple_name_2 || 'Ruben';
+          {/* 9. Testimonials */}
+          <div id="testimonials" className="bg-muted/30">
+            <TestimonialCarousel />
+          </div>
 
-  // Event mode: court or church
-  const isCourtMode = settings.active_event === 'court';
-  const weddingDateStr = isCourtMode ?
-  settings.court_wedding_date || '2026-03-16T14:00:00' :
-  settings.wedding_date || '2026-10-16T15:00:00';
-  const weddingDate = new Date(weddingDateStr);
-  const courtVenue = settings.court_wedding_venue || '301 Sycamore St, Brookville — Mayor Letner';
-  const courtAfterVenue = settings.court_wedding_after_venue || '10209 Gully Pass Dr, Dayton, OH 45458';
+          {/* 10. Why Choose Us */}
+          <div id="why-us">
+            <TrustBadgesSection />
+          </div>
 
-  // Countdown timer
-  useEffect(() => {
-    const tick = () => {
-      const diff = Math.max(0, weddingDate.getTime() - Date.now());
-      setCountdown({
-        days: Math.floor(diff / 86400000),
-        hours: Math.floor((diff % 86400000) / 3600000),
-        minutes: Math.floor((diff % 3600000) / 60000),
-        seconds: Math.floor((diff % 60000) / 1000),
-      });
-    };
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, [weddingDateStr]);
+          {/* 11. Blog Preview */}
+          <section id="blog">
+            <LazySection>
+              <BlogPreview />
+            </LazySection>
+          </section>
 
-  const features = [
-  { icon: Heart, label: t('nav.story'), desc: t('story.subtitle'), to: '/story', color: 'text-rose-400', bg: 'from-rose-500/20 to-pink-500/10' },
-  { icon: Clock, label: t('nav.rsvp'), desc: t('rsvp.subtitle'), to: '/rsvp', color: 'text-emerald-400', bg: 'from-emerald-500/20 to-teal-500/10' }];
+          {/* 12. FAQ */}
+          <section id="faq">
+            <LazySection>
+              <FAQPreview />
+            </LazySection>
+          </section>
 
-  const courtDetailSections = [
-  {
-    id: 'court-ceremony',
-    icon: Calendar,
-    title: t('court.wedding.ceremony'),
-    color: 'from-rose-500/20 to-pink-500/10',
-    iconColor: 'text-rose-400',
-    dialogContent: [
-    { icon: Clock, label: t('court.wedding.time'), desc: t('court.wedding.officiant'), highlight: true },
-    { icon: MapPin, label: t('court.wedding.ceremony'), desc: courtVenue, highlight: true }]
-  },
-  {
-    id: 'court-after',
-    icon: Utensils,
-    title: t('court.wedding.after'),
-    color: 'from-amber-500/20 to-orange-500/10',
-    iconColor: 'text-amber-400',
-    dialogContent: [
-    { icon: Utensils, label: t('court.wedding.after'), desc: t('court.wedding.after.desc') }]
-  }];
+          {/* 13. Newsletter */}
+          <section id="newsletter">
+            <LazySection>
+              <NewsletterSection />
+            </LazySection>
+          </section>
 
-
-  const churchDetailSections = [
-  {
-    id: 'ceremony',
-    icon: Church,
-    title: t('details.ceremony'),
-    color: 'from-rose-500/20 to-pink-500/10',
-    iconColor: 'text-rose-400',
-    dialogContent: [
-    { icon: Calendar, label: t('details.ceremony.time'), desc: t('details.ceremony.program.welcome'), highlight: true },
-    { icon: MapPin, label: t('details.ceremony.location'), desc: t('details.ceremony.address'), highlight: true },
-    { icon: BookOpen, label: t('details.ceremony.program.readings'), desc: t('details.ceremony.program.readings.desc') },
-    { icon: Gem, label: t('details.ceremony.program.vows'), desc: t('details.ceremony.program.vows.desc') },
-    { icon: Music, label: t('details.ceremony.program.hymns'), desc: t('details.ceremony.program.hymns.desc') },
-    { icon: Cross, label: t('details.ceremony.program.blessing'), desc: t('details.ceremony.program.blessing.desc') }]
-  },
-  {
-    id: 'reception',
-    icon: PartyPopper,
-    title: t('details.reception'),
-    color: 'from-amber-500/20 to-orange-500/10',
-    iconColor: 'text-amber-400',
-    dialogContent: [
-    { icon: Calendar, label: t('details.reception.time'), desc: t('details.reception.program.cocktail'), highlight: true },
-    { icon: MapPin, label: t('details.reception.location'), desc: t('details.reception.address'), highlight: true },
-    { icon: Utensils, label: t('details.reception.program.dinner'), desc: t('details.reception.program.dinner.desc') },
-    { icon: Music, label: t('details.reception.program.dance'), desc: t('details.reception.program.dance.desc') },
-    { icon: Heart, label: t('details.reception.program.cake'), desc: t('details.reception.program.cake.desc') }]
-  },
-  {
-    id: 'accommodation',
-    icon: Hotel,
-    title: t('details.accommodation'),
-    color: 'from-violet-500/20 to-purple-500/10',
-    iconColor: 'text-violet-400',
-    dialogContent: [
-    { icon: Hotel, label: t('details.accommodation.hotel'), desc: t('details.accommodation.hotel.desc'), highlight: true },
-    { icon: MapPin, label: t('details.accommodation.address'), desc: t('details.accommodation.address.desc') },
-    { icon: Sparkles, label: t('details.accommodation.rate'), desc: t('details.accommodation.rate.desc') }]
-  },
-  {
-    id: 'transport',
-    icon: Car,
-    title: t('details.transport'),
-    color: 'from-emerald-500/20 to-teal-500/10',
-    iconColor: 'text-emerald-400',
-    dialogContent: [
-    { icon: Car, label: t('details.transport.shuttle'), desc: t('details.transport.shuttle.desc'), highlight: true },
-    { icon: MapPin, label: t('details.transport.parking'), desc: t('details.transport.parking.desc') },
-    { icon: Clock, label: t('details.transport.schedule'), desc: t('details.transport.schedule.desc') }]
-  }];
-
-
-  const sectionVisibility: Record<string, boolean> = {
-    ceremony: settings.show_ceremony !== 'false',
-    reception: settings.show_reception !== 'false',
-    accommodation: settings.show_accommodation !== 'false',
-    transport: settings.show_transport !== 'false',
-    'court-ceremony': settings.show_ceremony !== 'false',
-    'court-after': settings.show_reception !== 'false',
-  };
-
-  const detailSections = (isCourtMode ? courtDetailSections : churchDetailSections)
-    .filter(s => sectionVisibility[s.id] !== false);
-
-  /* ─── Live Stream helpers ─── */
-  const livestreamUrl = settings.livestream_url || '';
-  const livestreamActive = settings.livestream_active === 'true';
-  const livestreamTitle = settings.livestream_title || '';
-
-  const getEmbedUrl = (rawUrl: string) => {
-    // YouTube
-    const ytMatch = rawUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/live\/)([\w-]+)/);
-    if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&rel=0`;
-    // Facebook
-    if (rawUrl.includes('facebook.com')) return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(rawUrl)}&autoplay=true`;
-    return null;
-  };
-
-  const handleShareStream = async () => {
-    const shareUrl = window.location.origin;
-    if (navigator.share) {
-      try {await navigator.share({ title: livestreamTitle || "Corine & Ruben's Wedding Live", url: shareUrl });} catch (_e) { /* share cancelled or unsupported */ }
-    } else {
-      navigator.clipboard.writeText(shareUrl);
-      toast.success('Link copied!');
-    }
-  };
-
-  const embedUrl = livestreamUrl ? getEmbedUrl(livestreamUrl) : null;
-
-  return (
-    <div className="min-h-screen flex flex-col">
-
-      {/* ===== HERO ===== */}
-      <section className="w-full min-h-screen relative overflow-hidden flex flex-col items-center pt-8 pb-8">
-        <FallingPetals isMobile={isMobile} />
-
-        <div className="absolute inset-0 mix-blend-soft-light z-[1] opacity-[0.1]" style={{
-          background: 'radial-gradient(ellipse at 30% 20%, hsl(var(--plum-light) / 0.3) 0%, transparent 50%), radial-gradient(ellipse at 70% 60%, hsl(var(--lavender-pink) / 0.2) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, hsl(var(--dusty-rose) / 0.15) 0%, transparent 60%)',
-          filter: 'saturate(0.4) brightness(1.2)'
-        }} />
-
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mt-20 md:mt-28 z-20 px-6">
-          
-          {/* Floating badge — Blessed Union */}
-          <div className="absolute top-24 left-4 md:left-12 z-30 hidden md:block">
-            <div className="glass-card-strong rounded-full px-4 py-2 flex items-center gap-2 animate-float-slow">
-              <Cross className="w-3.5 h-3.5 text-rose-400 icon-glow" />
-              <span className="font-sans-elegant text-[11px] font-bold text-foreground drop-shadow-sm">{t('badge.blessed')}</span>
+          {/* 14. Final CTA */}
+          <section id="final-action" className="relative overflow-hidden" ref={ctaRef}>
+            <div className="absolute inset-0">
+              <img
+                src={seniorCoupleActive}
+                alt="Protected senior couple"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[hsl(288_35%_8%/0.85)] via-[hsl(288_35%_12%/0.7)] to-[hsl(288_35%_15%/0.5)]" />
             </div>
-          </div>
 
-          {/* Floating badge — Soulmates */}
-          <div className="absolute top-28 right-4 md:right-12 z-30 hidden md:block">
-            <div className="glass-card-strong rounded-2xl px-4 py-2.5 flex items-center gap-2 animate-float-slow" style={{ animationDelay: '2s' }}>
-              <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400 icon-glow" />
-              <span className="font-sans-elegant text-[11px] font-bold text-foreground drop-shadow-sm">{t('love.soulmates')}</span>
-            </div>
-          </div>
-
-          {/* Love tagline label */}
-          <div
-            className="inline-block px-6 py-2.5 rounded-full mb-6"
-            style={{ background: 'rgba(255,255,255,0.08)' }}>
-            <p className="font-sans-elegant text-xs tracking-[0.3em] uppercase text-foreground/80 dark:text-foreground/90 font-semibold">
-              {t('love.tagline')}
-            </p>
-          </div>
-
-          <h1 className="font-serif-display text-4xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-2 leading-tight">
-            {coupleName1}
-          </h1>
-          <div className="my-3 md:my-4">
-            <span className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full gradient-primary shadow-glow animate-pulse-love" role="img" aria-label="Heart">
-              <Heart className="w-5 h-5 md:w-7 md:h-7 text-primary-foreground fill-primary-foreground" />
-            </span>
-          </div>
-          <p className="font-serif-display text-4xl md:text-7xl lg:text-8xl font-semibold text-foreground mb-4 md:mb-6 leading-tight" aria-hidden="false">
-            {coupleName2}
-          </p>
-
-          {/* Romantic subtitle */}
-          <p className="font-serif-display text-lg md:text-xl text-primary italic mb-2">
-            {t('love.together')}
-          </p>
-
-          <p className="font-sans-elegant text-lg md:text-xl text-foreground/70 dark:text-foreground/80 max-w-xl mb-8 font-medium" style={{ lineHeight: 1.6 }}>
-            {isCourtMode ? t('court.wedding.date') : t('hero.date')}
-          </p>
-
-          <div className="flex flex-row gap-4 justify-center mb-8">
-            <Link to="/rsvp" className="btn-primary">
-              <Heart className="w-4 h-4 fill-current" />
-              {t('hero.cta')}
-            </Link>
-            <Link to="/story" className="btn-outline">
-              {t('nav.story')}
-            </Link>
-          </div>
-        </div>
-
-        {/* ===== FLOATING CARDS ===== */}
-        <div className="w-full max-w-6xl mx-auto mt-6 md:mt-10 relative z-20 px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-
-            {/* LEFT */}
-            <div className="flex flex-col gap-4 items-center md:items-end md:translate-y-8">
-              <div className="glass-card-strong rounded-3xl p-4 md:p-5 w-44 md:w-52 animate-float-slow">
-                <div className="flex items-center gap-2 mb-3">
-                  <Heart className="w-4 h-4 text-rose-400 fill-rose-400 icon-glow" />
-                  <span className="font-sans-elegant text-[10px] font-bold text-foreground/70 tracking-wider uppercase">{t('love.loveStory')}</span>
-                </div>
-                <p className="font-serif-display text-sm text-foreground italic leading-relaxed">
-                  "{t('verse.1cor13')}"
-                </p>
-                <p className="font-sans-elegant text-[10px] text-foreground/70 mt-2 font-semibold">1 Corinthians 13:4-7</p>
-              </div>
-
+            <div className="container mx-auto px-4 py-20 md:py-28 lg:py-32 text-center relative z-10">
               <div
-                className="glass-card-strong rounded-3xl p-4 flex items-center gap-3 cursor-pointer animate-float-slow"
-                style={{ animationDelay: '1s' }}
-                onClick={() => toggleTrack('amazing-grace')}>
-                <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-rose-400/20">
-                  <img src={couple2} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={48} height={48} loading="lazy" decoding="async" />
+                className={`max-w-3xl mx-auto transition-all duration-500 ease-out ${ctaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+              >
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm mb-8">
+                  <Shield className="w-4 h-4 text-accent" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-white/90">
+                    Protected Community
+                  </span>
                 </div>
-                <div>
-                  <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('hymn.amazing')}</p>
-                  <p className="font-sans-elegant text-xs text-foreground/60 font-medium">Instrumental · 4:32</p>
-                </div>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ml-1 transition-all duration-300 ${currentTrack === 'amazing-grace' && isPlaying ? 'gradient-primary shadow-glow' : 'bg-background/80 dark:bg-background/40'}`}>
-                  {currentTrack === 'amazing-grace' && isPlaying ? <Pause className="w-3 h-3 text-primary-foreground fill-primary-foreground" /> : <Play className="w-3 h-3 text-foreground fill-foreground" />}
-                </div>
-              </div>
-            </div>
 
-            {/* CENTER — main countdown card */}
-            <div className="flex justify-center z-30 relative">
-              <div className="glass-card-dark rounded-3xl p-6 w-full max-w-[260px] md:scale-105 animate-float-slow" style={{ animationDelay: '0.5s' }}>
-                <div className="flex items-center gap-2 mb-2">
-                  <Heart className="w-4 h-4 text-rose-300 fill-rose-300 animate-pulse-love" />
-                  <p className="font-sans-elegant text-xs font-medium opacity-80 tracking-[0.1em] uppercase">{t('love.together')}</p>
-                </div>
-                <p className="font-serif-display text-xl font-semibold mb-2">{t('index.covenantLove')}</p>
-                <p className="font-sans-elegant text-xs opacity-60 mb-5" style={{ lineHeight: 1.5 }}>
-                  {t('love.countdownLabel')}
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+                  Start Protecting Your Family Today
+                </h2>
+                <p className="text-lg text-white/80 mb-10 max-w-xl mx-auto leading-relaxed">
+                  Join families across Ohio who live confidently, knowing they are
+                  protected from AI scams. Get started in minutes.
                 </p>
 
-                <div className="grid grid-cols-4 gap-2 mb-5">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+                  <Button asChild size="lg">
+                    <Link to="/training#pricing">
+                      Get Protected Today <ArrowRight className="ml-2 w-5 h-5" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="heroOutline" size="lg">
+                    <Link to="/business">Business Solutions</Link>
+                  </Button>
+                </div>
+
+                <div className="flex flex-wrap gap-3 justify-center">
                   {[
-                  { value: countdown.days, label: t('countdown.days') },
-                  { value: countdown.hours, label: t('countdown.hours') },
-                  { value: countdown.minutes, label: t('countdown.minutes') },
-                  { value: countdown.seconds, label: t('countdown.seconds') }].
-                  map((item) =>
-                  <div key={item.label} className="text-center rounded-2xl bg-white/10 backdrop-blur-sm border border-white/15 py-2 px-1">
-                      <span className="font-serif-display text-xl font-semibold block">
-                        {String(item.value).padStart(2, '0')}
-                      </span>
-                      <span className="font-sans-elegant text-[8px] tracking-[0.1em] uppercase opacity-60 block mt-0.5">
-                        {item.label}
-                      </span>
+                    `${SITE.veteranDiscountPercent}% Veteran Discount`,
+                    "Privacy-First",
+                    `${SITE.moneyBackGuaranteeDays}-Day Guarantee`,
+                    "24/7 Support",
+                  ].map((item) => (
+                    <div key={item} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15">
+                      <CheckCircle className="w-3.5 h-3.5 text-accent" />
+                      <span className="text-xs font-medium text-white/85">{item}</span>
                     </div>
-                  )}
-                </div>
-
-                <div className="flex flex-col gap-3">
-                  <div className="flex gap-2">
-                    <button aria-label="Play Our Melody" onClick={() => toggleTrack('wedding-day')} className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${currentTrack === 'wedding-day' && isPlaying ? 'bg-white/30 shadow-glow' : 'bg-background/20 backdrop-blur-sm border border-background/30 hover:bg-background/30'}`}>
-                      {currentTrack === 'wedding-day' && isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current" />}
-                    </button>
-                    <div className="flex-1 rounded-full bg-background/20 backdrop-blur-sm border border-background/30 flex items-center px-3">
-                      <div>
-                        <p className="font-sans-elegant text-xs font-bold text-foreground">Our Melody</p>
-                        <p className="font-sans-elegant text-[10px] text-foreground/60 italic">Made by us ♡</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* RIGHT */}
-            <div className="flex flex-col gap-4 items-center md:items-start md:-translate-y-6">
-              <div className="glass-card-strong rounded-full px-5 py-3 flex items-center gap-2 animate-float-slow" style={{ animationDelay: '1.5s' }}>
-                <Heart className="w-4 h-4 text-rose-400 fill-rose-400 icon-glow animate-pulse-love" />
-                <span className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('index.foreverAlways')}</span>
-              </div>
-
-              <div
-                className="glass-card-strong rounded-3xl p-4 flex items-center gap-3 cursor-pointer animate-float-slow"
-                style={{ animationDelay: '2s' }}
-                onClick={() => toggleTrack('blessed-larson')}>
-                <div className="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 ring-2 ring-violet-400/20">
-                  <img src={couple7} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={48} height={48} loading="lazy" decoding="async" />
-                </div>
-                <div>
-                  <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">I Have Been Blessed</p>
-                </div>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ml-1 transition-all duration-300 ${currentTrack === 'blessed-larson' && isPlaying ? 'gradient-primary shadow-glow' : 'bg-background/80 dark:bg-background/40'}`}>
-                  {currentTrack === 'blessed-larson' && isPlaying ? <Pause className="w-3 h-3 text-primary-foreground fill-primary-foreground" /> : <Play className="w-3 h-3 text-foreground fill-foreground" />}
-                </div>
-              </div>
-
-              <div className="glass-card-strong rounded-3xl p-3 md:p-4 w-40 md:w-48 animate-float-slow" style={{ animationDelay: '2.5s' }}>
-                <div className="flex items-center gap-1.5 mb-1.5">
-                  <Sparkles className="w-3 h-3 text-amber-400 icon-glow" />
-                  <p className="font-sans-elegant text-xs text-foreground/60 font-medium">{isCourtMode ? t('court.wedding.date') : t('hero.date')}</p>
-                </div>
-                <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-sm">{t('index.beginJourney')}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </section>
-
-      {/* ===== DIVIDER ===== */}
-      <SectionDivider variant="heart" />
-
-      {/* ===== LIVE STREAM ===== */}
-      {livestreamActive && livestreamUrl &&
-      <section className="py-8 md:py-12 relative overflow-hidden">
-          <div className="container mx-auto px-6 md:px-12 max-w-4xl relative z-10">
-            <div className="text-center mb-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card-strong mb-5">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
-                <p className="font-sans-elegant text-xs tracking-[0.2em] uppercase text-red-500 font-bold">LIVE</p>
-              </div>
-              <h2 className="font-serif-display text-3xl md:text-4xl text-foreground font-semibold mb-3">
-                {livestreamTitle || t('livestream.title') || 'Watch Live'}
-              </h2>
-            </div>
-
-            <div className="glass-card-strong rounded-3xl overflow-hidden relative">
-              {embedUrl ?
-            <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
-                  <iframe
-                src={embedUrl}
-                className="absolute inset-0 w-full h-full rounded-3xl"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                title="Live Stream" />
-                </div> :
-            <div className="p-12 text-center">
-                  <div className="w-20 h-20 rounded-full bg-red-500/15 flex items-center justify-center mx-auto mb-6">
-                    <Video className="w-10 h-10 text-red-500" />
-                  </div>
-                  <h3 className="font-serif-display text-xl text-foreground font-semibold mb-3">
-                    {livestreamTitle || 'Live Stream'}
-                  </h3>
-                  <a
-                href={livestreamUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary inline-flex items-center gap-2 text-base">
-                    <ExternalLink className="w-5 h-5" />
-                    Watch Live
-                  </a>
-                </div>
-            }
-            </div>
-
-            <div className="flex justify-center mt-4">
-              <button onClick={handleShareStream} className="btn-outline rounded-full px-5 py-2.5 text-sm flex items-center gap-2">
-                <Share2 className="w-4 h-4" />
-                Share Stream
-              </button>
-            </div>
-          </div>
-
-          <SectionDivider variant="sparkle" />
-        </section>
-      }
-
-      {/* ===== ANNOUNCEMENTS ===== */}
-      <AnnouncementsSection t={t} />
-
-      {/* ===== DIVIDER ===== */}
-      <SectionDivider variant="sparkle" />
-
-      {/* ===== ABOUT / LOVE STORY INTRO ===== */}
-      <section className="py-8 md:py-12 relative overflow-hidden section-below-fold">
-        <AuroraOrb position="left" color="rgba(212,165,200,0.3)" size={450} delay={0} />
-        <AuroraOrb position="right" color="rgba(232,196,184,0.25)" size={350} delay={4} />
-        <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
-          <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
-            <div>
-              <div className="relative">
-                <div className="glass-card-strong rounded-3xl p-2.5">
-                  <img
-                    alt={`${coupleName1} & ${coupleName2}`}
-                    className="w-full object-cover object-[center_20%] aspect-[4/5] border-2 shadow-2xl rounded-2xl"
-                    style={{ boxShadow: '0 20px 40px rgba(107, 78, 113, 0.15)' }}
-                    width={474}
-                    height={593}
-                    loading="lazy"
-                    decoding="async" src={couple5} />
-                </div>
-                <div className="absolute -bottom-6 -right-6 glass-card-strong rounded-3xl p-4 animate-float-slow">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center shadow-soft animate-pulse-love">
-                      <Heart className="w-5 h-5 text-primary-foreground fill-primary-foreground" />
-                    </div>
-                    <div>
-                      <p className="font-sans-elegant text-sm font-bold text-foreground drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]">11+ {t('index.years')}</p>
-                      <p className="font-sans-elegant text-[10px] font-semibold text-foreground/90 drop-shadow-[0_1px_1px_rgba(0,0,0,0.2)]">{t('love.together')}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute -top-4 -left-4 glass-card rounded-3xl px-4 py-2.5 hidden md:block animate-float-slow" style={{ animationDelay: '2s' }}>
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-amber-400 icon-glow" />
-                    <span className="font-sans-elegant text-xs font-semibold text-foreground">{t('love.loveStory')}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-6">
-                <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.story')}</p>
-              </div>
-              <h2 className="font-serif-display text-3xl md:text-5xl text-foreground mb-4 font-semibold whitespace-nowrap">
-                {t('story.title')}
-              </h2>
-              <p className="font-serif-display text-lg text-primary italic mb-6">{t('love.tagline')}</p>
-              <div className="glass-card rounded-3xl p-6 mb-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-20 h-20 rounded-full bg-gradient-to-br from-rose-400/8 to-violet-400/5 blur-xl pointer-events-none" />
-                <p className="font-sans-elegant text-base text-muted-foreground leading-relaxed relative z-10">
-                  {t('love.intro')}
-                </p>
-              </div>
-              <div className="glass-card rounded-3xl p-6 mb-6 relative overflow-hidden border-l-4 border-primary/30">
-                <p className="font-serif-display text-lg text-foreground italic leading-relaxed">
-                  {t('love.loveStory.desc')}
-                </p>
-                <div className="flex items-center gap-2 mt-3">
-                  <Heart className="w-3 h-3 text-rose-400 fill-rose-400" />
-                  <span className="font-sans-elegant text-xs text-muted-foreground font-medium">{coupleName1} & {coupleName2}</span>
-                </div>
-              </div>
-              <Link to="/story" className="btn-primary">
-                <Heart className="w-4 h-4 fill-current" />
-                {t('nav.story')} →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== DIVIDER ===== */}
-      <SectionDivider variant="line" />
-
-      {/* ===== SCRIPTURE — Transitioning Verses ===== */}
-      <section className="py-8 md:py-10 relative overflow-hidden section-below-fold">
-        <AuroraOrb position="center" color="rgba(139,107,138,0.2)" size={400} delay={3} />
-        <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
-          <TransitioningScripture t={t} />
-        </div>
-      </section>
-
-      {/* ===== DIVIDER ===== */}
-      <SectionDivider variant="heart" />
-
-      {/* ===== FAITH & GRACE WIDGETS ===== */}
-      <section className="py-8 md:py-10 relative overflow-hidden section-below-fold">
-        <AuroraOrb position="left" color="rgba(180,140,210,0.2)" size={500} delay={1} />
-        <AuroraOrb position="right" color="rgba(212,165,165,0.2)" size={380} delay={6} />
-        <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
-          <div className="text-center mb-10">
-            <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
-              <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('badge.faith')}</p>
-            </div>
-            <h2 className="font-serif-display text-3xl md:text-4xl text-foreground font-semibold mb-3">{t('index.foundedOnFaith')}</h2>
-            <p className="font-sans-elegant text-base text-muted-foreground max-w-md mx-auto">{t('love.promise.desc')}</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Proverbs card with glassmorphism text overlay */}
-            <div className="glass-card-strong rounded-3xl overflow-hidden md:row-span-2 card-hover">
-              <div className="relative h-full min-h-[300px]">
-                <img src={couple2} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={297} height={428} loading="lazy" decoding="async" />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/10" />
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <div className="rounded-2xl bg-background/20 backdrop-blur-xl border border-white/20 p-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)]">
-                    <Heart className="w-5 h-5 text-rose-300 fill-rose-300 icon-glow mb-3 animate-pulse-love" />
-                    <p className="font-serif-display text-base text-white italic leading-relaxed mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
-                      "{t('verse.proverbs')}"
-                    </p>
-                    <p className="font-sans-elegant text-xs text-white/90 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">Proverbs 3:5-6</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Faith feature cards */}
-            {[
-            { icon: Church, title: t('index.ceremony'), desc: t('index.ceremony.desc'), color: 'from-rose-500/20 to-pink-500/10', iconColor: 'text-rose-400', accent: 'rose', emoji: '⛪' },
-            { icon: Cross, title: t('index.blessing'), desc: t('index.blessing.desc'), color: 'from-violet-500/20 to-purple-500/10', iconColor: 'text-violet-400', accent: 'violet', emoji: '✝️' },
-            { icon: Gem, title: t('index.vows'), desc: t('index.vows.desc'), color: 'from-amber-500/20 to-orange-500/10', iconColor: 'text-amber-400', accent: 'amber', emoji: '💎' },
-            { icon: Users, title: t('index.fellowship'), desc: t('index.fellowship.desc'), color: 'from-emerald-500/20 to-teal-500/10', iconColor: 'text-emerald-400', accent: 'emerald', emoji: '🤝' }].
-            map((item, i) =>
-            <div key={i} className="group glass-card-strong rounded-3xl p-6 card-hover relative overflow-hidden border border-border/20">
-                {/* Background glow */}
-                <div className={`absolute top-0 right-0 w-32 h-32 rounded-full bg-gradient-to-br ${item.color} blur-2xl pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity duration-500`} />
-                <div className={`absolute bottom-0 left-0 w-20 h-20 rounded-full bg-gradient-to-tr ${item.color} blur-2xl pointer-events-none opacity-30`} />
-
-                {/* Top row: icon + emoji */}
-                <div className="flex items-start justify-between mb-4 relative z-10">
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center ring-2 ring-white/10 group-hover:ring-primary/20 group-hover:shadow-glow transition-all duration-500`}>
-                    <item.icon className={`w-7 h-7 ${item.iconColor} icon-glow group-hover:scale-110 transition-transform duration-300`} />
-                  </div>
-                  <span className="text-2xl opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">{item.emoji}</span>
-                </div>
-
-                <h3 className="font-serif-display text-lg text-foreground font-semibold mb-2 relative z-10">{item.title}</h3>
-                <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed relative z-10">{item.desc}</p>
-
-                {/* Bottom accent line */}
-                <div className={`mt-4 h-0.5 w-12 rounded-full bg-gradient-to-r ${item.color} group-hover:w-full transition-all duration-500`} />
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== DIVIDER ===== */}
-      <SectionDivider variant="sparkle" />
-
-      {/* ===== LOVE GALLERY STRIP ===== */}
-      <section className="py-6 md:py-10 relative overflow-hidden section-below-fold">
-        <AuroraOrb position="center" color="rgba(232,196,184,0.25)" size={450} delay={2} />
-        <div className="container mx-auto px-6 md:px-12 max-w-6xl relative z-10">
-          <div className="text-center mb-6">
-            <div className="love-divider mb-3">
-              <Heart className="w-5 h-5 text-rose-400 fill-rose-400 icon-glow" />
-            </div>
-            <p className="font-serif-display text-lg text-primary italic">{t('index.capturedMoments')}</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {(homepageGalleryImages.length > 0 ?
-            homepageGalleryImages.map((img) => ({ img: img.url, label: '♥' })) :
-            [
-            { img: couple11, label: '♥' },
-            { img: cakeImg, label: '🌸' },
-            { img: ringsImg, label: '💍' },
-            { img: couple7, label: '♥' }]).
-
-            map((item, i) =>
-            <div
-              key={i}
-              className="glass-card-strong rounded-3xl p-1.5 overflow-hidden card-hover">
-                <div className="relative rounded-[20px] overflow-hidden aspect-square group">
-                  <img src={item.img} alt="Wedding gallery photo" className="w-full h-full object-cover object-[center_20%] group-hover:scale-105 transition-transform duration-700" width={241} height={241} loading="lazy" decoding="async" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent flex items-end justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <span className="text-2xl">{item.label}</span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== DIVIDER ===== */}
-      <SectionDivider variant="line" />
-
-      {/* ===== WEDDING DETAILS — Interactive Cards ===== */}
-      <section className="py-8 md:py-12 relative overflow-hidden section-below-fold">
-        <AuroraOrb position="left" color="rgba(201,169,182,0.25)" size={400} delay={0} />
-        <AuroraOrb position="right" color="rgba(180,140,210,0.2)" size={350} delay={5} />
-        <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
-          <div className="text-center mb-12">
-            <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
-              <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('nav.details')}</p>
-            </div>
-            <h2 className="font-serif-display text-2xl md:text-5xl text-foreground font-semibold mb-4">{t('details.title')}</h2>
-            <p className="font-sans-elegant text-base md:text-lg text-muted-foreground max-w-lg mx-auto">{t('details.subtitle')}</p>
-          </div>
-
-          <div className={`grid gap-5 ${isCourtMode ? 'grid-cols-2 max-w-lg mx-auto' : 'grid-cols-2 md:grid-cols-4'}`}>
-            {detailSections.map((section, i) => {
-              const subtitleKeys: Record<string, string> = {
-                ceremony: 'details.ceremony.time',
-                reception: 'details.reception.time',
-                accommodation: 'details.accommodation.hotel',
-                transport: 'details.transport.shuttle',
-                'court-ceremony': 'court.wedding.time',
-                'court-after': 'court.wedding.after'
-              };
-              return (
-                <button
-                  key={section.id}
-                  onClick={() => setActiveDetail(section.id)}
-                  className="group relative rounded-3xl p-4 md:p-7 text-center cursor-pointer overflow-hidden
-                    bg-white/60 dark:bg-white/[0.04] backdrop-blur-xl
-                    border border-white/40 dark:border-white/10
-                    shadow-[0_8px_32px_rgba(139,107,138,0.08),0_2px_8px_rgba(0,0,0,0.04)]
-                    hover:shadow-[0_16px_48px_rgba(139,107,138,0.16),0_4px_16px_rgba(0,0,0,0.06)]
-                    hover:scale-105 hover:-translate-y-1.5 active:scale-95
-                    transition-all duration-500">
-                  
-                  {/* Soft colored glow behind icon */}
-                  <div className={`absolute top-4 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full bg-gradient-to-br ${section.color} blur-2xl pointer-events-none opacity-50 group-hover:opacity-80 transition-opacity duration-500`} />
-
-                  {/* Icon circle with soft pastel bg */}
-                  <div className={`relative w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br ${section.color} flex items-center justify-center mb-3 md:mb-5 mx-auto
-                    ring-4 ring-white/50 dark:ring-white/10
-                    group-hover:ring-primary/20 group-hover:shadow-glow
-                    transition-all duration-500`}>
-                    <section.icon className={`w-5 h-5 md:w-7 md:h-7 ${section.iconColor} group-hover:scale-110 transition-transform duration-300`} />
-                  </div>
-
-                  <h3 className="font-serif-display text-base md:text-lg text-foreground font-semibold mb-1.5">{section.title}</h3>
-
-                  {/* Preview text */}
-                  <p className="font-sans-elegant text-[11px] text-muted-foreground leading-relaxed mb-3 line-clamp-2">
-                    {t(subtitleKeys[section.id] || 'details.tapToSee')}
-                  </p>
-
-                  {/* Tap indicator */}
-                  <div className="flex items-center justify-center gap-1.5 text-primary/60 group-hover:text-primary transition-colors duration-300">
-                    <span className="font-sans-elegant text-[10px] font-semibold tracking-wide uppercase">{t('details.tapToSee')}</span>
-                    <ChevronDown className="w-3 h-3 group-hover:translate-y-0.5 transition-transform duration-300" />
-                  </div>
-
-                </button>);
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== COMING SOON BANNER (Court Mode Only) ===== */}
-      {isCourtMode &&
-      <>
-          <SectionDivider variant="sparkle" />
-          <section className="py-8 md:py-12 relative overflow-hidden">
-            <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10">
-              <div className="glass-card-strong rounded-3xl p-8 md:p-12 text-center relative overflow-hidden border border-primary/20">
-                <GoldenCorners />
-                <div className="absolute top-0 right-0 w-40 h-40 rounded-full bg-gradient-to-br from-amber-400/10 to-rose-400/10 blur-3xl pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-gradient-to-tr from-violet-400/10 to-primary/10 blur-3xl pointer-events-none" />
-                
-                <div className="text-5xl mb-4 animate-pulse-love">
-                  ⛪
-                </div>
-                
-                <h3 className="font-serif-display text-2xl md:text-3xl text-foreground font-semibold mb-4">
-                  {t('church.wedding.coming.short')}
-                </h3>
-                <p className="font-sans-elegant text-base md:text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
-                  {t('church.wedding.coming')}
-                </p>
-                
-                <div className="flex items-center justify-center gap-2 mt-6">
-                  <Heart className="w-4 h-4 text-rose-400 fill-rose-400 animate-pulse-love" />
-                  <span className="font-sans-elegant text-sm text-primary font-semibold">{t('church.wedding.coming.teaser')}</span>
-                  <Heart className="w-4 h-4 text-rose-400 fill-rose-400 animate-pulse-love" />
+                  ))}
                 </div>
               </div>
             </div>
           </section>
-        </>
-      }
 
-      {/* ===== DIVIDER ===== */}
-      <SectionDivider variant="heart" />
+          <Footer />
 
-      {/* ===== SCRIPTURE — Auto-Transitioning Verses ===== */}
-      <ScriptureTransition t={t} />
-
-      {/* ===== DIVIDER ===== */}
-      <SectionDivider variant="sparkle" />
-
-      {/* ===== PROMISE + PERSONAL QUOTES (merged) ===== */}
-      <PersonalCourtSection t={t} coupleNames={`${coupleName1} & ${coupleName2}`} />
-
-      {/* ===== DIVIDER ===== */}
-      <SectionDivider variant="heart" />
-
-      {/* ===== EXPLORE NAVIGATION ===== */}
-      <section className="py-8 md:py-12 relative overflow-hidden section-below-fold">
-        <AuroraOrb position="center" color="rgba(180,140,210,0.2)" size={400} delay={4} />
-        <div className="container mx-auto px-6 md:px-12 max-w-5xl relative z-10">
-          <div className="text-center mb-10">
-            <div className="inline-block px-5 py-2 rounded-full glass-card-strong mb-5">
-              <p className="font-sans-elegant text-xs tracking-[0.25em] uppercase text-muted-foreground font-medium">{t('index.explore')}</p>
-            </div>
-            <h2 className="font-serif-display text-3xl md:text-5xl text-foreground font-semibold mb-4">
-              {t('explore.title')}
-            </h2>
-            <p className="font-sans-elegant text-lg text-muted-foreground max-w-md mx-auto">
-              {t('explore.subtitle')}
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
-            {features.map((feat, i) =>
-            <div key={i}>
-                <Link
-                to={feat.to}
-                className="glass-card-strong rounded-3xl p-7 flex flex-col items-center text-center card-hover group block h-full relative overflow-hidden">
-                  <div className={`absolute top-0 right-0 w-20 h-20 rounded-full bg-gradient-to-br ${feat.bg} blur-xl pointer-events-none`} />
-                  <div className={`w-14 h-14 rounded-3xl bg-gradient-to-br ${feat.bg} flex items-center justify-center mb-4 group-hover:shadow-glow group-hover:scale-110 transition-all duration-500`}>
-                    <feat.icon className={`w-6 h-6 ${feat.color} icon-glow`} />
-                  </div>
-                  <h3 className="font-serif-display text-lg font-semibold text-foreground mb-2">{feat.label}</h3>
-                  <p className="font-sans-elegant text-sm text-muted-foreground leading-relaxed">{feat.desc}</p>
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== DIVIDER ===== */}
-      <SectionDivider variant="sparkle" />
-
-      {/* ===== CTA / RSVP ===== */}
-      <section className="py-8 md:py-12 relative overflow-hidden section-below-fold">
-        <AuroraOrb position="left" color="rgba(212,165,200,0.3)" size={400} delay={0} />
-        <AuroraOrb position="right" color="rgba(139,107,138,0.2)" size={350} delay={6} />
-        <div className="container mx-auto px-6 md:px-12 max-w-3xl relative z-10 text-center">
-          <div>
-            <div className="glass-card-strong rounded-full w-28 h-28 mx-auto mb-8 flex items-center justify-center overflow-hidden ring-4 ring-primary/15 relative">
-              <img src={couple8} alt="Corine & Ruben" className="w-full h-full object-cover object-[center_20%]" width={112} height={112} loading="lazy" decoding="async" />
-              <div className="absolute inset-0 flex items-center justify-center bg-foreground/20" />
-            </div>
-
-            <div className="love-divider mb-6">
-              <Heart className="w-5 h-5 text-rose-400 fill-rose-400 icon-glow" />
-            </div>
-
-            <h2 className="font-serif-display text-3xl md:text-6xl text-foreground font-semibold mb-4">
-              {t('rsvp.title')}
-            </h2>
-            <p className="font-serif-display text-lg text-primary italic mb-2">{t('love.tagline')}</p>
-            <p className="font-sans-elegant text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-lg mx-auto">
-              {t('rsvp.subtitle')}
-            </p>
-            <Link to="/rsvp" className="btn-primary text-base">
-              <Heart className="w-5 h-5 fill-current" />
-              {t('hero.cta')}
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== DETAIL DIALOGS ===== */}
-      <Suspense fallback={null}>
-      {detailSections.map((section) =>
-      <LazyDialog key={section.id} open={activeDetail === section.id} onOpenChange={(open) => !open && setActiveDetail(null)}>
-          <LazyDialogContent className="max-w-lg">
-            <LazyDialogHeader>
-              <div className="relative mx-auto mb-4">
-                <div className={`absolute inset-0 w-20 h-20 rounded-full bg-gradient-to-br ${section.color} blur-xl opacity-60 mx-auto`} />
-                <div className={`relative w-16 h-16 rounded-full bg-gradient-to-br ${section.color} flex items-center justify-center mx-auto ring-4 ring-white/30 dark:ring-white/10`}>
-                  <section.icon className={`w-7 h-7 ${section.iconColor}`} />
-                </div>
-              </div>
-              <LazyDialogTitle className="font-serif-display text-2xl text-center">{section.title}</LazyDialogTitle>
-              <LazyDialogDescription className="font-sans-elegant text-center text-muted-foreground">
-                {t('details.subtitle')}
-              </LazyDialogDescription>
-            </LazyDialogHeader>
-            <div className="space-y-3 pt-2 max-h-[60vh] overflow-y-auto pr-1">
-              {section.dialogContent.map((item, j) =>
-            <div
-              key={j}
-              className={`rounded-2xl p-4 flex items-start gap-3 ${
-              (item as {highlight?: boolean;}).highlight ?
-              'bg-primary/[0.06] dark:bg-primary/[0.08] border border-primary/15' :
-              'glass-card'}`
-              }>
-                  <div className={`w-9 h-9 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center flex-shrink-0 mt-0.5`}>
-                    <item.icon className={`w-4 h-4 ${section.iconColor}`} />
-                  </div>
-                  <div>
-                    <p className="font-sans-elegant text-sm font-bold text-foreground">{item.label}</p>
-                    <p className="font-sans-elegant text-xs text-muted-foreground leading-relaxed mt-0.5">{item.desc}</p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </LazyDialogContent>
-        </LazyDialog>
-      )}
-      </Suspense>
-
-
-
-    </div>);
-};
-
+          <ScamShieldSubmission
+            open={scamShieldOpen}
+            onOpenChange={setScamShieldOpen}
+          />
+        </main>
+      </div>
+    </PageTransition>
+  );
+});
 export default Index;

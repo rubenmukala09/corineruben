@@ -1,18 +1,36 @@
-import { useEffect, useLayoutEffect } from 'react';
-import { useLocation, useNavigationType } from 'react-router-dom';
+import { useEffect, forwardRef } from "react";
+import { useLocation } from "react-router-dom";
 
-const ScrollToTop = () => {
-  const { pathname } = useLocation();
-  const navType = useNavigationType();
+export const ScrollToTop = forwardRef<HTMLDivElement>((_props, _ref) => {
+  const { pathname, hash } = useLocation();
 
-  // useLayoutEffect runs BEFORE the browser paints — prevents footer flash
-  useLayoutEffect(() => {
-    if (navType !== 'POP') {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+  useEffect(() => {
+    if (hash) {
+      requestAnimationFrame(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          const headerOffset = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition =
+            elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        }
+      });
+    } else {
+      requestAnimationFrame(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
     }
-  }, [pathname, navType]);
+  }, [pathname, hash]);
 
   return null;
-};
+});
 
-export default ScrollToTop;
+ScrollToTop.displayName = "ScrollToTop";

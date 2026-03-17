@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "services": "Servicios",
+    "training": "Capacitación",
+    "business": "Negocios",
+    "resources": "Recursos",
+    "contact": "Contacto",
+    "careers": "Empleo",
+    "portal": "Portal",
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse",
+    "logout": "Cerrar Sesión",
+    "help": "Centro de Ayuda"
+  },
+  "hero": {
+    "title": "Protegiendo Lo Que Más Importa",
+    "subtitle": "Soluciones avanzadas de ciberseguridad, protección contra estafas y seguridad digital para individuos, familias y empresas.",
+    "cta_primary": "Comenzar",
+    "cta_secondary": "Más Información"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "all": "Todos",
+    "yes": "Sí",
+    "no": "No",
+    "close": "Cerrar",
+    "view_all": "Ver Todo",
+    "read_more": "Leer Más",
+    "learn_more": "Más Información"
+  },
+  "auth": {
+    "sign_in": "Iniciar Sesión",
+    "sign_up": "Registrarse",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "reset_password": "Restablecer Contraseña",
+    "confirm_password": "Confirmar Contraseña",
+    "welcome_back": "Bienvenido de Vuelta",
+    "create_account": "Crear Cuenta"
+  },
+  "footer": {
+    "copyright": "© {{year}} InVision Network. Todos los derechos reservados.",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio",
+    "contact_us": "Contáctenos"
+  },
+  "tickets": {
+    "title": "Mis Tickets de Soporte",
+    "subtitle": "Rastrea y administra tus solicitudes de soporte",
+    "new_ticket": "Nuevo Ticket",
+    "subject": "Asunto",
+    "description": "Descripción",
+    "category": "Categoría",
+    "priority": "Prioridad",
+    "status": "Estado",
+    "no_tickets": "Sin tickets aún",
+    "create_prompt": "Crea un ticket de soporte para obtener ayuda de nuestro equipo."
+  },
+  "referral": {
+    "title": "Programa de Referidos",
+    "subtitle": "Gana recompensas al referir amigos y colegas",
+    "generate_code": "Generar Código de Referido",
+    "copy_link": "Copiar Enlace",
+    "total_referrals": "Total de Referidos",
+    "successful": "Exitosos",
+    "total_earnings": "Ganancias Totales"
+  },
+  "help": {
+    "title": "Centro de Ayuda",
+    "subtitle": "Encuentra respuestas a tus preguntas",
+    "search_placeholder": "Buscar ayuda...",
+    "was_helpful": "¿Fue útil?",
+    "no_results": "No se encontraron artículos. Intenta con otro término de búsqueda."
+  }
+}

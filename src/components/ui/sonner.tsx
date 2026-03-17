@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { useTheme } from "next-themes";
 import { Toaster as Sonner, toast } from "sonner";
 
@@ -14,10 +13,12 @@ const Toaster = ({ ...props }: ToasterProps) => {
       toastOptions={{
         classNames: {
           toast:
-            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
+            "group toast backdrop-blur-xl bg-white/70 text-foreground border border-white/40 shadow-2xl dark:bg-slate-900/70 dark:border-white/10",
           description: "group-[.toast]:text-muted-foreground",
-          actionButton: "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
-          cancelButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+          actionButton:
+            "group-[.toast]:bg-primary/90 group-[.toast]:text-primary-foreground group-[.toast]:shadow",
+          cancelButton:
+            "group-[.toast]:bg-white/70 group-[.toast]:text-muted-foreground group-[.toast]:border group-[.toast]:border-white/40",
         },
       }}
       {...props}
