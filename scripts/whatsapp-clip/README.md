@@ -1,5 +1,13 @@
 # WhatsApp Status clip generator
 
+Two tools live here:
+
+- **`make-clip.sh`** — a 30 s still-photo clip with a Ken Burns push-in. Simple,
+  fast, no dependencies beyond ffmpeg.
+- **`make-lyric-video.sh`** — a full-length music video: audio-reactive bar
+  spectrum, beat-driven motion, and optional burned-in lyrics. Needs python3
+  with numpy and pillow. See [Lyric video](#lyric-video) below.
+
 Turns one portrait photo + one audio track into a 9:16 clip that WhatsApp
 Status (and Instagram Reels / TikTok / YouTube Shorts) accepts as-is.
 
@@ -65,3 +73,63 @@ PY
   bias them (e.g. `y='ih/3-(ih/zoom/2)'`) to hold a face higher in frame.
 - **No grain** — drop the `noise=` filter; it costs roughly 15 % of the file
   size because grain is expensive to compress.
+
+
+## Lyric video
+
+```bash
+scripts/whatsapp-clip/make-lyric-video.sh <image> <audio> <out.mp4> [lyrics.txt|.lrc]
+```
+
+Runs in four stages, all from the audio itself:
+
+1. **Analyse** (`analyze_audio.py`) — spectral-flux onset detection against a
+   local median baseline, giving beat times and a tempo estimate, plus a
+   per-frame RMS envelope.
+2. **Overlays** — a bottom scrim for text legibility, and the spectrum strip
+   from `spectrum.py`: 56 log-spaced bands (60 Hz–6 kHz), fast-attack /
+   slow-release smoothing, gold gradient bars with rounded caps, falling
+   peak-hold markers, a glow pass and a fading reflection. It writes rawvideo
+   to stdout on a black field, because the strip is screen-blended over the
+   video and `screen(x, black) == x` — so no alpha channel is needed.
+3. **Lyrics** (`lyrics_to_ass.py`) — see below. Skipped if no file is given.
+4. **Render** — Ken Burns with a beat-synced zoom pulse and brightness lift,
+   highlight bloom, vignette, grain, fades.
+
+### Why not ffmpeg's own visualisers
+
+`showfreqs` maps linearly-spaced FFT bins across the width, so a sung vocal
+piles into the left edge and the rest of the frame stays flat. `showcqt` spaces
+by pitch but rendered far too dim here, and its brightness controls fight the
+tint. Computing the bands directly is both easier to reason about and gives
+control over bar shape, peak-hold and glow.
+
+### Lyrics input
+
+Either an `.lrc` with explicit timings, which are used as-is:
+
+```
+[00:32.30] first line
+[00:39.20] second line
+```
+
+…or plain text, one line per displayed line, which gets auto-placed against
+sung passages detected from the energy envelope. Auto-placement is a starting
+point to nudge, not a finished timing — convert to `.lrc` once it's close.
+
+Styling lives in the `HEAD` block of `lyrics_to_ass.py` (font, size, colours,
+margin). Lines fade in with a slight scale-up so each one lands rather than
+blinks.
+
+### Gotchas worth knowing
+
+- **Blend in RGB, not YUV.** `blend=all_mode=screen` runs per-plane, so on
+  yuv420p it screens the chroma planes too — U/V are centred at 128, and
+  `screen(128,128) ≈ 192`, which tints the whole frame magenta. The filter
+  chain converts to `gbrp` before any blend and back to `yuv420p` at the end.
+- **Don't trust container duration.** An MP3 sliced with `-c copy` keeps the
+  original Xing header and reports the original length. The script derives
+  duration from the decoded sample count instead.
+- **Size.** Capped at ~1 Mbps video + 112 kbps audio, which lands a 2-minute
+  clip near 14 MB — under WhatsApp's 16 MB send limit. Longer tracks need a
+  lower `-maxrate`.
